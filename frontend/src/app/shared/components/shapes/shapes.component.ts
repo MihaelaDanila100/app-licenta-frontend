@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { SideNavShapes } from '../../data/constants/sidenav-shapes';
 import { ShapesService } from '../../services/shapes.service';
 
 @Component({
@@ -27,7 +28,9 @@ export class ShapesComponent implements OnInit {
   }
 
   private initShapes(): void {
-    this.shapes["circle"] = this.shapesService.drawCircle(30, 30, 20, "white", "black", 2);
+    this.shapes["circle"] = this.shapesService.drawCircle(SideNavShapes.circle);
+    this.shapes["dottedCircle"] = this.shapesService.drawDashedCircle(SideNavShapes.dottedCircle);
+    this.shapes["square"] = this.shapesService.drawRectangle(SideNavShapes.square);
   }
 
 }
