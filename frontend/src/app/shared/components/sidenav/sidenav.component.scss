@@ -18,10 +18,28 @@
 }
 
 ::ng-deep .p-accordion-tab {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 ::ng-deep .p-accordion-header-link {
     color: #505050;
     font-weight: 600;
+}
+
+::ng-deep .p-accordion-header:has(.pi-chevron-down) {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+::ng-deep .p-accordion-tab:has(.pi-chevron-down) {
+    margin-bottom: 20px;
+}
+
+::ng-deep .p-accordion-content {
+    border: solid 2px #e7e7e7;
+    background-color: white;
+    padding: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
