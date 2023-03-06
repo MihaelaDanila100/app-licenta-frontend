@@ -1,4 +1,27 @@
-:host ::ng-deep .p-sidebar-left {
+::ng-deep .p-sidebar-left {
     top: 10vh !important;
-    width: 15rem !important;
+    width: 17rem !important;
+    padding: 0px 1rem;
+}
+
+::ng-deep .p-sidebar-left .p-sidebar-content {
+    height: 100%;
+    padding-top: 20px;
+}
+
+::ng-deep .p-accordion-header {
+    font-size: 16px;
+    padding: 1rem 0.5rem;
+    background-color: #f5f4f463;
+    border-radius: 10px;
+    border: solid 2px #e7e7e7;
+}
+
+::ng-deep .p-accordion-tab {
+    margin-bottom: 10px;
+}
+
+::ng-deep .p-accordion-header-link {
+    color: #505050;
+    font-weight: 600;
 }
