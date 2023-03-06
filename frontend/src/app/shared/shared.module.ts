@@ -5,19 +5,21 @@ import { FullLayoutComponent } from './components/full-layout/full-layout.compon
 import { MaterialModule } from './material/material.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { PrimengComponentsModule } from './primeng-components/primeng-components.module';
-
-
+import { KonvaModule } from "ng2-konva";
+import { ShapesComponent } from './components/shapes/shapes.component';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     FullLayoutComponent,
-    SidenavComponent
+    SidenavComponent,
+    ShapesComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    PrimengComponentsModule
+    PrimengComponentsModule,
+    KonvaModule
   ],
   exports: [
     NavbarComponent

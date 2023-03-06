@@ -22,6 +22,8 @@
     "@angular/router": "^14.0.0",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
+    "konva": "^8.4.2",
+    "ng2-konva": "^6.0.0",
     "primeicons": "^6.0.1",
     "primeng": "^15.2.0",
     "rxjs": "~7.5.0",

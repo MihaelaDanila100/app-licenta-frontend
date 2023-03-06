@@ -2,14 +2,16 @@
     <ng-template pTemplate = "content">
         <p-accordion [multiple]="true">
             <p-accordionTab header="Shapes">
-                Content 1
-                </p-accordionTab>
-                <p-accordionTab header="Arrows">
+                <ng-template pTemplate="content">
+                    <app-shapes></app-shapes>
+                </ng-template>
+            </p-accordionTab>
+            <p-accordionTab header="Arrows">
                 Content 2
-                </p-accordionTab>
-                <p-accordionTab header="Text">
+            </p-accordionTab>
+            <p-accordionTab header="Text">
                 Content 3    
-                </p-accordionTab>
+            </p-accordionTab>
         </p-accordion>
     </ng-template>
 </p-sidebar>
