@@ -46,4 +46,17 @@ export class ShapesService {
       strokeWidth: shape.strokeWidth
     }));
   }
+
+  public drawDashedRectangle(shape: Rectangle): Observable<any> {
+    return of({
+      x: shape.x,
+      y: shape.y,
+      width: shape.width,
+      height: shape.height,
+      fill: shape.fillColor,
+      stroke: shape.strokeColor,
+      strokeWidth: shape.strokeWidth,
+      dash: [6, 6]
+    })
+  }
 }

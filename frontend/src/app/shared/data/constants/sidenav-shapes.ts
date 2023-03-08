@@ -24,5 +24,15 @@ export const SideNavShapes = {
         fillColor: "white",
         strokeColor: "black",
         strokeWidth: 2
+    },
+    dottedSqare: {
+        x: 10,
+        y: 80,
+        width: 38,
+        height: 38,
+        fillColor: "white",
+        strokeColor: "black",
+        strokeWidth: 2,
+        dash: [4, 4]
     }
 }

@@ -22,7 +22,7 @@ export class ShapesComponent implements OnInit {
   ngOnInit(): void {
     this.configStage.next({
       width: 200, 
-      height: 100
+      height: 300
     });
     this.initShapes();
   }
@@ -31,6 +31,7 @@ export class ShapesComponent implements OnInit {
     this.shapes["circle"] = this.shapesService.drawCircle(SideNavShapes.circle);
     this.shapes["dottedCircle"] = this.shapesService.drawDashedCircle(SideNavShapes.dottedCircle);
     this.shapes["square"] = this.shapesService.drawRectangle(SideNavShapes.square);
+    this.shapes["dottedSquare"] = this.shapesService.drawDashedRectangle(SideNavShapes.dottedSqare);
   }
 
 }
