@@ -1,0 +1,32 @@
+import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { ArrowsService } from '../../services/arrows.service';
+
+@Component({
+  selector: 'app-arrows',
+  templateUrl: './arrows.component.html',
+  styleUrls: ['./arrows.component.scss']
+})
+export class ArrowsComponent implements OnInit {
+
+  public configStage = new BehaviorSubject({
+    width: 500,
+    height: 500
+  });
+  public arrows: any = {};
+
+  constructor(private arrowsService: ArrowsService) { }
+
+  ngOnInit(): void {
+    this.configStage.next({
+      width: 200,
+      height: 300
+    });
+    this.initArrows();
+  }
+
+  private initArrows(): void {
+
+  }
+
+}

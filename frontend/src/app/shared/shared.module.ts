@@ -7,13 +7,15 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { PrimengComponentsModule } from './primeng-components/primeng-components.module';
 import { KonvaModule } from "ng2-konva";
 import { ShapesComponent } from './components/shapes/shapes.component';
+import { ArrowsComponent } from './components/arrows/arrows.component';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     FullLayoutComponent,
     SidenavComponent,
-    ShapesComponent
+    ShapesComponent,
+    ArrowsComponent
   ],
   imports: [
     CommonModule,
