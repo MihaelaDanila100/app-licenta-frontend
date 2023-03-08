@@ -30,6 +30,7 @@ export class ArrowsComponent implements OnInit {
     this.arrows["line"] = this.arrowsService.drawLine(SideNavArrows.line);
     this.arrows["dashedLine"] = this.arrowsService.drawLine(SideNavArrows.dashedLine);
     this.arrows["arrow"] = this.arrowsService.drawArrow(SideNavArrows.arrow);
+    this.arrows["dashedArrow"] = this.arrowsService.drawArrow(SideNavArrows.dashedArrow);
   }
 
 }
