@@ -15,5 +15,18 @@ export const SideNavArrows = {
         lineJoin: "round",
         tension: 1,
         dash: [4, 4]
+    },
+    arrow: {
+        x: 140,
+        y: 10,
+        points: [0, 0, 30, 30],
+        pointerLength: 10,
+        pointerWidth: 10,
+        fillColor: 'black',
+        strokeColor: 'black',
+        strokeWidth: 2,
+        lineCap: "round",
+        lineJoin: "round",
+        tension: 1
     }
 }

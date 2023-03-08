@@ -22,7 +22,7 @@ export class ShapesComponent implements OnInit {
   ngOnInit(): void {
     this.configStage.next({
       width: 200, 
-      height: 300
+      height: 135
     });
     this.initShapes();
   }
