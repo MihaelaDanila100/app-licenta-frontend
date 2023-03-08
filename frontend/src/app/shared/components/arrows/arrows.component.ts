@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SideNavArrows } from '../../data/constants/sidenav-arrows';
 import { ArrowsService } from '../../services/arrows.service';
 
 @Component({
@@ -26,7 +27,8 @@ export class ArrowsComponent implements OnInit {
   }
 
   private initArrows(): void {
-
+    this.arrows["line"] = this.arrowsService.drawLine(SideNavArrows.line);
+    this.arrows["dashedLine"] = this.arrowsService.drawLine(SideNavArrows.dashedLine);
   }
 
 }
