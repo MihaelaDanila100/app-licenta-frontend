@@ -32,6 +32,7 @@ export class ShapesComponent implements OnInit {
     this.shapes["dottedCircle"] = this.shapesService.drawDashedCircle(SideNavShapes.dottedCircle);
     this.shapes["square"] = this.shapesService.drawRectangle(SideNavShapes.square);
     this.shapes["dottedSquare"] = this.shapesService.drawDashedRectangle(SideNavShapes.dottedSqare);
+    this.shapes["rectangle"] = this.shapesService.drawRectangle(SideNavShapes.rectangle);
   }
 
 }

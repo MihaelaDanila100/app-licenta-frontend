@@ -34,5 +34,14 @@ export const SideNavShapes = {
         strokeColor: "black",
         strokeWidth: 2,
         dash: [4, 4]
+    },
+    rectangle: {
+        x: 70,
+        y: 80,
+        width: 60,
+        height: 38,
+        fillColor: "white",
+        strokeColor: "black",
+        strokeWidth: 2
     }
 }
