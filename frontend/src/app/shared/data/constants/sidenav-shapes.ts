@@ -5,7 +5,8 @@ export const SideNavShapes = {
         radius: 20, 
         fillColor: "white", 
         strokeColor: "black", 
-        strokeWidth: 2
+        strokeWidth: 2,
+        draggable: true
     },
     dottedCircle: {
         x: 100, 

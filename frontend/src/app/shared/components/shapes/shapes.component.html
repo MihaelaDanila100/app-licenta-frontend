@@ -1,6 +1,6 @@
 <ko-stage [config] = "configStage">
     <ko-layer>
-        <ko-circle class="shape" [config]="shapes.circle"></ko-circle>
+        <ko-circle class="shape" [config]="shapes.circle" draggable (dragstart) = "dragCircle()"></ko-circle>
         <ko-circle class="shape" [config]="shapes.dottedCircle"></ko-circle>
         <ko-rect [config] = "shapes.square"></ko-rect>
         <ko-rect [config] = "shapes.dottedSquare"></ko-rect>

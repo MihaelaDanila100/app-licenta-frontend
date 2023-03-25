@@ -35,4 +35,8 @@ export class ShapesComponent implements OnInit {
     this.shapes["rectangle"] = this.shapesService.drawRectangle(SideNavShapes.rectangle);
   }
 
+  public dragCircle(): void {
+    console.log("aha")
+  }
+
 }
