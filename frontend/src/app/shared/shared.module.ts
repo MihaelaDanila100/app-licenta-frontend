@@ -8,6 +8,7 @@ import { PrimengComponentsModule } from './primeng-components/primeng-components
 import { KonvaModule } from "ng2-konva";
 import { ShapesComponent } from './components/shapes/shapes.component';
 import { ArrowsComponent } from './components/arrows/arrows.component';
+import { WhiteboardComponent } from './components/whiteboard/whiteboard.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ArrowsComponent } from './components/arrows/arrows.component';
     FullLayoutComponent,
     SidenavComponent,
     ShapesComponent,
-    ArrowsComponent
+    ArrowsComponent,
+    WhiteboardComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { ArrowsComponent } from './components/arrows/arrows.component';
     KonvaModule
   ],
   exports: [
-    NavbarComponent
+    NavbarComponent,
+    WhiteboardComponent
   ]
 })
 export class SharedModule { }
