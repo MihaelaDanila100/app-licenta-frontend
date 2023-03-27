@@ -1,5 +1,9 @@
 <div>
     <app-navbar></app-navbar>
 
-    <app-canvas></app-canvas>
+    <a [routerLink] = "'/lines'">Go to draw lines</a>
+    <br>
+    <a [routerLink] = "'/'">Go to square</a>
+
+    <router-outlet></router-outlet>
 </div>

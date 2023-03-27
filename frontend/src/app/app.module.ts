@@ -4,12 +4,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CanvasComponent } from './canvas/canvas.component'
+import { CanvasComponent } from './canvas/canvas.component';
+import { LinePannelComponent } from './line-pannel/line-pannel.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    CanvasComponent
+    CanvasComponent,
+    LinePannelComponent
   ],
   imports: [
     BrowserModule,
