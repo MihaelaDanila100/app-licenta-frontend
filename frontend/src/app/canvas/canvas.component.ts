@@ -10,7 +10,7 @@ export class CanvasComponent implements OnInit {
 
   private canvas: any;
   private boundBox: any;
-  private shape: any;
+  private shape!: fabric.Rect;
 
   constructor() { }
 
@@ -29,7 +29,10 @@ export class CanvasComponent implements OnInit {
     this.shape = new fabric.Rect({
       width: 200,
       height: 200,
-      fill: 'red'
+      fill: 'red',
+      hasControls: false,
+      stroke: 'blue',
+      strokeDashArray: [2, 2]
     });
 
     this.canvas.add(this.boundBox);
