@@ -6,3 +6,7 @@ export interface Circle {
     top?: number,
     left?: number
 }
+
+export interface DashedCircle extends Circle {
+    dashes: number[]
+}

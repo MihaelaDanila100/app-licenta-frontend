@@ -26,6 +26,13 @@ export const Shapes = {
         radius: 20,
         showControls: false,
         top: 53,
+        left: 165,
+    },
+    dashedCircle: {
+        radius: 20,
+        showControls: false,
+        dashes: [3, 3],
+        top: 53,
         left: 8
     }
 }
