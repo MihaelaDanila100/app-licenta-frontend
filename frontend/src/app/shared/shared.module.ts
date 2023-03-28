@@ -5,6 +5,7 @@ import { FullLayoutComponent } from './components/full-layout/full-layout.compon
 import { MaterialModule } from './material/material.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { PrimengComponentsModule } from './primeng-components/primeng-components.module';
+import { SidenavShapesComponent } from './components/sidenav-shapes/sidenav-shapes.component';
 
 
 
@@ -12,7 +13,8 @@ import { PrimengComponentsModule } from './primeng-components/primeng-components
   declarations: [
     NavbarComponent,
     FullLayoutComponent,
-    SidenavComponent
+    SidenavComponent,
+    SidenavShapesComponent
   ],
   imports: [
     CommonModule,

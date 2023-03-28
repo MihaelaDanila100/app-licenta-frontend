@@ -2,8 +2,10 @@
     <ng-template pTemplate = "content">
         <p-accordion [multiple]="true">
             <p-accordionTab header="Shapes">
-                Content 1
-                </p-accordionTab>
+                <ng-template pTemplate="content">
+                    <app-sidenav-shapes></app-sidenav-shapes>
+                </ng-template>
+            </p-accordionTab>
                 <p-accordionTab header="Arrows">
                 Content 2
                 </p-accordionTab>
