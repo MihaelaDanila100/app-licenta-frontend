@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DrawingService } from '../../services/drawing.service';
 import { ShapesService } from '../../services/shapes.service';
 import { fabric } from 'fabric';
+import { Shapes } from '../../data/shapes';
 
 @Component({
   selector: 'app-sidenav-shapes',
@@ -22,11 +23,9 @@ export class SidenavShapesComponent implements OnInit {
   }
 
   private initShapes() {
-    this.shapes.push(this.shapesService.createRect({
-      width: 60,
-      height: 30,
-      showControls: false
-    }));
+    this.shapes.push(this.shapesService.createRectangle(Shapes.rectangle));
+    this.shapes.push(this.shapesService.createDashedRectangle(Shapes.dashedRectangle));
+    
   }
 
 }

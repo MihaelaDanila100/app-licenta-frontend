@@ -3,7 +3,9 @@ export interface Rectangle {
     height: any,
     showControls: boolean,
     fill?: string,
-    stroke?: string
+    stroke?: string,
+    top?: number,
+    left?: number
 }
 
 export interface DashesRectangle extends Rectangle {
