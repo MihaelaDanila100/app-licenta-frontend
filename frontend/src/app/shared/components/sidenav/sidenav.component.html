@@ -9,9 +9,11 @@
                 <p-accordionTab header="Arrows">
                 Content 2
                 </p-accordionTab>
-                <p-accordionTab header="Text">
-                Content 3    
-                </p-accordionTab>
+            <p-accordionTab header="Text">
+                <ng-template pTemplate="content">
+                    <app-text></app-text>
+                </ng-template>  
+            </p-accordionTab>
         </p-accordion>
     </ng-template>
 </p-sidebar>
