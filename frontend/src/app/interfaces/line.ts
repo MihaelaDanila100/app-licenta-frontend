@@ -7,3 +7,7 @@ export interface Line {
     scale?: number,
     strokeWidth?: number
 }
+
+export interface DashedLine extends Line {
+    dashes: number[]
+}

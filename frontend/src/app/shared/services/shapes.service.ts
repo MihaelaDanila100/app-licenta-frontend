@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
 import { Circle, DashedCircle } from 'src/app/interfaces/circle';
-import { Line } from 'src/app/interfaces/line';
+import { DashedLine, Line } from 'src/app/interfaces/line';
 import { DashesRectangle, Rectangle } from 'src/app/interfaces/rectangle';
 
 
@@ -65,5 +65,11 @@ export class ShapesService {
     let newCircle = this.createCircle(circle);
     newCircle.strokeDashArray = circle.dashes;
     return newCircle;
+  }
+
+  public createDashedLine(line: DashedLine): fabric.Line {
+    let newLine = this.createLine(line);
+    newLine.strokeDashArray = line.dashes;
+    return newLine;
   }
 }

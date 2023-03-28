@@ -34,5 +34,15 @@ export const Shapes = {
         dashes: [3, 3],
         top: 53,
         left: 8
+    },
+    dashedLine: {
+        points: [0, 0, 35, 35],
+        stroke: 'black',
+        top: 55,
+        left: 95,
+        scale: 2.5,
+        strokeWidth: 1,
+        showControls: false,
+        dashes: [3, 3]
     }
 }
