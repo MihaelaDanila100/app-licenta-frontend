@@ -1,0 +1,9 @@
+.shapes_container {
+    width: 100%;
+    height: 20vh;
+}
+
+::ng-deep .shapes_container .canvas-container {
+    width: 100% !important;
+    height: 100% !important;
+}
