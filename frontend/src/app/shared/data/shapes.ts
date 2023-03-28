@@ -21,5 +21,11 @@ export const Shapes = {
         scale: 2.5,
         strokeWidth: 1,
         showControls: false
+    },
+    circle: {
+        radius: 20,
+        showControls: false,
+        top: 53,
+        left: 8
     }
 }

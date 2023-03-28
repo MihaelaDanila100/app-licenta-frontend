@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
+import { Circle } from 'src/app/interfaces/circle';
 import { Line } from 'src/app/interfaces/line';
 import { DashesRectangle, Rectangle } from 'src/app/interfaces/rectangle';
 
@@ -43,5 +44,20 @@ export class ShapesService {
         left: line.left,
         hasControls: line.showControls
       })
+  }
+
+  public createCircle(circle: Circle): fabric.Circle {
+     if(!circle.stroke) circle.stroke = 'black';
+     if(!circle.fill) circle.fill = 'transparent';
+     if(!circle.top) circle.top = 0;
+     if(!circle.left) circle.left = 0;
+     return new fabric.Circle({
+      radius: circle.radius,
+      hasControls: circle.showControls,
+      stroke: circle.stroke,
+      fill: circle.fill,
+      top: circle.top,
+      left: circle.left
+     });
   }
 }
