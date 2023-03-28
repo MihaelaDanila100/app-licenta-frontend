@@ -13,4 +13,13 @@ export const Shapes = {
         top: 2,
         left: 80
     },
+    line: {
+        points: [0, 0, 30, 30],
+        stroke: 'black',
+        top: 2,
+        left: 160,
+        scale: 2.5,
+        strokeWidth: 1,
+        showControls: false
+    }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
+import { Line } from 'src/app/interfaces/line';
 import { DashesRectangle, Rectangle } from 'src/app/interfaces/rectangle';
 
 
@@ -30,5 +31,17 @@ export class ShapesService {
     let newRectangle = this.createRectangle(rectangle);
     newRectangle.strokeDashArray = rectangle.dashes;
     return newRectangle;
+  }
+
+  public createLine(line: Line): fabric.Line {
+    if(!line.top) line.top = 0;
+    if(!line.left) line.left = 0;
+    return new fabric.Line(line.points,
+      {
+        stroke: line.stroke,
+        top: line.top,
+        left: line.left,
+        hasControls: line.showControls
+      })
   }
 }
