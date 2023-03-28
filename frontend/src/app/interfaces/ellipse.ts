@@ -7,3 +7,7 @@ export interface Ellipse {
     top?: number,
     left?: number
 }
+
+export interface DashedEllipse extends Ellipse {
+    dashes: number[]
+}

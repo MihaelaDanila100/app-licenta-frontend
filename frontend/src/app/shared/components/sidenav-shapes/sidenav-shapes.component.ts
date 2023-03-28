@@ -30,6 +30,7 @@ export class SidenavShapesComponent implements OnInit {
     this.shapes.push(this.shapesService.createDashedCircle(Shapes.dashedCircle));
     this.shapes.push(this.shapesService.createDashedLine(Shapes.dashedLine));
     this.shapes.push(this.shapesService.createEllipse(Shapes.ellipse));
+    this.shapes.push(this.shapesService.createDashedEllipse(Shapes.dashedEllipse));
   }
 
 }

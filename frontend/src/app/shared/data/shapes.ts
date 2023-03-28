@@ -51,5 +51,13 @@ export const Shapes = {
         showControls: false,
         top: 115,
         left: 2
+    },
+    dashedEllipse: {
+        rx: 30,
+        ry: 15,
+        showControls: false,
+        top: 115,
+        left: 85,
+        dashes: [3, 3]
     }
 }
