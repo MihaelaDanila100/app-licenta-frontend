@@ -44,5 +44,12 @@ export const Shapes = {
         strokeWidth: 1,
         showControls: false,
         dashes: [3, 3]
+    },
+    ellipse: {
+        rx: 30,
+        ry: 15,
+        showControls: false,
+        top: 115,
+        left: 2
     }
 }

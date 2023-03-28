@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
 import { Circle, DashedCircle } from 'src/app/interfaces/circle';
+import { Ellipse } from 'src/app/interfaces/ellipse';
 import { DashedLine, Line } from 'src/app/interfaces/line';
 import { DashesRectangle, Rectangle } from 'src/app/interfaces/rectangle';
 
@@ -71,5 +72,21 @@ export class ShapesService {
     let newLine = this.createLine(line);
     newLine.strokeDashArray = line.dashes;
     return newLine;
+  }
+
+  public createEllipse(ellipse: Ellipse): fabric.Ellipse {
+    if(!ellipse.fill) ellipse.fill = 'transparent';
+    if(!ellipse.stroke) ellipse.stroke = 'black';
+    if(!ellipse.top) ellipse.top = 0;
+    if(!ellipse.left) ellipse.left = 0;
+    return new fabric.Ellipse({
+      rx: ellipse.rx,
+      ry: ellipse.ry,
+      hasControls: ellipse.showControls,
+      fill: ellipse.fill,
+      stroke: ellipse.stroke,
+      top: ellipse.top,
+      left: ellipse.left
+    });
   }
 }
