@@ -19,10 +19,11 @@ export class CanvasWhiteboardComponent implements OnInit {
     this.whiteBoardCanvas.setDimensions({
       width: window.innerWidth * 69 / 100,
       height: window.innerHeight * 69 / 100
-    })
+    });
     this.activeShapesService.activeShapes.subscribe((newShape) => {
+      console.log("hhhh ", newShape)
       this.whiteBoardCanvas.add(newShape);
-    })
+    });
   }
 
 }
