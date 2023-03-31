@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DrawingService } from '../../services/drawing.service';
 import { ShapesService } from '../../services/shapes.service';
 import { fabric } from 'fabric';
-import { Shapes } from '../../data/shapes';
+import { Shapes } from '../../data/constants/shapes';
 import { ActiveShapesService } from '../../services/active-shapes.service';
+import { ShapeTypes } from '../../data/enums/shape-types';
 
 @Component({
   selector: 'app-sidenav-shapes',
@@ -26,10 +27,10 @@ export class SidenavShapesComponent implements OnInit {
     this.initShapes();
     this.shapes.forEach((shape) => {
       this.shapesCanvas.add(shape);
-      shape.on("mousedown", () => {
-        this.activeShapesService.addShape(shape);
-      })
     });
+    this.shapesCanvas.on("mouse:down", (event: any) => {
+      if(event.target) this.activeShapesService.addShape(event.target);
+    })
   }
 
   private initShapes() {

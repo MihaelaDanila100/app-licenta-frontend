@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { fabric } from 'fabric';
 import { Subject } from 'rxjs';
+import { ShapeTypes } from '../data/enums/shape-types';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,14 @@ export class ActiveShapesService {
 
   constructor() { }
 
-  public addShape(shape: fabric.Object): void {
-    this.activeShapesSbj.next(shape);
+  public addShape(shape: any): void {
+    switch (shape.get('type')) {
+      case ShapeTypes.RECTANGLE:
+        this.activeShapesSbj.next(new fabric.Rect(shape))
+        break;
+    
+      default:
+        break;
+    }
   }
 }
