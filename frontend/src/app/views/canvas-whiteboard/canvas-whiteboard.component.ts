@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
+import { DrawingService } from 'src/app/shared/services/drawing.service';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CanvasWhiteboardComponent implements OnInit {
 
-  constructor() { }
+  private whiteBoardCanvas!: fabric.Canvas;
+
+  constructor(private drawingService: DrawingService,
+    private activeShapesService: ActiveShapesService) { }
 
   ngOnInit(): void {
+    this.whiteBoardCanvas = this.drawingService.createCanvas('whiteboard_canvas', {});
+    this.activeShapesService.activeShapes.subscribe((newShape) => {
+      this.whiteBoardCanvas.add(newShape);
+    })
   }
 
 }

@@ -3,7 +3,8 @@ export const Shapes = {
         width: 60,
         height: 30,
         showControls: false,
-        top: 2
+        top: 2,
+        selectable: false
     },
     dashedRectangle: {
         width: 60,

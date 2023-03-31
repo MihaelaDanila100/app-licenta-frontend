@@ -18,6 +18,7 @@ export class ShapesService {
     if(!rectangle.stroke) rectangle.stroke = 'black';
     if(!rectangle.top) rectangle.top = 0;
     if(!rectangle.left) rectangle.left = 0;
+    if(!rectangle.selectable) rectangle.selectable = true;
     return new fabric.Rect({
       width: rectangle.width,
       height: rectangle.height,
@@ -25,7 +26,8 @@ export class ShapesService {
       stroke: rectangle.stroke,
       hasControls: rectangle.showControls,
       left: rectangle.left,
-      top: rectangle.top
+      top: rectangle.top,
+      selectable: rectangle.selectable
     });
   }
 

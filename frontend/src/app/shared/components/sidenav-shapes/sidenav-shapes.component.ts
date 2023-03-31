@@ -3,6 +3,7 @@ import { DrawingService } from '../../services/drawing.service';
 import { ShapesService } from '../../services/shapes.service';
 import { fabric } from 'fabric';
 import { Shapes } from '../../data/shapes';
+import { ActiveShapesService } from '../../services/active-shapes.service';
 
 @Component({
   selector: 'app-sidenav-shapes',
@@ -14,12 +15,21 @@ export class SidenavShapesComponent implements OnInit {
   private shapesCanvas!: fabric.Canvas;
   private shapes: fabric.Object[] = [];
 
-  constructor(private shapesService: ShapesService, private drawingService: DrawingService) { }
+  constructor(private shapesService: ShapesService, 
+    private drawingService: DrawingService,
+    private activeShapesService: ActiveShapesService) { }
 
   ngOnInit(): void {
-    this.shapesCanvas = this.drawingService.createCanvas('shapes_canvas', {});
+    this.shapesCanvas = this.drawingService.createCanvas('shapes_canvas', {
+      preserveObjectStacking: true
+    });
     this.initShapes();
-    this.shapes.forEach((shape) => this.shapesCanvas.add(shape));
+    this.shapes.forEach((shape) => {
+      this.shapesCanvas.add(shape);
+      shape.on("mousedown", () => {
+        this.activeShapesService.addShape(shape);
+      })
+    });
   }
 
   private initShapes() {

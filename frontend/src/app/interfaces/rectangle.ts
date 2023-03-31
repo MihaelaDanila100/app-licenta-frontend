@@ -5,7 +5,8 @@ export interface Rectangle {
     fill?: string,
     stroke?: string,
     top?: number,
-    left?: number
+    left?: number,
+    selectable?: boolean
 }
 
 export interface DashesRectangle extends Rectangle {
