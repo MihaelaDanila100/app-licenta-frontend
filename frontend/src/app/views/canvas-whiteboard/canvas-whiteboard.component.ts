@@ -21,7 +21,6 @@ export class CanvasWhiteboardComponent implements OnInit {
       height: window.innerHeight * 69 / 100
     });
     this.activeShapesService.activeShapes.subscribe((newShape) => {
-      console.log("hhhh ", newShape)
       this.whiteBoardCanvas.add(newShape);
     });
   }

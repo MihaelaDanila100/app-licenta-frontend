@@ -14,14 +14,13 @@ export class ActiveShapesService {
   constructor() { }
 
   public addShape(shape: any): void {
-    console.log(shape.get('type'))
     switch (shape.get('type')) {
       case ShapeTypes.RECTANGLE:
         this.activeShapesSbj.next(new fabric.Rect(shape))
         break;
       
       case ShapeTypes.LINE:
-        this.activeShapesSbj.next(new fabric.Line(shape.points, shape))
+        this.activeShapesSbj.next(new fabric.Line([shape.x1, shape.y1, shape.x2, shape.y2], shape))
         break;
       
       case ShapeTypes.CIRCLE:
