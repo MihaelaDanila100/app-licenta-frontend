@@ -16,6 +16,10 @@ export class CanvasWhiteboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.whiteBoardCanvas = this.drawingService.createCanvas('whiteboard_canvas', {});
+    this.whiteBoardCanvas.setDimensions({
+      width: window.innerWidth * 69 / 100,
+      height: window.innerHeight * 69 / 100
+    })
     this.activeShapesService.activeShapes.subscribe((newShape) => {
       this.whiteBoardCanvas.add(newShape);
     })
