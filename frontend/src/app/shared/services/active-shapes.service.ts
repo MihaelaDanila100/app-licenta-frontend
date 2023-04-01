@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ShapeTypes } from '../data/enums/shape-types';
 
 @Injectable({
@@ -9,30 +9,45 @@ import { ShapeTypes } from '../data/enums/shape-types';
 export class ActiveShapesService {
 
   private activeShapesSbj: Subject<fabric.Object> = new Subject<fabric.Object>();
+  private selectedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public activeShapes = this.activeShapesSbj.asObservable();
+  public selectedShape = this.selectedShapeSbj.asObservable();
 
   constructor() { }
 
   public addShape(shape: any): void {
     switch (shape.get('type')) {
       case ShapeTypes.RECTANGLE:
-        this.activeShapesSbj.next(new fabric.Rect(shape))
+        let rectangle = new fabric.Rect(shape)
+        rectangle.hasControls = true;
+        this.activeShapesSbj.next(rectangle)
         break;
       
       case ShapeTypes.LINE:
-        this.activeShapesSbj.next(new fabric.Line([shape.x1, shape.y1, shape.x2, shape.y2], shape))
+        let line = new fabric.Line([shape.x1, shape.y1, shape.x2, shape.y2], shape);
+        line.hasControls = true;
+        this.activeShapesSbj.next(line)
         break;
       
       case ShapeTypes.CIRCLE:
-        this.activeShapesSbj.next(new fabric.Circle(shape))
+        let circle = new fabric.Circle(shape);
+        circle.hasControls = true;
+        this.activeShapesSbj.next(circle);
         break;
       
       case ShapeTypes.ELLIPSE:
-        this.activeShapesSbj.next(new fabric.Ellipse(shape))
+        let ellipse = new fabric.Ellipse(shape);
+        ellipse.hasControls = true;
+        this.activeShapesSbj.next(ellipse);
         break;
     
       default:
         break;
     }
+  }
+
+  public selectShape(value?: boolean): void {
+    if(value === undefined) value = !this.selectedShapeSbj.value;
+    this.selectedShapeSbj.next(value);
   }
 }

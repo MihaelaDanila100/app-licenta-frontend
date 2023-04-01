@@ -9,6 +9,7 @@ import { IconService } from './shared/services/icon.service';
 export class AppComponent {
 
   title = 'frontend';
+  public blockedShape: boolean = true;
 
   constructor(private matIconsService: IconService) {}
 }

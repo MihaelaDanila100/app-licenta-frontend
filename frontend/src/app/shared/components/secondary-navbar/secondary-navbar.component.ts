@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActiveShapesService } from '../../services/active-shapes.service';
 
 @Component({
   selector: 'app-secondary-navbar',
@@ -7,17 +8,19 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class SecondaryNavbarComponent implements OnInit {
 
-  @Input() locked: boolean = true; 
-  @Output() lockedChange: EventEmitter<any> = new EventEmitter<any>();
+  public unlocked: boolean = true; 
 
-  constructor() { }
+  constructor(private activeShapesService: ActiveShapesService) { }
 
   ngOnInit(): void {
+    this.activeShapesService.selectedShape.subscribe((res: boolean) => {
+      this.unlocked = res;
+      console.log("resss ", res)
+    })
   }
 
   public lockShape(): void {
-    this.locked = !this.locked;
-    this.lockedChange.emit(this.locked);
+    this.activeShapesService.selectShape();
   }
 
 }

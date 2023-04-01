@@ -22,7 +22,13 @@ export class CanvasWhiteboardComponent implements OnInit {
     });
     this.activeShapesService.activeShapes.subscribe((newShape) => {
       this.whiteBoardCanvas.add(newShape);
+      newShape.on("mousedown", (event) => {
+        this.activeShapesService.selectShape(true);
+      })
     });
+    this.whiteBoardCanvas.on("mouse:down", (event) => {
+      if(!event.target) this.activeShapesService.selectShape(false);
+    })
   }
 
 }
