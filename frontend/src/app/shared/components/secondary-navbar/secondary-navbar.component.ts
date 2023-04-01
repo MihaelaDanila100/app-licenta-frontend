@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-secondary-navbar',
@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SecondaryNavbarComponent implements OnInit {
 
+  @Input() locked: boolean = true; 
+  @Output() lockedChange: EventEmitter<any> = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  public lockShape(): void {
+    this.locked = !this.locked;
+    this.lockedChange.emit(this.locked);
   }
 
 }

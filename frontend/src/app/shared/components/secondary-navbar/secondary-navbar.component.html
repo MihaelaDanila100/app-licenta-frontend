@@ -1,3 +1,3 @@
 <div class="scd_navbar">
-    <mat-icon svgIcon="lock_icon"></mat-icon>
+    <mat-icon [svgIcon]="locked ? 'unlock_icon' : 'lock_icon'" (click) = "lockShape()"></mat-icon>
 </div>
