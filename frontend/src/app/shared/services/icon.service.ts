@@ -10,6 +10,7 @@ export class IconService {
   constructor(private matIcons: MatIconRegistry, private domSanitizer: DomSanitizer) { 
     this.useUnlockIcon();
     this.useLockIcon();
+    this.usePalleteIcon();
   }
 
   public useUnlockIcon(): void {
@@ -20,5 +21,10 @@ export class IconService {
   public useLockIcon(): void {
     this.matIcons.addSvgIcon('lock_icon', 
     this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/lock_icon.svg'))
+  }
+
+  public usePalleteIcon(): void {
+    this.matIcons.addSvgIcon('pallette_icon', 
+    this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/pallette_icon.svg'))
   }
 }

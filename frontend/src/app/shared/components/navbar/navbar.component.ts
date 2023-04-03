@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
   constructor() { }
 
   public displaySideNav: boolean = false;
 
-  ngOnInit(): void {
+  public showColors(event: any): void {
+    console.log("changesss ", event)
   }
 
   public toggleSideNav(): void {

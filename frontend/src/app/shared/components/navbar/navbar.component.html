@@ -5,5 +5,5 @@
         <div class="zoom">100%</div>
     </div>
 </nav>
-<app-secondary-navbar></app-secondary-navbar>
+<app-secondary-navbar (showColorChooserChange) = "showColors($event)"></app-secondary-navbar>
 <app-sidenav [(display)] = "displaySideNav"></app-sidenav>

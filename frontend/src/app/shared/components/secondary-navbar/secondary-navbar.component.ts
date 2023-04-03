@@ -9,17 +9,24 @@ import { ActiveShapesService } from '../../services/active-shapes.service';
 export class SecondaryNavbarComponent implements OnInit {
 
   public unlocked: boolean = true; 
+  public showColorChooser: boolean = false;
+  @Output() showColorChooserChange: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private activeShapesService: ActiveShapesService) { }
 
   ngOnInit(): void {
     this.activeShapesService.selectedShape.subscribe((res: boolean) => {
       this.unlocked = res;
-    })
+    });
   }
 
   public lockShape(): void {
     this.activeShapesService.selectShape();
+  }
+
+  public toggleColors(): void {
+    this.showColorChooser = !this.showColorChooser;
+    this.showColorChooserChange.emit(this.showColorChooser);
   }
 
 }
