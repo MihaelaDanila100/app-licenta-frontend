@@ -1,0 +1,10 @@
+::ng-deep .p-sidebar-right {
+    top: 14vh !important;
+    width: 15rem !important;
+    padding: 0px 1rem;
+}
+
+::ng-deep .p-sidebar-right .p-sidebar-content {
+    height: 100%;
+    padding-top: 20px;
+}

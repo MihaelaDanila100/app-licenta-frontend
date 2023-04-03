@@ -10,9 +10,10 @@ export class NavbarComponent {
   constructor() { }
 
   public displaySideNav: boolean = false;
+  public displaySettings: boolean = false;
 
   public showColors(event: any): void {
-    console.log("changesss ", event)
+    this.displaySettings = event;
   }
 
   public toggleSideNav(): void {

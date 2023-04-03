@@ -8,6 +8,7 @@ import { PrimengComponentsModule } from './primeng-components/primeng-components
 import { SidenavShapesComponent } from './components/sidenav-shapes/sidenav-shapes.component';
 import { TextComponent } from './components/text/text.component';
 import { SecondaryNavbarComponent } from './components/secondary-navbar/secondary-navbar.component';
+import { OptionsNavbarComponent } from './components/options-navbar/options-navbar.component';
 
 
 
@@ -18,7 +19,8 @@ import { SecondaryNavbarComponent } from './components/secondary-navbar/secondar
     SidenavComponent,
     SidenavShapesComponent,
     TextComponent,
-    SecondaryNavbarComponent
+    SecondaryNavbarComponent,
+    OptionsNavbarComponent
   ],
   imports: [
     CommonModule,

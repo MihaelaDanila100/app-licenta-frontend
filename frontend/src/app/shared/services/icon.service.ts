@@ -8,23 +8,30 @@ import { DomSanitizer } from "@angular/platform-browser";
 export class IconService {
 
   constructor(private matIcons: MatIconRegistry, private domSanitizer: DomSanitizer) { 
-    this.useUnlockIcon();
     this.useLockIcon();
     this.usePalleteIcon();
   }
 
-  public useUnlockIcon(): void {
-    this.matIcons.addSvgIcon('unlock_icon', 
-    this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/unlock_icon.svg'))
-  }
-
   public useLockIcon(): void {
-    this.matIcons.addSvgIcon('lock_icon', 
-    this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/lock_icon.svg'))
+    this.matIcons.addSvgIcon(
+      'lock_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/lock_icon.svg')
+    );
+    this.matIcons.addSvgIcon(
+      'unlock_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/unlock_icon.svg')
+    );
   }
 
   public usePalleteIcon(): void {
-    this.matIcons.addSvgIcon('pallette_icon', 
-    this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/pallette_icon.svg'))
+    this.matIcons.addSvgIcon(
+      'pallette_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/pallette_icon.svg')
+    );
+    this.matIcons.addSvgIcon(
+      'active_pallette_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/pallete_on_icon.svg')
+    );
   }
+
 }
