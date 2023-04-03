@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
 import { DrawingService } from 'src/app/shared/services/drawing.service';
 
@@ -7,12 +8,15 @@ import { DrawingService } from 'src/app/shared/services/drawing.service';
   templateUrl: './canvas-whiteboard.component.html',
   styleUrls: ['./canvas-whiteboard.component.scss']
 })
-export class CanvasWhiteboardComponent implements OnInit {
+export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
 
   private whiteBoardCanvas!: fabric.Canvas;
+  public drownShapes: fabric.Object[] = [];
+  private subscriptions: Subscription = new Subscription();
 
   constructor(private drawingService: DrawingService,
     private activeShapesService: ActiveShapesService) { }
+  
 
   ngOnInit(): void {
     this.whiteBoardCanvas = this.drawingService.createCanvas('whiteboard_canvas', {});
@@ -22,13 +26,18 @@ export class CanvasWhiteboardComponent implements OnInit {
     });
     this.activeShapesService.activeShapes.subscribe((newShape) => {
       this.whiteBoardCanvas.add(newShape);
-      newShape.on("mousedown", (event) => {
-        this.activeShapesService.selectShape(true);
-      })
+      this.subscriptions.add(this.activeShapesService.selectedShape.subscribe((res: any) => {
+        newShape.hasControls = res;
+        this.whiteBoardCanvas.renderAll();
+      }));
     });
     this.whiteBoardCanvas.on("mouse:down", (event) => {
       if(!event.target) this.activeShapesService.selectShape(false);
     })
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

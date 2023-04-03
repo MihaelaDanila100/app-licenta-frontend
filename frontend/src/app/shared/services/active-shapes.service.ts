@@ -9,7 +9,7 @@ import { ShapeTypes } from '../data/enums/shape-types';
 export class ActiveShapesService {
 
   private activeShapesSbj: Subject<fabric.Object> = new Subject<fabric.Object>();
-  private selectedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  private selectedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public activeShapes = this.activeShapesSbj.asObservable();
   public selectedShape = this.selectedShapeSbj.asObservable();
 

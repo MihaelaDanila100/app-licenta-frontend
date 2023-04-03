@@ -15,7 +15,6 @@ export class SecondaryNavbarComponent implements OnInit {
   ngOnInit(): void {
     this.activeShapesService.selectedShape.subscribe((res: boolean) => {
       this.unlocked = res;
-      console.log("resss ", res)
     })
   }
 
