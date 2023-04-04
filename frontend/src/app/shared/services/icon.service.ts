@@ -29,7 +29,7 @@ export class IconService {
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/pallette_icon.svg')
     );
     this.matIcons.addSvgIcon(
-      'active_pallette_icon', 
+      'full_pallete_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/pallete_on_icon.svg')
     );
   }
