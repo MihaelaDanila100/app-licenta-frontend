@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ShapeTypes } from '../data/enums/shape-types';
+import { ColorType } from '../data/enums/color-types';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,12 @@ export class ActiveShapesService {
 
   private activeShapesSbj: Subject<fabric.Object> = new Subject<fabric.Object>();
   private selectedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private colorFillSbj: Subject<string> = new Subject<string>();
+  private colorStrokeSbj: Subject<string> = new Subject<string>();
   public activeShapes = this.activeShapesSbj.asObservable();
   public selectedShape = this.selectedShapeSbj.asObservable();
+  public colorFill = this.colorFillSbj.asObservable();
+  public colorStroke = this.colorStrokeSbj.asObservable();
 
   constructor() { }
 
@@ -49,5 +54,10 @@ export class ActiveShapesService {
   public selectShape(value?: boolean): void {
     if(value === undefined) value = !this.selectedShapeSbj.value;
     this.selectedShapeSbj.next(value);
+  }
+
+  public colorShape(event: any): void {
+    if(event.type === ColorType.FILL) this.colorFillSbj.next(event.value);
+    if(event.type === ColorType.STROKE) this.colorStrokeSbj.next(event.value);
   }
 }

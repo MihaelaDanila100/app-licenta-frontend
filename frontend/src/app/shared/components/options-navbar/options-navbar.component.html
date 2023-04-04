@@ -1,5 +1,8 @@
-<p-sidebar [(visible)]="display" [autoZIndex]="true" [baseZIndex]="-1" (onHide) = "updateVisibility()" position = "right">
+<p-sidebar class="options_navbar" [(visible)]="display" [autoZIndex]="true" [baseZIndex]="-1" (onHide) = "updateVisibility()" position = "right">
     <ng-template pTemplate = "content">
-        aaaa
+        <span>Fill color</span>
+        <p-colorPicker [(ngModel)]="fillColor" (ngModelChange) = "changeFillColor($event)" [inline]="true"></p-colorPicker>
+        <span>Outline color</span>
+        <p-colorPicker [(ngModel)]="outlineColor" (ngModelChange) = "changeOutlineColor($event)" [inline]="true"></p-colorPicker>
     </ng-template>
 </p-sidebar>
