@@ -38,8 +38,13 @@ export class ActiveShapesService {
         break;
       
       case ShapeTypes.LINE:
-        let line = new fabric.Line([shape.x1, shape.y1, shape.x2, shape.y2], shape);
-        line.hasControls = true;
+        let line = new fabric.Line([shape.x1, shape.y1, shape.x2, shape.y2], {
+          stroke: shape.stroke,
+          top: 100,
+          left: 100,
+          hasControls: false,
+          strokeDashArray: shape.strokeDashArray
+        });
         this.activeShapesSbj.next(line)
         break;
       
