@@ -20,11 +20,19 @@ export class ActiveShapesService {
 
   constructor() { }
 
-  public addShape(shape: any): void {
+  public addShapeToWhiteboard(shape: any): void {
     switch (shape.get('type')) {
       case ShapeTypes.RECTANGLE:
-        let rectangle = new fabric.Rect(shape)
-        rectangle.hasControls = true;
+        let rectangle = new fabric.Rect({
+          width: shape.width,
+          height: shape.height,
+          fill: shape.fill,
+          stroke: shape.stroke,
+          hasControls: false,
+          left: 100,
+          top: 100,
+          selectable: true
+        });
         this.activeShapesSbj.next(rectangle)
         break;
       
