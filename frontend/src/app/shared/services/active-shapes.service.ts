@@ -62,8 +62,16 @@ export class ActiveShapesService {
         break;
       
       case ShapeTypes.ELLIPSE:
-        let ellipse = new fabric.Ellipse(shape);
-        ellipse.hasControls = true;
+        let ellipse = new fabric.Ellipse({
+          rx: shape.rx,
+          ry: shape.ry,
+          hasControls: false,
+          fill: shape.fill,
+          stroke: shape.stroke,
+          strokeDashArray: shape.strokeDashArray,
+          top: 100,
+          left: 100
+        });
         this.activeShapesSbj.next(ellipse);
         break;
     
