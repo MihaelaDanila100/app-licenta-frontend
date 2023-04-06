@@ -28,6 +28,7 @@ export class ActiveShapesService {
           height: shape.height,
           fill: shape.fill,
           stroke: shape.stroke,
+          strokeDashArray: shape.strokeDashArray,
           hasControls: false,
           left: 100,
           top: 100,
