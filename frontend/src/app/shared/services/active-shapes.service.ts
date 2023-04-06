@@ -13,10 +13,12 @@ export class ActiveShapesService {
   private selectedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private colorFillSbj: Subject<string> = new Subject<string>();
   private colorStrokeSbj: Subject<string> = new Subject<string>();
+  private curentShapeSbj: Subject<any> = new Subject<any>();
   public activeShapes = this.activeShapesSbj.asObservable();
   public selectedShape = this.selectedShapeSbj.asObservable();
   public colorFill = this.colorFillSbj.asObservable();
   public colorStroke = this.colorStrokeSbj.asObservable();
+  public currentShape = this.curentShapeSbj.asObservable();
 
   constructor() { }
 
@@ -88,5 +90,9 @@ export class ActiveShapesService {
   public colorShape(event: any): void {
     if(event.type === ColorType.FILL) this.colorFillSbj.next(event.value);
     if(event.type === ColorType.STROKE) this.colorStrokeSbj.next(event.value);
+  }
+
+  public updateCurrentShape(shape: any): void {
+    this.curentShapeSbj.next(shape);
   }
 }

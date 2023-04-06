@@ -23,10 +23,10 @@ export class OptionsNavbarComponent {
     this.displayChange.emit(this.display);
   }
 
-  public changeFillColor(event: any): void {
+  public changeFillColor(): void {
     let newColor = {
       type: ColorType.FILL,
-      value: event
+      value: this.fillColor
     };
     this.activeShapesService.colorShape(newColor);
   }

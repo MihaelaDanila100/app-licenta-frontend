@@ -13,6 +13,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   private whiteBoardCanvas!: fabric.Canvas;
   public drownShapes: fabric.Object[] = [];
   private subscriptions: Subscription = new Subscription();
+  public fillColor!: string;
 
   constructor(private drawingService: DrawingService,
     private activeShapesService: ActiveShapesService) { }
@@ -26,13 +27,14 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     });
     this.activeShapesService.activeShapes.subscribe((newShape) => {
       this.whiteBoardCanvas.add(newShape);
+      this.subscriptions.add(this.activeShapesService.colorFill.subscribe((color) => {
+        newShape.fill = color;
+        this.whiteBoardCanvas.renderAll();
+      }));
       this.subscriptions.add(this.activeShapesService.selectedShape.subscribe((res: any) => {
         newShape.hasControls = res;
         this.whiteBoardCanvas.renderAll();
       }));
-    });
-    this.activeShapesService.colorFill.subscribe((color) => {
-      console.log("fill ", color)
     });
     this.activeShapesService.colorStroke.subscribe((color) => {
       console.log("stroke ", color)
@@ -41,6 +43,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       if(!event.target) this.activeShapesService.selectShape(false);
     })
   }
+
+
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

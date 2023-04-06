@@ -3,12 +3,12 @@
         <div class="flex_row">
             <span>Fill color</span>
             <div>
-                <button class="add_button">Add</button>
+                <button class="add_button" (click) = "changeFillColor()">Add</button>
                 <button *ngIf = "!syncFill" mat-mini-fab class="icon_btn" (click) = "toggleFillSync()"><mat-icon class="transitioned">sync</mat-icon></button>
                 <button *ngIf = "syncFill" mat-mini-fab class="icon_btn" (click) = "toggleFillSync()"><mat-icon class="transitioned">sync_disabled</mat-icon></button>
             </div>
         </div>
-        <p-colorPicker [(ngModel)]="fillColor" (ngModelChange) = "changeFillColor($event)" [inline]="true"></p-colorPicker>
+        <p-colorPicker [(ngModel)]="fillColor" [inline]="true"></p-colorPicker>
         <div class="flex_row">
             <span>Stroke color</span>
             <div>
