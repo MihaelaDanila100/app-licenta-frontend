@@ -8,3 +8,36 @@
     height: 100%;
     padding-top: 20px;
 }
+
+.flex_row {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add_button {
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    background-color: rgb(15, 176, 146);
+    color: white;
+    font-size: 10px;
+    padding: 5px 10px;
+}
+
+.icon_btn {
+    font-size: 10px !important;
+}
+
+@keyframes appearence {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+.transitioned {
+    animation: appearence .5s linear;
+}

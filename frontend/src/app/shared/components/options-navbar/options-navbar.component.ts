@@ -13,6 +13,8 @@ export class OptionsNavbarComponent {
   @Output() displayChange: EventEmitter<any> = new EventEmitter<any>();
   public fillColor!: any;
   public outlineColor!: any;
+  public syncFill: boolean = false;
+  public syncStroke: boolean = false;
 
   constructor(private activeShapesService: ActiveShapesService) { }
 
@@ -35,6 +37,14 @@ export class OptionsNavbarComponent {
       value: event
     };
     this.activeShapesService.colorShape(newColor);
+  }
+
+  public toggleFillSync(): void {
+    this.syncFill = !this.syncFill;
+  }
+
+  public toggleStrokeSync(): void {
+    this.syncStroke = !this.syncStroke;
   }
 
 }

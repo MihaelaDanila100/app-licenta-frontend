@@ -4,6 +4,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { SidebarModule } from 'primeng/sidebar';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { FormsModule } from '@angular/forms';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [],
@@ -12,13 +13,15 @@ import { FormsModule } from '@angular/forms';
     AccordionModule,
     SidebarModule,
     ColorPickerModule,
-    FormsModule
+    FormsModule,
+    TooltipModule
   ],
   exports: [
     AccordionModule,
     SidebarModule,
     ColorPickerModule,
-    FormsModule
+    FormsModule,
+    TooltipModule
   ]
 })
 export class PrimengComponentsModule { }
