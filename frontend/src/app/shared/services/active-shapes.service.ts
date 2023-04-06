@@ -49,8 +49,15 @@ export class ActiveShapesService {
         break;
       
       case ShapeTypes.CIRCLE:
-        let circle = new fabric.Circle(shape);
-        circle.hasControls = true;
+        let circle = new fabric.Circle({
+          radius: shape.radius,
+          hasControls: false,
+          stroke: shape.stroke,
+          strokeDashArray: shape.strokeDashArray,
+          fill: shape.fill,
+          top: 100,
+          left: 100
+        });
         this.activeShapesSbj.next(circle);
         break;
       
