@@ -27,28 +27,21 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.activeShapesService.activeShapes.subscribe((newShape) => {
       this.whiteBoardCanvas.add(newShape);
       this.subscriptions.add(this.activeShapesService.colorFill.subscribe((color) => {
-        if(color.trim() != ''){
-          newShape.on("mousedown", () => {
-              newShape.set('fill', color);
-              this.whiteBoardCanvas.renderAll();
-          });
-        }
+        newShape.on("mousedown", () => {
+            newShape.set('fill', color);
+            this.whiteBoardCanvas.renderAll();
+        });
       }));
       this.subscriptions.add(this.activeShapesService.colorStroke.subscribe((color) => {
-        if(color.trim() != ''){
-          newShape.on("mousedown", () => {
-            newShape.set('stroke', color);
-            this.whiteBoardCanvas.renderAll();
-          });
-        }
+        newShape.on("mousedown", () => {
+          newShape.set('stroke', color);
+          this.whiteBoardCanvas.renderAll();
+        });
       }));
       this.subscriptions.add(this.activeShapesService.selectedShape.subscribe((res: any) => {
         newShape.hasControls = res;
         this.whiteBoardCanvas.renderAll();
       }));
-    });
-    this.activeShapesService.colorStroke.subscribe((color) => {
-      console.log("stroke ", color)
     });
     this.whiteBoardCanvas.on("mouse:down", (event) => {
       if(!event.target) this.activeShapesService.selectShape(false);

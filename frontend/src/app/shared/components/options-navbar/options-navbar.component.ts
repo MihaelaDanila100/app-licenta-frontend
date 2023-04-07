@@ -65,7 +65,6 @@ export class OptionsNavbarComponent {
       type: event.type,
       value: event.value
     };
-    this.activeShapesService.clearAllColors();
     this.activeShapesService.colorShape(newColor);
   }
 

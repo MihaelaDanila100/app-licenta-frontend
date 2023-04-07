@@ -39,6 +39,15 @@
     }
 }
 
+@keyframes selected {
+    from {
+        border: none;
+    }
+    to {
+        border: solid 2px rgb(209, 209, 209);
+    }
+}
+
 .transitioned {
     animation: appearence .5s linear;
 }
@@ -61,6 +70,7 @@
 .selected_color {
     border: solid 2px rgb(209, 209, 209);
     box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+    animation: selected 0.5s linear;
 }
 
 .buttons {

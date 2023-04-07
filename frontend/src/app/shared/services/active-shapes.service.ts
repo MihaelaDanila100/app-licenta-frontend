@@ -93,8 +93,8 @@ export class ActiveShapesService {
   }
 
   public clearAllColors(): void {
-    this.colorFillSbj.next('');
-    this.colorStrokeSbj.next('');
+    this.colorFillSbj.next('transparent');
+    this.colorStrokeSbj.next('transparent');
   }
 
   public updateCurrentShape(shape: any): void {
