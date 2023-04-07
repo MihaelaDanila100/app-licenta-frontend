@@ -41,3 +41,21 @@
 .transitioned {
     animation: appearence .5s linear;
 }
+
+.color_span {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.used_colors {
+    margin-top: 10px;
+}
+
+.selected_color {
+    border: solid 2px rgb(209, 209, 209);
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+}

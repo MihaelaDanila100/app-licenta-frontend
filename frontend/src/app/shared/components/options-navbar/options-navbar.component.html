@@ -18,5 +18,9 @@
             </div>
         </div>
         <p-colorPicker [(ngModel)]="outlineColor" (ngModelChange) = "changeOutlineColor($event)" [inline]="true"></p-colorPicker>
+        <span>Recently used</span>
+        <div class="used_colors">
+            <div *ngFor = "let color of usedColors" class="color_span" [style.background-color] = "color" (click) = "selectColor($event)" [ngClass] = "{'selected_color': selectedColor == color}"></div>
+        </div>
     </ng-template>
 </p-sidebar>
