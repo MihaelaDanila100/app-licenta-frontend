@@ -22,7 +22,7 @@ export class ActiveShapesService {
   public colorStroke = this.colorStrokeSbj.asObservable();
   public currentShape = this.curentShapeSbj.asObservable();
   public syncColorFill = this.fillSyncSbj.asObservable();
-  public syncColorStroke = this.fillSyncSbj.asObservable();
+  public syncColorStroke = this.strokeSyncSbj.asObservable();
 
   constructor() { }
 
