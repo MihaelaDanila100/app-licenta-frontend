@@ -34,10 +34,10 @@ export class OptionsNavbarComponent {
     if(!this.usedColors.includes(this.fillColor)) this.usedColors.push(this.fillColor);
   }
 
-  public changeOutlineColor(event: any): void {
+  public changeOutlineColor(): void {
     let newColor = {
       type: ColorType.STROKE,
-      value: event
+      value: this.outlineColor
     };
     this.activeShapesService.colorShape(newColor);
     if(!this.usedColors.includes(this.outlineColor)) this.usedColors.push(this.outlineColor);
