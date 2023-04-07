@@ -13,6 +13,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   private whiteBoardCanvas!: fabric.Canvas;
   public drownShapes: fabric.Object[] = [];
   private subscriptions: Subscription = new Subscription();
+  public isFillSync: boolean = false;
 
   constructor(private drawingService: DrawingService,
     private activeShapesService: ActiveShapesService) { }
@@ -31,6 +32,10 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
             newShape.set('fill', color);
             this.whiteBoardCanvas.renderAll();
         });
+        if(this.isFillSync) {
+          newShape.set('fill', color);
+          this.whiteBoardCanvas.renderAll();
+        }
       }));
       this.subscriptions.add(this.activeShapesService.colorStroke.subscribe((color) => {
         newShape.on("mousedown", () => {
@@ -42,10 +47,13 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         newShape.hasControls = res;
         this.whiteBoardCanvas.renderAll();
       }));
+      this.subscriptions.add(this.activeShapesService.syncColorFill.subscribe((res: boolean) => {
+        this.isFillSync = res;
+      }))
     });
     this.whiteBoardCanvas.on("mouse:down", (event) => {
       if(!event.target) this.activeShapesService.selectShape(false);
-    })
+    });
   }
 
 

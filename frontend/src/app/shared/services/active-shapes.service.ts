@@ -14,11 +14,13 @@ export class ActiveShapesService {
   private colorFillSbj: Subject<string> = new Subject<string>();
   private colorStrokeSbj: Subject<string> = new Subject<string>();
   private curentShapeSbj: Subject<any> = new Subject<any>();
+  private fillSyncSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public activeShapes = this.activeShapesSbj.asObservable();
   public selectedShape = this.selectedShapeSbj.asObservable();
   public colorFill = this.colorFillSbj.asObservable();
   public colorStroke = this.colorStrokeSbj.asObservable();
   public currentShape = this.curentShapeSbj.asObservable();
+  public syncColorFill = this.fillSyncSbj.asObservable();
 
   constructor() { }
 
@@ -99,5 +101,9 @@ export class ActiveShapesService {
 
   public updateCurrentShape(shape: any): void {
     this.curentShapeSbj.next(shape);
+  }
+
+  public syncFill(value: boolean): void {
+    this.fillSyncSbj.next(value);
   }
 }

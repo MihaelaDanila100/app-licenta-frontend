@@ -4,11 +4,10 @@
             <span>Fill color</span>
             <div class="buttons">
                 <button class="add_button" (click) = "changeFillColor()">Add</button>
-                <span *ngIf = "!syncFill" class="icon_btn" (click) = "toggleFillSync()"><mat-icon class="transitioned">sync</mat-icon></span>
-                <span *ngIf = "syncFill" class="icon_btn" (click) = "toggleFillSync()"><mat-icon class="transitioned">sync_disabled</mat-icon></span>
-            </div>
-        </div>
-        <p-colorPicker [(ngModel)]="fillColor" [inline]="true"></p-colorPicker>
+                <span *ngIf = "!isFillSync" class="icon_btn" (click) = "toggleFillSync(true)"><mat-icon class="transitioned">sync</mat-icon></span>
+                <span *ngIf = "isFillSync" class="icon_btn" (click) = "toggleFillSync(false)"><mat-icon class="transitioned">sync_disabled</mat-icon></span>
+            </div>  </div>
+        <p-colorPicker [(ngModel)]="fillColor" (ngModelChange) = "updateFillColor()" [inline]="true"></p-colorPicker>
         <div class="flex_row">
             <span>Stroke color</span>
             <div class="buttons">
