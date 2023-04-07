@@ -28,8 +28,10 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.activeShapesService.activeShapes.subscribe((newShape) => {
       this.whiteBoardCanvas.add(newShape);
       this.subscriptions.add(this.activeShapesService.colorFill.subscribe((color) => {
-        newShape.fill = color;
-        this.whiteBoardCanvas.renderAll();
+        newShape.on("mousedown", () => {
+            newShape.set('fill', color);
+            this.whiteBoardCanvas.renderAll();
+        })
       }));
       this.subscriptions.add(this.activeShapesService.selectedShape.subscribe((res: any) => {
         newShape.hasControls = res;
