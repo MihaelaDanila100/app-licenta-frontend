@@ -20,7 +20,9 @@
         <p-colorPicker [(ngModel)]="outlineColor" [inline]="true"></p-colorPicker>
         <span>Recently used</span>
         <div class="used_colors">
-            <div *ngFor = "let color of usedColors" class="color_span" [style.background-color] = "color" (click) = "selectColor($event)" [ngClass] = "{'selected_color': selectedColor == color}"></div>
+            <div *ngFor = "let color of usedColors" class="color_span" [style.background-color] = "color.value" (click) = "selectColor(color)" [ngClass] = "{'selected_color': selectedColor == color.value}">
+                <mat-icon class="color_icon" [svgIcon] = "color.type === colorType.FILL ? 'fill_color_icon' : 'outline_color_icon'"></mat-icon>
+            </div>
         </div>
     </ng-template>
 </p-sidebar>

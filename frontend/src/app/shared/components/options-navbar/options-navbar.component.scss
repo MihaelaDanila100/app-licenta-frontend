@@ -44,12 +44,14 @@
 }
 
 .color_span {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 30px;
     cursor: pointer;
     display: inline-block;
     margin-right: 10px;
+    text-align: center;
+    color: white;
 }
 
 .used_colors {
@@ -65,4 +67,8 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.color_icon {
+    margin-top: 3px;
 }

@@ -13,7 +13,6 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   private whiteBoardCanvas!: fabric.Canvas;
   public drownShapes: fabric.Object[] = [];
   private subscriptions: Subscription = new Subscription();
-  public fillColor!: string;
 
   constructor(private drawingService: DrawingService,
     private activeShapesService: ActiveShapesService) { }
@@ -28,18 +27,20 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.activeShapesService.activeShapes.subscribe((newShape) => {
       this.whiteBoardCanvas.add(newShape);
       this.subscriptions.add(this.activeShapesService.colorFill.subscribe((color) => {
-        newShape.on("mousedown", () => {
-          this.fillColor = color;
-            newShape.set('fill', color);
-            this.whiteBoardCanvas.renderAll();
-        });
-        this.fillColor = color;
+        if(color.trim() != ''){
+          newShape.on("mousedown", () => {
+              newShape.set('fill', color);
+              this.whiteBoardCanvas.renderAll();
+          });
+        }
       }));
       this.subscriptions.add(this.activeShapesService.colorStroke.subscribe((color) => {
-        newShape.on("mousedown", () => {
-          newShape.set('stroke', color);
-          this.whiteBoardCanvas.renderAll();
-        });
+        if(color.trim() != ''){
+          newShape.on("mousedown", () => {
+            newShape.set('stroke', color);
+            this.whiteBoardCanvas.renderAll();
+          });
+        }
       }));
       this.subscriptions.add(this.activeShapesService.selectedShape.subscribe((res: any) => {
         newShape.hasControls = res;

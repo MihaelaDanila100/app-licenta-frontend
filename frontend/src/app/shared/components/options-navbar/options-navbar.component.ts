@@ -15,8 +15,8 @@ export class OptionsNavbarComponent {
   public outlineColor!: any;
   public syncFill: boolean = false;
   public syncStroke: boolean = false;
-  public usedColors: string[] = [];
-  public selectedColor: string = '';
+  public usedColors: any[] = [];
+  public selectedColor: any = '';
 
   constructor(private activeShapesService: ActiveShapesService) { }
 
@@ -31,7 +31,9 @@ export class OptionsNavbarComponent {
       value: this.fillColor
     };
     this.activeShapesService.colorShape(newColor);
-    if(!this.usedColors.includes(this.fillColor)) this.usedColors.push(this.fillColor);
+    if(this.usedColors.findIndex((color) => color.value == this.fillColor) < 0) {
+      this.usedColors.push(newColor);
+    } 
   }
 
   public changeOutlineColor(): void {
@@ -40,11 +42,17 @@ export class OptionsNavbarComponent {
       value: this.outlineColor
     };
     this.activeShapesService.colorShape(newColor);
-    if(!this.usedColors.includes(this.outlineColor)) this.usedColors.push(this.outlineColor);
+    if(this.usedColors.findIndex((color) => color.value == this.outlineColor) < 0){
+      this.usedColors.push(newColor);
+    } 
   }
 
   public toggleFillSync(): void {
     this.syncFill = !this.syncFill;
+  }
+
+  public get colorType(): typeof ColorType {
+    return ColorType; 
   }
 
   public toggleStrokeSync(): void {
@@ -52,13 +60,12 @@ export class OptionsNavbarComponent {
   }
 
   public selectColor(event: any): void {
-    this.selectedColor = event;
+    this.selectedColor = event.value;
     let newColor = {
-      type: ColorType.STROKE,
-      value: event
+      type: event.type,
+      value: event.value
     };
-    this.activeShapesService.colorShape(newColor);
-    newColor.value = ColorType.FILL;
+    this.activeShapesService.clearAllColors();
     this.activeShapesService.colorShape(newColor);
   }
 

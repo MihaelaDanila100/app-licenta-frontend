@@ -92,6 +92,11 @@ export class ActiveShapesService {
     if(event.type === ColorType.STROKE) this.colorStrokeSbj.next(event.value);
   }
 
+  public clearAllColors(): void {
+    this.colorFillSbj.next('');
+    this.colorStrokeSbj.next('');
+  }
+
   public updateCurrentShape(shape: any): void {
     this.curentShapeSbj.next(shape);
   }
