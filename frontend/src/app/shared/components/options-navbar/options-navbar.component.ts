@@ -41,23 +41,23 @@ export class OptionsNavbarComponent {
     if(this.isFillSync) this.changeFillColor();
   }
 
+  public updateStrokeColor(): void {
+    if(this.isOutlineSync) this.changeOutlineColor();
+  }
+
   public changeOutlineColor(): void {
     let newColor = {
       type: ColorType.STROKE,
       value: this.outlineColor
     };
     this.activeShapesService.colorShape(newColor);
-    if(this.usedColors.findIndex((color) => color.value == this.outlineColor) < 0){
+    if(!this.isOutlineSync && this.usedColors.findIndex((color) => color.value == this.outlineColor) < 0){
       this.usedColors.push(newColor);
     } 
   }
 
   public get colorType(): typeof ColorType {
     return ColorType; 
-  }
-
-  public toggleStrokeSync(): void {
-    this.syncStroke = !this.syncStroke;
   }
 
   public selectColor(event: any): void {
@@ -72,6 +72,11 @@ export class OptionsNavbarComponent {
   public toggleFillSync(value: boolean): void {
     this.isFillSync = value;
     this.activeShapesService.syncFill(value);
+  }
+
+  public toggleStrokeSync(value: boolean): void {
+    this.isOutlineSync = value;
+    this.activeShapesService.syncStroke(value);
   }
 
 }
