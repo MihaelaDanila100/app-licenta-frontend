@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
 import { DrawingService } from 'src/app/shared/services/drawing.service';
 
@@ -58,6 +58,14 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.subscriptions.add(this.activeShapesService.syncColorStroke.subscribe((res: boolean) => {
         this.isStrokeSync = res;
       }));
+      newShape.on('mousedown', (event) => {
+        this.subscriptions.add(this.activeShapesService.duplicatedShape.subscribe((res) => {
+          if(res) console.log("Time to duplicate");;
+        }));
+        this.subscriptions.add(this.activeShapesService.deletedShape.subscribe((res) => {
+          if(res) console.log("Time to delete");;
+        }));
+      });
     });
     this.whiteBoardCanvas.on("mouse:down", (event) => {
       if(!event.target) this.activeShapesService.selectShape(false);

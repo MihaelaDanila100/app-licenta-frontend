@@ -12,6 +12,7 @@ export class IconService {
     this.usePalleteIcon();
     this.useColorizeIcons();
     this.useMeasurementIcons();
+    this.useActionsIcons();
   }
 
   public useLockIcon(): void {
@@ -51,6 +52,17 @@ export class IconService {
     this.matIcons.addSvgIcon(
       'border_width_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/border_width.svg')
+    );
+  }
+
+  public useActionsIcons(): void {
+    this.matIcons.addSvgIcon(
+      'duplicate_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/duplicate_icon.svg')
+    );
+    this.matIcons.addSvgIcon(
+      'delete_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/delete_icon.svg')
     );
   }
 

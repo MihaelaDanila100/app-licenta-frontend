@@ -28,6 +28,14 @@ export class SecondaryNavbarComponent implements OnInit {
     this.activeShapesService.selectShape();
   }
 
+  public duplicateShape(): void {
+    this.activeShapesService.duplicateShape();
+  }
+
+  public deleteShape(): void {
+    this.activeShapesService.deleteShape();
+  }
+
   public toggleColors(): void {
     this.showColorChooser = !this.showColorChooser;
     this.showColorChooserChange.emit(this.showColorChooser);
