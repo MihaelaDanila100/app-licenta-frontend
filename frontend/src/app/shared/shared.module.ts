@@ -9,6 +9,7 @@ import { SidenavShapesComponent } from './components/sidenav-shapes/sidenav-shap
 import { TextComponent } from './components/text/text.component';
 import { SecondaryNavbarComponent } from './components/secondary-navbar/secondary-navbar.component';
 import { OptionsNavbarComponent } from './components/options-navbar/options-navbar.component';
+import { InlinePopupComponent } from './components/inline-popup/inline-popup.component';
 
 
 
@@ -20,7 +21,8 @@ import { OptionsNavbarComponent } from './components/options-navbar/options-navb
     SidenavShapesComponent,
     TextComponent,
     SecondaryNavbarComponent,
-    OptionsNavbarComponent
+    OptionsNavbarComponent,
+    InlinePopupComponent
   ],
   imports: [
     CommonModule,

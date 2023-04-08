@@ -10,7 +10,8 @@ export class IconService {
   constructor(private matIcons: MatIconRegistry, private domSanitizer: DomSanitizer) { 
     this.useLockIcon();
     this.usePalleteIcon();
-    this.usecolorizeIcons();
+    this.useColorizeIcons();
+    this.useMeasurementIcons();
   }
 
   public useLockIcon(): void {
@@ -35,7 +36,7 @@ export class IconService {
     );
   }
 
-  public usecolorizeIcons(): void {
+  public useColorizeIcons(): void {
     this.matIcons.addSvgIcon(
       'fill_color_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/fill_icon.svg')
@@ -43,6 +44,13 @@ export class IconService {
     this.matIcons.addSvgIcon(
       'outline_color_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/outline_icon.svg')
+    );
+  }
+
+  public useMeasurementIcons(): void {
+    this.matIcons.addSvgIcon(
+      'border_width_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/border_width.svg')
     );
   }
 

@@ -1,4 +1,8 @@
 <div class="scd_navbar">
     <mat-icon [svgIcon]="unlocked ? 'unlock_icon' : 'lock_icon'" (click) = "lockShape()"></mat-icon>
     <mat-icon [svgIcon] = "showColorChooser ? 'full_pallete_icon' : 'pallette_icon'" (click) = "toggleColors()"></mat-icon>
+    <span>
+        <mat-icon svgIcon = "border_width_icon" (click) = "openBorderWidth()"></mat-icon>
+        <app-inline-popup></app-inline-popup>
+    </span>
 </div>
