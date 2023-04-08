@@ -10,6 +10,7 @@ import { TextComponent } from './components/text/text.component';
 import { SecondaryNavbarComponent } from './components/secondary-navbar/secondary-navbar.component';
 import { OptionsNavbarComponent } from './components/options-navbar/options-navbar.component';
 import { InlinePopupComponent } from './components/inline-popup/inline-popup.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -27,7 +28,8 @@ import { InlinePopupComponent } from './components/inline-popup/inline-popup.com
   imports: [
     CommonModule,
     MaterialModule,
-    PrimengComponentsModule
+    PrimengComponentsModule,
+    BrowserAnimationsModule
   ],
   exports: [
     NavbarComponent
