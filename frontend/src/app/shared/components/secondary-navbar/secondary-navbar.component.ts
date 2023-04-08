@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActiveShapesService } from '../../services/active-shapes.service';
 import { PopupService } from '../../services/popup.service';
+import { InlinePopupComponent } from '../inline-popup/inline-popup.component';
 
 @Component({
   selector: 'app-secondary-navbar',
@@ -11,7 +12,9 @@ export class SecondaryNavbarComponent implements OnInit {
 
   public unlocked: boolean = true; 
   public showColorChooser: boolean = false;
+  public chooseBorder: boolean = false;
   @Output() showColorChooserChange: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild(InlinePopupComponent) strokeWidthRef: any;
 
   constructor(private activeShapesService: ActiveShapesService, private popupService: PopupService) { }
 
@@ -31,7 +34,9 @@ export class SecondaryNavbarComponent implements OnInit {
   }
 
   public openBorderWidth(): void {
-    this.popupService.addPopUp();
+    this.chooseBorder = !this.chooseBorder;
+    if(this.chooseBorder) this.popupService.addPopUp();
+    else this.popupService.removePopUp();
   }
 
 }

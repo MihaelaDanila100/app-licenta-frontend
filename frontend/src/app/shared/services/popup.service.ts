@@ -14,4 +14,8 @@ export class PopupService {
   public addPopUp(): void {
     this.popupsSbjs.next(true);
   }
+
+  public removePopUp(): void {
+    this.popupsSbjs.next(false);
+  }
 }

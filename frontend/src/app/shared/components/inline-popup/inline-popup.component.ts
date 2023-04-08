@@ -13,8 +13,8 @@ export class InlinePopupComponent implements OnInit {
   constructor(private popupService: PopupService) { }
 
   ngOnInit(): void {
-    this.popupService.inlineModals.subscribe(() => {
-      this.visible = true;
+    this.popupService.inlineModals.subscribe((res: boolean) => {
+      this.visible = res;
     });
   }
 
