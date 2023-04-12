@@ -13,7 +13,7 @@ export class ActiveShapesService {
   private selectedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private colorFillSbj: Subject<string> = new Subject<string>();
   private colorStrokeSbj: Subject<string> = new Subject<string>();
-  private curentShapeSbj: Subject<any> = new Subject<any>();
+  private curentShapeRefSbj: Subject<any> = new Subject<any>();
   private fillSyncSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private strokeSyncSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private duplicateShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -22,7 +22,7 @@ export class ActiveShapesService {
   public selectedShape = this.selectedShapeSbj.asObservable();
   public colorFill = this.colorFillSbj.asObservable();
   public colorStroke = this.colorStrokeSbj.asObservable();
-  public currentShape = this.curentShapeSbj.asObservable();
+  public currentShapeRef = this.curentShapeRefSbj.asObservable();
   public syncColorFill = this.fillSyncSbj.asObservable();
   public syncColorStroke = this.strokeSyncSbj.asObservable();
   public duplicatedShape = this.duplicateShapeSbj.asObservable();
@@ -106,7 +106,7 @@ export class ActiveShapesService {
   }
 
   public updateCurrentShape(shape: any): void {
-    this.curentShapeSbj.next(shape);
+    this.curentShapeRefSbj.next(shape);
   }
 
   public syncFill(value: boolean): void {
@@ -126,6 +126,6 @@ export class ActiveShapesService {
   public deleteShape(value?: boolean): void {
     if(value === undefined) value = !this.deleteShapeSbj.value;
     this.deleteShapeSbj.next(value);
-    this.deleteShapeSbj.next(false);
+    // this.deleteShapeSbj.next(false);
   }
 }

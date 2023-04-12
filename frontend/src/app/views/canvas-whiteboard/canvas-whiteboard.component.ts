@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription, switchMap } from 'rxjs';
+import { Subscription, forkJoin, mergeMap, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
 import { DrawingService } from 'src/app/shared/services/drawing.service';
 
@@ -28,6 +28,20 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     });
     this.activeShapesService.activeShapes.subscribe((newShape) => {
       this.whiteBoardCanvas.add(newShape);
+      this.activeShapesService.currentShapeRef.pipe(
+        mergeMap((newShapeRef) => {
+          console.log("we receive a new shape ", newShapeRef, newShapeRef === newShape, newShape == newShapeRef)
+          let deletedRequest = this.activeShapesService.deletedShape.pipe(takeWhile(() => newShapeRef === newShape));
+          return forkJoin([deletedRequest]);
+        })
+      ).subscribe((requests) => {
+        let isDeleted = requests[0];
+        console.log("is deleteeed ", requests)
+        if(isDeleted){
+          newShape.set('fill', 'red');
+          this.whiteBoardCanvas.renderAll();
+        } 
+      })
       this.subscriptions.add(this.activeShapesService.colorFill.subscribe((color) => {
         newShape.on("mousedown", () => {
             newShape.set('fill', color);
@@ -58,13 +72,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.subscriptions.add(this.activeShapesService.syncColorStroke.subscribe((res: boolean) => {
         this.isStrokeSync = res;
       }));
-      newShape.on('mousedown', (event) => {
-        this.subscriptions.add(this.activeShapesService.duplicatedShape.subscribe((res) => {
-          if(res) console.log("Time to duplicate");;
-        }));
-        this.subscriptions.add(this.activeShapesService.deletedShape.subscribe((res) => {
-          if(res) console.log("Time to delete");;
-        }));
+      newShape.on("mousedown", () => {
+        this.activeShapesService.updateCurrentShape(newShape);
       });
     });
     this.whiteBoardCanvas.on("mouse:down", (event) => {
