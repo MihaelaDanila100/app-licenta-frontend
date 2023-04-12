@@ -41,7 +41,19 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
           this.whiteBoardCanvas.remove(newShape);
           this.whiteBoardCanvas.renderAll();
         } 
-      })
+      });
+      this.activeShapesService.currentShapeRef.pipe(
+        mergeMap((newShapeRef) => {
+          this.kill$.next(newShapeRef);
+          let duplicatedRequest = this.activeShapesService.duplicatedShape.pipe(takeWhile(() => this.kill$.value == newShape));
+          return duplicatedRequest;
+        })
+      ).subscribe((requests) => {
+        let isDuplicated = requests;
+        if(isDuplicated){
+          this.activeShapesService.addShapeToWhiteboard(newShape, true);
+        } 
+      });
       this.subscriptions.add(this.activeShapesService.colorFill.subscribe((color) => {
         newShape.on("mousedown", () => {
             newShape.set('fill', color);

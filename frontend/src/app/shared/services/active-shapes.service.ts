@@ -30,7 +30,7 @@ export class ActiveShapesService {
 
   constructor() { }
 
-  public addShapeToWhiteboard(shape: any): void {
+  public addShapeToWhiteboard(shape: any, positionRelative?: boolean): void {
     switch (shape.get('type')) {
       case ShapeTypes.RECTANGLE:
         let rectangle = new fabric.Rect({
@@ -40,8 +40,8 @@ export class ActiveShapesService {
           stroke: shape.stroke,
           strokeDashArray: shape.strokeDashArray,
           hasControls: false,
-          left: 100,
-          top: 100,
+          left: positionRelative ? shape.left + 10 : 100,
+          top: positionRelative ? shape.top + 10 : 100,
           selectable: true
         });
         this.activeShapesSbj.next(rectangle)
@@ -50,8 +50,8 @@ export class ActiveShapesService {
       case ShapeTypes.LINE:
         let line = new fabric.Line([shape.x1, shape.y1, shape.x2, shape.y2], {
           stroke: shape.stroke,
-          top: 100,
-          left: 100,
+          top: positionRelative ? shape.top + 10 : 100,
+          left: positionRelative ? shape.left + 10 : 100,
           hasControls: false,
           strokeDashArray: shape.strokeDashArray
         });
@@ -65,8 +65,8 @@ export class ActiveShapesService {
           stroke: shape.stroke,
           strokeDashArray: shape.strokeDashArray,
           fill: shape.fill,
-          top: 100,
-          left: 100
+          top: positionRelative ? shape.top + 10 : 100,
+          left: positionRelative ? shape.left + 10 : 100,
         });
         this.activeShapesSbj.next(circle);
         break;
@@ -79,8 +79,8 @@ export class ActiveShapesService {
           fill: shape.fill,
           stroke: shape.stroke,
           strokeDashArray: shape.strokeDashArray,
-          top: 100,
-          left: 100
+          top: positionRelative ? shape.top + 10 : 100,
+          left: positionRelative ? shape.left + 10 : 100,
         });
         this.activeShapesSbj.next(ellipse);
         break;
