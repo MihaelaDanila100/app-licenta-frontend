@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription, forkJoin, mergeMap, switchMap, takeUntil, takeWhile } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription, filter, forkJoin, map, mergeMap, switchMap, takeUntil, takeWhile } from 'rxjs';
 import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
 import { DrawingService } from 'src/app/shared/services/drawing.service';
 
@@ -15,12 +15,16 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   public isFillSync: boolean = false;
   public isStrokeSync: boolean = false;
+  private kill$ = new BehaviorSubject(null);
 
   constructor(private drawingService: DrawingService,
     private activeShapesService: ActiveShapesService) { }
   
 
   ngOnInit(): void {
+    this.kill$.subscribe((val) => {
+      console.log("kill valll ", val)
+    })
     this.whiteBoardCanvas = this.drawingService.createCanvas('whiteboard_canvas', {});
     this.whiteBoardCanvas.setDimensions({
       width: window.innerWidth * 69 / 100,
@@ -30,12 +34,13 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.whiteBoardCanvas.add(newShape);
       this.activeShapesService.currentShapeRef.pipe(
         mergeMap((newShapeRef) => {
-          console.log("we receive a new shape ", newShapeRef, newShapeRef === newShape, newShape == newShapeRef)
-          let deletedRequest = this.activeShapesService.deletedShape.pipe(takeWhile(() => newShapeRef === newShape));
+          this.kill$.next(newShapeRef);
+          let deletedRequest = this.activeShapesService.deletedShape.pipe(takeWhile(() => this.kill$.value == newShape));
           return deletedRequest;
         })
       ).subscribe((requests) => {
         let isDeleted = requests;
+        console.log("requestsss ", newShape, requests)
         if(isDeleted){
           newShape.set('fill', 'red');
           this.whiteBoardCanvas.renderAll();
