@@ -22,9 +22,6 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   
 
   ngOnInit(): void {
-    this.kill$.subscribe((val) => {
-      console.log("kill valll ", val)
-    })
     this.whiteBoardCanvas = this.drawingService.createCanvas('whiteboard_canvas', {});
     this.whiteBoardCanvas.setDimensions({
       width: window.innerWidth * 69 / 100,
@@ -40,9 +37,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         })
       ).subscribe((requests) => {
         let isDeleted = requests;
-        console.log("requestsss ", newShape, requests)
         if(isDeleted){
-          newShape.set('fill', 'red');
+          this.whiteBoardCanvas.remove(newShape);
           this.whiteBoardCanvas.renderAll();
         } 
       })
