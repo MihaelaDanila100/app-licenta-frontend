@@ -47,4 +47,8 @@ export class SecondaryNavbarComponent implements OnInit {
     else this.popupService.removePopUp();
   }
 
+  public addTextInNode(): void {
+    this.activeShapesService.addTextShape();
+  }
+
 }

@@ -18,6 +18,7 @@ export class ActiveShapesService {
   private strokeSyncSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private duplicateShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private deleteShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public textShapeSbj: Subject<string> = new Subject<string>();
   public activeShapes = this.activeShapesSbj.asObservable();
   public selectedShape = this.selectedShapeSbj.asObservable();
   public colorFill = this.colorFillSbj.asObservable();
@@ -27,6 +28,7 @@ export class ActiveShapesService {
   public syncColorStroke = this.strokeSyncSbj.asObservable();
   public duplicatedShape = this.duplicateShapeSbj.asObservable();
   public deletedShape = this.deleteShapeSbj.asObservable();
+  public textShape = this.textShapeSbj.asObservable();
 
   constructor() { }
 
@@ -127,5 +129,10 @@ export class ActiveShapesService {
     if(value === undefined) value = !this.deleteShapeSbj.value;
     this.deleteShapeSbj.next(value);
     this.deleteShapeSbj.next(false);
+  }
+
+  public addTextShape(value?: any): void {
+    if(!value) value = 'text';
+    this.textShapeSbj.next(value);
   }
 }

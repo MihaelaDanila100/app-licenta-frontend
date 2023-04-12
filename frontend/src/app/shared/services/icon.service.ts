@@ -13,6 +13,7 @@ export class IconService {
     this.useColorizeIcons();
     this.useMeasurementIcons();
     this.useActionsIcons();
+    this.useIconsService();
   }
 
   public useLockIcon(): void {
@@ -63,6 +64,13 @@ export class IconService {
     this.matIcons.addSvgIcon(
       'delete_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/delete_icon.svg')
+    );
+  }
+
+  public useIconsService(): void {
+    this.matIcons.addSvgIcon(
+      'add_text_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_text_icon.svg')
     );
   }
 
