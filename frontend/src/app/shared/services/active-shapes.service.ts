@@ -126,6 +126,6 @@ export class ActiveShapesService {
   public deleteShape(value?: boolean): void {
     if(value === undefined) value = !this.deleteShapeSbj.value;
     this.deleteShapeSbj.next(value);
-    // this.deleteShapeSbj.next(false);
+    this.deleteShapeSbj.next(false);
   }
 }

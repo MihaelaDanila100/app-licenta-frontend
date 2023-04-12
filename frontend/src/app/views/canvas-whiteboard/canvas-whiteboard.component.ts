@@ -32,11 +32,10 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         mergeMap((newShapeRef) => {
           console.log("we receive a new shape ", newShapeRef, newShapeRef === newShape, newShape == newShapeRef)
           let deletedRequest = this.activeShapesService.deletedShape.pipe(takeWhile(() => newShapeRef === newShape));
-          return forkJoin([deletedRequest]);
+          return deletedRequest;
         })
       ).subscribe((requests) => {
-        let isDeleted = requests[0];
-        console.log("is deleteeed ", requests)
+        let isDeleted = requests;
         if(isDeleted){
           newShape.set('fill', 'red');
           this.whiteBoardCanvas.renderAll();
