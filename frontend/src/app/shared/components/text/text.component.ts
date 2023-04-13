@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DrawingService } from '../../services/drawing.service';
+import { ActiveShapesService } from '../../services/active-shapes.service';
 
 @Component({
   selector: 'app-text',
@@ -11,7 +12,8 @@ export class TextComponent implements OnInit {
   private textCanvas!: fabric.Canvas;
   private text!: fabric.Text;
 
-  constructor(private canvasService: DrawingService) { }
+  constructor(private canvasService: DrawingService,
+    private activeShapesService: ActiveShapesService) { }
 
   ngOnInit(): void {
     this.textCanvas = this.canvasService.createCanvas('text_canvas', {});
@@ -19,6 +21,9 @@ export class TextComponent implements OnInit {
       value: 'Text',
       showControls: false
     }));
+    this.textCanvas.on("mouse:down", (event: any) => {
+      if(event.target) this.activeShapesService.addShapeToWhiteboard(event.target);
+    })
   }
 
 }
