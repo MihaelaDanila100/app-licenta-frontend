@@ -18,6 +18,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   public isFillSync: boolean = false;
   public isStrokeSync: boolean = false;
   private kill$ = new BehaviorSubject(null);
+  private currentNodeNumber: number = 0;
 
   constructor(private drawingService: DrawingService,
     private activeShapesService: ActiveShapesService,
@@ -30,7 +31,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       width: window.innerWidth * 69 / 100,
       height: window.innerHeight * 69 / 100
     });
-    this.activeShapesService.activeShapes.subscribe((newShape) => {
+    this.activeShapesService.activeShapes.subscribe((newShape: any) => {
       this.whiteBoardCanvas.add(newShape);
       this.activeShapesService.currentShapeRef.pipe(
         mergeMap((newShapeRef) => {
@@ -60,11 +61,18 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.activeShapesService.currentShapeRef.pipe(
         mergeMap((newShapeRef) => {
           this.kill$.next(newShapeRef);
-          let duplicatedRequest = this.activeShapesService.textShape.pipe(takeWhile(() => this.kill$.value == newShape));
-          return duplicatedRequest;
+          let textRequest = this.activeShapesService.textShape.pipe(takeWhile(() => this.kill$.value == newShape));
+          return textRequest;
         })
       ).subscribe((requests) => {
-        if(requests) this.activeShapesService.addShapeToWhiteboard(this.shapesService.createText(Shapes.text));
+        if(requests){
+          this.currentNodeNumber++;
+          let text = Object.assign({}, Shapes.text);
+          text.value = this.currentNodeNumber.toString();
+          text.left = (newShape.left || 100) + (newShape.width || newShape.radius || 20) / 3;
+          text.top = (newShape.top || 100) + (newShape.height || newShape.radius || 20) / 4;
+          this.activeShapesService.addShapeToWhiteboard(this.shapesService.createText(text));
+        } 
       });
       this.subscriptions.add(this.activeShapesService.colorFill.subscribe((color) => {
         newShape.on("mousedown", () => {

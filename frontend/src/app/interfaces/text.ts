@@ -4,5 +4,7 @@ export interface Text {
     left?: number,
     top?: number,
     fill?: string,
-    showControls: boolean
+    showControls: boolean,
+    fontSize?: number,
+    fontWeight?: string | number
 }

@@ -92,8 +92,11 @@ export class ActiveShapesService {
           fontFamily: shape.fontFamily ? shape.fontFamily : 'arial black',
           left: shape.left ? shape.left : 100, 
           top: shape.top ? shape.top : 100,
-          hasControls: shape.hasControls
+          hasControls: shape.hasControls,
+          fontSize: shape.fontSize,
+          fontWeight: shape.fontWeight
         });
+        console.log("daaa ", shape, text)
         this.activeShapesSbj.next(text);
         break;
 

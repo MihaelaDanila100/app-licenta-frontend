@@ -104,7 +104,9 @@ export class ShapesService {
       fontFamily: text.fontStyle ? text.fontStyle : 'arial black',
       left: text.left ? text.left : 100, 
       top: text.top ? text.top : 100,
-      hasControls: text.showControls
+      hasControls: text.showControls,
+      fontSize: text.fontSize ? text.fontSize : 40,
+      fontWeight: text.fontWeight
     })
   }
 }

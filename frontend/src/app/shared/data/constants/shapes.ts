@@ -67,5 +67,7 @@ export const Shapes = {
         left: 100,
         top: 100,
         showControls: false,
+        fontSize: 20,
+        fontWeight: 'normal'
     }
 }
