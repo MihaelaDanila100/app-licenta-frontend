@@ -60,5 +60,12 @@ export const Shapes = {
         top: 115,
         left: 85,
         dashes: [3, 3]
+    },
+    text: {
+        value: 'text',
+        fontStyle: 'arial black',
+        left: 100,
+        top: 100,
+        showControls: false,
     }
 }

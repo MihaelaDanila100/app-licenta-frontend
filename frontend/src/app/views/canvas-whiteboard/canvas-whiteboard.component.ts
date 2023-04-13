@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription, mergeMap, takeWhile } from 'rxjs';
+import { Shapes } from 'src/app/shared/data/constants/shapes';
 import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
 import { DrawingService } from 'src/app/shared/services/drawing.service';
+import { ShapesService } from 'src/app/shared/services/shapes.service';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -18,7 +20,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   private kill$ = new BehaviorSubject(null);
 
   constructor(private drawingService: DrawingService,
-    private activeShapesService: ActiveShapesService) { }
+    private activeShapesService: ActiveShapesService,
+    private shapesService: ShapesService) { }
   
 
   ngOnInit(): void {
@@ -61,8 +64,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
           return duplicatedRequest;
         })
       ).subscribe((requests) => {
-        let newText = requests;
-        console.log("texttt ", newText)
+        if(requests) this.activeShapesService.addShapeToWhiteboard(this.shapesService.createText(Shapes.text));
       });
       this.subscriptions.add(this.activeShapesService.colorFill.subscribe((color) => {
         newShape.on("mousedown", () => {

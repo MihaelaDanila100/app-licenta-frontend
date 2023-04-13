@@ -16,7 +16,7 @@ export class DrawingService {
 
   public createText(text: Text): fabric.Text {
     if(!text.fill) text.fill = 'black';
-    return new fabric.Text(text.default, {
+    return new fabric.Text(text.value, {
       fill: text.fill,
       hasControls: text.showControls
     });

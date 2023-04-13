@@ -1,5 +1,8 @@
 export interface Text {
-    default: string,
-    showControls: boolean,
-    fill?: string
+    value: string,
+    fontStyle?: string,
+    left?: number,
+    top?: number,
+    fill?: string,
+    showControls: boolean
 }

@@ -18,7 +18,7 @@ export class ActiveShapesService {
   private strokeSyncSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private duplicateShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private deleteShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public textShapeSbj: Subject<string> = new Subject<string>();
+  public textShapeSbj: Subject<any> = new Subject<any>();
   public activeShapes = this.activeShapesSbj.asObservable();
   public selectedShape = this.selectedShapeSbj.asObservable();
   public colorFill = this.colorFillSbj.asObservable();
@@ -87,6 +87,16 @@ export class ActiveShapesService {
         this.activeShapesSbj.next(ellipse);
         break;
     
+      case ShapeTypes.TEXT:
+        let text = new fabric.IText(shape.text, { 
+          fontFamily: shape.fontFamily ? shape.fontFamily : 'arial black',
+          left: shape.left ? shape.left : 100, 
+          top: shape.top ? shape.top : 100,
+          hasControls: shape.hasControls
+        });
+        this.activeShapesSbj.next(text);
+        break;
+
       default:
         break;
     }
@@ -131,8 +141,8 @@ export class ActiveShapesService {
     this.deleteShapeSbj.next(false);
   }
 
-  public addTextShape(value?: any): void {
-    if(!value) value = 'text';
-    this.textShapeSbj.next(value);
+  public addTextShape(): void {
+    this.textShapeSbj.next(true);
+    this.textShapeSbj.next(false);
   }
 }

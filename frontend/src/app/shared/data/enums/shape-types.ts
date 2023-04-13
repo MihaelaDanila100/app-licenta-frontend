@@ -2,5 +2,6 @@ export enum ShapeTypes {
     RECTANGLE = 'rect',
     LINE = 'line',
     CIRCLE = 'circle',
-    ELLIPSE = 'ellipse'
+    ELLIPSE = 'ellipse',
+    TEXT = 'i-text'
 }

@@ -4,6 +4,7 @@ import { Circle, DashedCircle } from 'src/app/interfaces/circle';
 import { DashedEllipse, Ellipse } from 'src/app/interfaces/ellipse';
 import { DashedLine, Line } from 'src/app/interfaces/line';
 import { DashesRectangle, Rectangle } from 'src/app/interfaces/rectangle';
+import { Text } from 'src/app/interfaces/text';
 
 
 @Injectable({
@@ -96,5 +97,14 @@ export class ShapesService {
     let newEllipse = this.createEllipse(ellipse);
     newEllipse.strokeDashArray = ellipse.dashes;
     return newEllipse;
+  }
+
+  public createText(text: Text): fabric.IText {
+    return new fabric.IText(text.value, {
+      fontFamily: text.fontStyle ? text.fontStyle : 'arial black',
+      left: text.left ? text.left : 100, 
+      top: text.top ? text.top : 100,
+      hasControls: text.showControls
+    })
   }
 }
