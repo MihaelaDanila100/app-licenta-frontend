@@ -41,10 +41,8 @@ export class SecondaryNavbarComponent implements OnInit {
     this.showColorChooserChange.emit(this.showColorChooser);
   }
 
-  public openBorderWidth(): void {
-    this.chooseBorder = !this.chooseBorder;
-    if(this.chooseBorder) this.popupService.addPopUp();
-    else this.popupService.removePopUp();
+  public openShapeSettings(): void {
+    console.log("daaaa")
   }
 
   public addTextInNode(): void {

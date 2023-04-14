@@ -51,8 +51,8 @@ export class IconService {
 
   public useMeasurementIcons(): void {
     this.matIcons.addSvgIcon(
-      'border_width_icon', 
-      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/border_width.svg')
+      'shape_settings_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/shape_settings.svg')
     );
   }
 
