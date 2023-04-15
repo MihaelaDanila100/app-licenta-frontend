@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ActiveShapesService } from '../../services/active-shapes.service';
-import { ColorType } from '../../data/enums/color-types';
-import { ColorService } from '../../services/color.service';
+import { ActiveShapesService } from '../../../../shared/services/active-shapes.service';
+import { ColorType } from '../../../../shared/data/enums/color-types';
+import { ColorService } from '../../../../shared/services/color.service';
 
 @Component({
   selector: 'app-color-chooser',

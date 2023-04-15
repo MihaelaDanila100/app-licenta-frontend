@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ColorType } from '../../data/enums/color-types';
-import { ActiveShapesService } from '../../services/active-shapes.service';
+import { ColorType } from '../../../../shared/data/enums/color-types';
+import { ActiveShapesService } from '../../../../shared/services/active-shapes.service';
 
 @Component({
   selector: 'app-options-navbar',

@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ActiveShapesService } from '../../services/active-shapes.service';
-import { PopupService } from '../../services/popup.service';
-import { InlinePopupComponent } from '../inline-popup/inline-popup.component';
+import { ActiveShapesService } from '../../../../shared/services/active-shapes.service';
+import { PopupService } from '../../../../shared/services/popup.service';
 import { Node } from 'src/app/entities/node';
-import { ShapesService } from '../../services/shapes.service';
+import { ShapesService } from '../../../../shared/services/shapes.service';
 
 @Component({
   selector: 'app-secondary-navbar',
@@ -19,7 +18,6 @@ export class SecondaryNavbarComponent implements OnInit {
   public showColorChooser: boolean = false;
   public chooseBorder: boolean = false;
   @Output() showColorChooserChange: EventEmitter<any> = new EventEmitter<any>();
-  @ViewChild(InlinePopupComponent) strokeWidthRef: any;
 
   constructor(private activeShapesService: ActiveShapesService, private popupService: PopupService) { }
 

@@ -1,1 +1,12 @@
-<p>full-layout works!</p>
+<div>
+    <app-navbar (menuToggle) = "drawer.toggle()"></app-navbar>
+    <mat-drawer-container>
+        <mat-drawer #drawer mode="side" class="sidenav">
+            <app-sidenav></app-sidenav>
+        </mat-drawer>
+
+        <ng-container>
+            <router-outlet></router-outlet>
+        </ng-container>
+    </mat-drawer-container>
+</div>

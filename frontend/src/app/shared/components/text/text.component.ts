@@ -16,7 +16,9 @@ export class TextComponent implements OnInit {
     private activeShapesService: ActiveShapesService) { }
 
   ngOnInit(): void {
-    this.textCanvas = this.canvasService.createCanvas('text_canvas', {});
+    this.textCanvas = this.canvasService.createCanvas('text_canvas', {
+      width: 210
+    });
     this.textCanvas.add(this.canvasService.createText({
       value: 'Text',
       showControls: false

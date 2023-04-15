@@ -10,8 +10,9 @@ export class DrawingService {
   constructor() { }
 
   public createCanvas(container: string, options?: any): fabric.Canvas {
+    console.log("optionsss ", options)
     if(!options) options = {};
-    return new fabric.Canvas(container, {});
+    return new fabric.Canvas(container, options);
   }
 
   public createText(text: Text): fabric.IText {

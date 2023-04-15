@@ -1,19 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { FullLayoutComponent } from './components/full-layout/full-layout.component';
 import { MaterialModule } from './material/material.module';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { PrimengComponentsModule } from './primeng-components/primeng-components.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FullLayoutComponent } from './components/full-layout/full-layout.component';
+import { RouterModule } from '@angular/router';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SidenavShapesComponent } from './components/sidenav-shapes/sidenav-shapes.component';
 import { TextComponent } from './components/text/text.component';
-import { SecondaryNavbarComponent } from './components/secondary-navbar/secondary-navbar.component';
-import { OptionsNavbarComponent } from './components/options-navbar/options-navbar.component';
-import { InlinePopupComponent } from './components/inline-popup/inline-popup.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ColorChooserComponent } from './components/color-chooser/color-chooser.component';
-import { ShapeOptionsComponent } from './components/shape-options/shape-options.component';
-
 
 
 @NgModule({
@@ -22,21 +17,20 @@ import { ShapeOptionsComponent } from './components/shape-options/shape-options.
     FullLayoutComponent,
     SidenavComponent,
     SidenavShapesComponent,
-    TextComponent,
-    SecondaryNavbarComponent,
-    OptionsNavbarComponent,
-    InlinePopupComponent,
-    ColorChooserComponent,
-    ShapeOptionsComponent
+    TextComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     PrimengComponentsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RouterModule
   ],
   exports: [
-    NavbarComponent
+    NavbarComponent,
+    MaterialModule,
+    PrimengComponentsModule,
+    BrowserAnimationsModule
   ]
 })
 export class SharedModule { }
