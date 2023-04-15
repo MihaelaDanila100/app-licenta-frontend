@@ -31,8 +31,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.whiteBoardCanvas = this.drawingService.createCanvas('whiteboard_canvas', {});
     this.whiteBoardCanvas.setDimensions({
-      width: window.innerWidth * 69 / 100,
-      height: window.innerHeight * 69 / 100
+      width: window.innerWidth * 81 / 100,
+      height: window.innerHeight * 82 / 100
     });
     this.activeShapesService.activeShapes.subscribe((newShape: any) => {
       this.whiteBoardCanvas.add(newShape);
