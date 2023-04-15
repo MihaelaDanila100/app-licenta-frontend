@@ -12,7 +12,11 @@ import { Text } from 'src/app/interfaces/text';
 })
 export class ShapesService {
 
-  constructor() { }
+  static instance: ShapesService;
+
+  constructor() { 
+    ShapesService.instance = this;
+  }
 
   public createRectangle(rectangle: Rectangle): fabric.Rect {
     if(!rectangle.fill) rectangle.fill = 'transparent';

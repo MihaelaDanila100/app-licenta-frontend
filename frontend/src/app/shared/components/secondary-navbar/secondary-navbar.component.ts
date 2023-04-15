@@ -2,11 +2,16 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ActiveShapesService } from '../../services/active-shapes.service';
 import { PopupService } from '../../services/popup.service';
 import { InlinePopupComponent } from '../inline-popup/inline-popup.component';
+import { Node } from 'src/app/entities/node';
+import { ShapesService } from '../../services/shapes.service';
 
 @Component({
   selector: 'app-secondary-navbar',
   templateUrl: './secondary-navbar.component.html',
-  styleUrls: ['./secondary-navbar.component.scss']
+  styleUrls: ['./secondary-navbar.component.scss'],
+  providers: [
+    ShapesService
+  ]
 })
 export class SecondaryNavbarComponent implements OnInit {
 
@@ -46,7 +51,7 @@ export class SecondaryNavbarComponent implements OnInit {
   }
 
   public addNode(): void {
-    console.log("nodddd")
+    let node = new Node();
   }
 
   public addTextInNode(): void {
