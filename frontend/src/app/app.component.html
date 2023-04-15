@@ -1,14 +1,22 @@
 <div>
     <app-navbar (toggledMenu) = "toggleMenu()"></app-navbar>
+    
+    <div class="flex_row">
+        <app-secondary-navbar></app-secondary-navbar>
+    
+        <mat-sidenav-container [autosize] = "true">
+            <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="sidenavbar">
+                <app-sidenav></app-sidenav>
+            </mat-sidenav>
+    
+            <mat-sidenav-content class="flex_row no_scroll">
+                <app-canvas-whiteboard></app-canvas-whiteboard>
 
-    <mat-sidenav-container [autosize] = "true">
-        <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="sidenavbar">
-            <app-sidenav></app-sidenav>
-        </mat-sidenav>
-
-        <mat-sidenav-content class="flex_row">
-            <app-secondary-navbar></app-secondary-navbar>
-            <app-canvas-whiteboard></app-canvas-whiteboard>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+                <mat-sidenav #drawer mode="side" position = "end" [(opened)]="closed">
+                    <app-options-navbar></app-options-navbar>
+                </mat-sidenav>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </div>
+    
 </div>

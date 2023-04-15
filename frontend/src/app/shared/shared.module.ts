@@ -39,7 +39,8 @@ import { ShapeOptionsComponent } from './components/shape-options/shape-options.
     NavbarComponent,
     MaterialModule,
     SidenavComponent,
-    SecondaryNavbarComponent
+    SecondaryNavbarComponent,
+    OptionsNavbarComponent
   ]
 })
 export class SharedModule { }

@@ -11,14 +11,8 @@ export class OptionsNavbarComponent {
   
   @Input() display: boolean = false;
   @Input() selectedIndex: number = 0;
-  @Output() displayChange: EventEmitter<any> = new EventEmitter<any>();
 
 
   constructor() { }
-
-  public updateVisibility(): void {
-    this.display = false;
-    this.displayChange.emit(this.display);
-  }
 
 }

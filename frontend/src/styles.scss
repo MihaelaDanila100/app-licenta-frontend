@@ -8,3 +8,7 @@ body {
     display: flex !important;
     flex-direction: row !important;
 }
+
+.no_scroll {
+    overflow-x: hidden !important;
+}
