@@ -11,6 +11,7 @@ import { SecondaryNavbarComponent } from './components/secondary-navbar/secondar
 import { OptionsNavbarComponent } from './components/options-navbar/options-navbar.component';
 import { InlinePopupComponent } from './components/inline-popup/inline-popup.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ColorChooserComponent } from './components/color-chooser/color-chooser.component';
 
 
 
@@ -23,7 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TextComponent,
     SecondaryNavbarComponent,
     OptionsNavbarComponent,
-    InlinePopupComponent
+    InlinePopupComponent,
+    ColorChooserComponent
   ],
   imports: [
     CommonModule,

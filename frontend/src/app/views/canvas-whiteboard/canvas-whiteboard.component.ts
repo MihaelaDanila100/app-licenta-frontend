@@ -17,6 +17,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   public isFillSync: boolean = false;
   public isStrokeSync: boolean = false;
+  public isTextSync: boolean = false;
   private kill$ = new BehaviorSubject(null);
   private currentNodeNumber: number = 0;
 
@@ -76,24 +77,39 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       });
       this.subscriptions.add(this.activeShapesService.colorFill.subscribe((color) => {
         newShape.on("mousedown", () => {
-            newShape.set('fill', color);
+            if(!newShape._objects) newShape.set('fill', color);
+            else newShape._objects[0].set('fill', color);
             this.whiteBoardCanvas.renderAll();
         });
         if(this.isFillSync) {
-          newShape.set('fill', color);
+          if(!newShape._objects) newShape.set('fill', color);
+          else newShape._objects[0].set('fill', color);
           this.whiteBoardCanvas.renderAll();
         }
       }));
-      this.subscriptions.add(this.activeShapesService.colorStroke.subscribe((color) => {
-        newShape.on("mousedown", () => {
-          newShape.set('stroke', color);
-          this.whiteBoardCanvas.renderAll();
-        });
-        if(this.isStrokeSync) {
-          newShape.set('stroke', color);
-          this.whiteBoardCanvas.renderAll();
-        }
-      }));
+      if(!newShape._objects) {
+        this.subscriptions.add(this.activeShapesService.colorStroke.subscribe((color) => {
+          newShape.on("mousedown", () => {
+            newShape.set('stroke', color);
+            this.whiteBoardCanvas.renderAll();
+          });
+          if(this.isStrokeSync) {
+            newShape.set('stroke', color);
+            this.whiteBoardCanvas.renderAll();
+          }
+        }));
+      } else {
+        this.subscriptions.add(this.activeShapesService.colorText.subscribe((color) => {
+          newShape.on("mousedown", () => {
+            newShape._objects[1].set('fill', color);
+            this.whiteBoardCanvas.renderAll();
+          });
+          if(this.isTextSync) {
+            newShape._objects[1].set('fill', color);
+            this.whiteBoardCanvas.renderAll();
+          }
+        }));
+      }
       this.subscriptions.add(this.activeShapesService.selectedShape.subscribe((res: any) => {
         newShape.hasControls = res;
         this.whiteBoardCanvas.renderAll();
@@ -101,9 +117,15 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.subscriptions.add(this.activeShapesService.syncColorFill.subscribe((res: boolean) => {
         this.isFillSync = res;
       }));
-      this.subscriptions.add(this.activeShapesService.syncColorStroke.subscribe((res: boolean) => {
-        this.isStrokeSync = res;
-      }));
+      if(!newShape._objects) {
+        this.subscriptions.add(this.activeShapesService.syncColorStroke.subscribe((res: boolean) => {
+          this.isStrokeSync = res;
+        }));
+      } else {
+        this.subscriptions.add(this.activeShapesService.syncColorText.subscribe((res: boolean) => {
+          this.isTextSync = res;
+        }));
+      }
       newShape.on("mousedown", () => {
         this.activeShapesService.updateCurrentShape(newShape);
       });

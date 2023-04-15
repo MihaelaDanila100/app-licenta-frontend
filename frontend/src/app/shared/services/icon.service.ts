@@ -47,6 +47,10 @@ export class IconService {
       'outline_color_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/outline_icon.svg')
     );
+    this.matIcons.addSvgIcon(
+      'text_color_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/text_color_icon.svg')
+    );
   }
 
   public useMeasurementIcons(): void {

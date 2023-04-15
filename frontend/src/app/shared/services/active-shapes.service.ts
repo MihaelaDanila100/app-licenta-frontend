@@ -14,9 +14,11 @@ export class ActiveShapesService {
   private selectedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private colorFillSbj: Subject<string> = new Subject<string>();
   private colorStrokeSbj: Subject<string> = new Subject<string>();
+  private colorTextSbj: Subject<string> = new Subject<string>();
   private curentShapeRefSbj: Subject<any> = new Subject<any>();
   private fillSyncSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private strokeSyncSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private textSyncSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private duplicateShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private deleteShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public textShapeSbj: Subject<any> = new Subject<any>();
@@ -24,9 +26,11 @@ export class ActiveShapesService {
   public selectedShape = this.selectedShapeSbj.asObservable();
   public colorFill = this.colorFillSbj.asObservable();
   public colorStroke = this.colorStrokeSbj.asObservable();
+  public colorText = this.colorTextSbj.asObservable();
   public currentShapeRef = this.curentShapeRefSbj.asObservable();
   public syncColorFill = this.fillSyncSbj.asObservable();
   public syncColorStroke = this.strokeSyncSbj.asObservable();
+  public syncColorText = this.textSyncSbj.asObservable();
   public duplicatedShape = this.duplicateShapeSbj.asObservable();
   public deletedShape = this.deleteShapeSbj.asObservable();
   public textShape = this.textShapeSbj.asObservable();
@@ -116,8 +120,22 @@ export class ActiveShapesService {
   }
 
   public colorShape(event: any): void {
-    if(event.type === ColorType.FILL) this.colorFillSbj.next(event.value);
-    if(event.type === ColorType.STROKE) this.colorStrokeSbj.next(event.value);
+    switch (event.type) {
+      case ColorType.FILL:
+        this.colorFillSbj.next(event.value);
+        break;
+      
+      case ColorType.STROKE:
+        this.colorStrokeSbj.next(event.value);
+        break;
+      
+      case ColorType.TEXT:
+        this.colorTextSbj.next(event.value);
+        break;
+    
+      default:
+        break;
+    }
   }
 
   public clearAllColors(): void {
@@ -135,6 +153,10 @@ export class ActiveShapesService {
 
   public syncStroke(value: boolean): void {
     this.strokeSyncSbj.next(value);
+  }
+
+  public syncText(value: boolean): void {
+    this.textSyncSbj.next(value);
   }
 
   public duplicateShape(value?: boolean): void {

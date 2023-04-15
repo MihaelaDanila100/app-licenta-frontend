@@ -1,0 +1,44 @@
+<div>
+    <div>
+        <div class="flex_row">
+            <span>Fill color</span>
+            <div class="buttons">
+                <button class="add_button" (click) = "changeFillColor()">Add</button>
+                <span *ngIf = "!isFillSync" class="icon_btn" (click) = "toggleFillSync(true)"><mat-icon class="transitioned">sync</mat-icon></span>
+                <span *ngIf = "isFillSync" class="icon_btn" (click) = "toggleFillSync(false)"><mat-icon class="transitioned">sync_disabled</mat-icon></span>
+            </div>  
+        </div>
+        <p-colorPicker [(ngModel)]="fillColor" (ngModelChange) = "updateFillColor()" [inline]="true"></p-colorPicker>
+    </div>
+
+    <div *ngIf = "!isGroup">
+        <div class="flex_row">
+            <span>Stroke color</span>
+            <div class="buttons">
+                <button class="add_button" (click) = "changeOutlineColor()">Add</button>
+                <span *ngIf = "!isOutlineSync" class="icon_btn" (click) = "toggleStrokeSync(true)"><mat-icon class="transitioned">sync</mat-icon></span>
+                <span *ngIf = "isOutlineSync" class="icon_btn" (click) = "toggleStrokeSync(false)"><mat-icon class="transitioned">sync_disabled</mat-icon></span>
+            </div>
+        </div>
+        <p-colorPicker [(ngModel)]="outlineColor" (ngModelChange) = "updateStrokeColor()" [inline]="true"></p-colorPicker>
+    </div>
+
+    <div *ngIf = "isGroup">
+        <div class="flex_row">
+            <span>Text color</span>
+            <div class="buttons">
+                <button class="add_button" (click) = "changeTextColor()">Add</button>
+                <span *ngIf = "!isTextSync" class="icon_btn" (click) = "toggleTextSync(true)"><mat-icon class="transitioned">sync</mat-icon></span>
+                <span *ngIf = "isTextSync" class="icon_btn" (click) = "toggleTextSync(false)"><mat-icon class="transitioned">sync_disabled</mat-icon></span>
+            </div>
+        </div>
+        <p-colorPicker [(ngModel)]="textColor" (ngModelChange) = "updateTextColor()" [inline]="true"></p-colorPicker>
+    </div>
+
+    <span>Recently used</span>
+    <div class="used_colors">
+        <div *ngFor = "let color of usedColors" class="color_span" [style.background-color] = "color.value" (click) = "selectColor(color)" [ngClass] = "{'selected_color': selectedColor == color.value}">
+            <mat-icon class="color_icon" [svgIcon] = "getColorIcon(color)"></mat-icon>
+        </div>
+    </div>
+</div>

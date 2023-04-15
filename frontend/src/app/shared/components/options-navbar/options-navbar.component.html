@@ -1,27 +1,5 @@
 <p-sidebar class="options_navbar" [(visible)]="display" [autoZIndex]="true" [baseZIndex]="-1" (onHide) = "updateVisibility()" position = "right">
     <ng-template pTemplate = "content">
-        <div class="flex_row">
-            <span>Fill color</span>
-            <div class="buttons">
-                <button class="add_button" (click) = "changeFillColor()">Add</button>
-                <span *ngIf = "!isFillSync" class="icon_btn" (click) = "toggleFillSync(true)"><mat-icon class="transitioned">sync</mat-icon></span>
-                <span *ngIf = "isFillSync" class="icon_btn" (click) = "toggleFillSync(false)"><mat-icon class="transitioned">sync_disabled</mat-icon></span>
-            </div>  </div>
-        <p-colorPicker [(ngModel)]="fillColor" (ngModelChange) = "updateFillColor()" [inline]="true"></p-colorPicker>
-        <div class="flex_row">
-            <span>Stroke color</span>
-            <div class="buttons">
-                <button class="add_button" (click) = "changeOutlineColor()">Add</button>
-                <span *ngIf = "!isOutlineSync" class="icon_btn" (click) = "toggleStrokeSync(true)"><mat-icon class="transitioned">sync</mat-icon></span>
-                <span *ngIf = "isOutlineSync" class="icon_btn" (click) = "toggleStrokeSync(false)"><mat-icon class="transitioned">sync_disabled</mat-icon></span>
-            </div>
-        </div>
-        <p-colorPicker [(ngModel)]="outlineColor" (ngModelChange) = "updateStrokeColor()" [inline]="true"></p-colorPicker>
-        <span>Recently used</span>
-        <div class="used_colors">
-            <div *ngFor = "let color of usedColors" class="color_span" [style.background-color] = "color.value" (click) = "selectColor(color)" [ngClass] = "{'selected_color': selectedColor == color.value}">
-                <mat-icon class="color_icon" [svgIcon] = "color.type === colorType.FILL ? 'fill_color_icon' : 'outline_color_icon'"></mat-icon>
-            </div>
-        </div>
+        <app-color-chooser></app-color-chooser>
     </ng-template>
 </p-sidebar>

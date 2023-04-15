@@ -1,4 +1,5 @@
 export enum ColorType {
     FILL = 'fill',
-    STROKE = 'stroke'
+    STROKE = 'stroke',
+    TEXT = 'text'
 }
