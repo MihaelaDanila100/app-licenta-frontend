@@ -24,12 +24,19 @@ export class Node {
         else {
             if(representation) objects = [...representation._objects];
             else {
+                let circle = this.shapesService.createCircle(Shapes.circle);
                 let text = Shapes.text;
                 text.value = this.label;
-                objects = [this.shapesService.createCircle(Shapes.circle), this.shapesService.createText(text)];
+                text.top = (circle.top || 0) + 10;
+                text.left = (circle.left || 0) + 14;
+                objects = [circle, this.shapesService.createText(text)];
             } 
         } 
         this.representation = new fabric.Group(objects);
+    }
+
+    public getNodeDrawing(): fabric.Group {
+        return this.representation;
     }
 
 }

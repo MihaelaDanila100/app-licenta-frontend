@@ -3,6 +3,7 @@ import { fabric } from 'fabric';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ShapeTypes } from '../data/enums/shape-types';
 import { ColorType } from '../data/enums/color-types';
+import { Node } from 'src/app/entities/node';
 
 @Injectable({
   providedIn: 'root'
@@ -103,6 +104,10 @@ export class ActiveShapesService {
       default:
         break;
     }
+  }
+
+  public addNodeToWhiteboard(node: Node): void {
+    this.activeShapesSbj.next(node.getNodeDrawing());
   }
 
   public selectShape(value?: boolean): void {
