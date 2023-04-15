@@ -45,6 +45,10 @@ export class SecondaryNavbarComponent implements OnInit {
     console.log("daaaa")
   }
 
+  public addNode(): void {
+    console.log("nodddd")
+  }
+
   public addTextInNode(): void {
     this.activeShapesService.addTextShape();
   }

@@ -72,6 +72,11 @@ export class IconService {
       'add_text_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_text_icon.svg')
     );
+    this.matIcons.addSvgIcon(
+      'add_node_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_node_icon.svg')
+    );
+
   }
 
 }
