@@ -6,6 +6,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   declarations: [],
@@ -16,7 +17,8 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     ColorPickerModule,
     FormsModule,
     TooltipModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    TabViewModule
   ],
   exports: [
     AccordionModule,
@@ -24,7 +26,8 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     ColorPickerModule,
     FormsModule,
     TooltipModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    TabViewModule
   ]
 })
 export class PrimengComponentsModule { }

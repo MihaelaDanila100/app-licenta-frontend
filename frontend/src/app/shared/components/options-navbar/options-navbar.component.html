@@ -1,5 +1,12 @@
 <p-sidebar class="options_navbar" [(visible)]="display" [autoZIndex]="true" [baseZIndex]="-1" (onHide) = "updateVisibility()" position = "right">
     <ng-template pTemplate = "content">
-        <app-color-chooser></app-color-chooser>
+        <p-tabView>
+            <p-tabPanel header="Colors">
+                <app-color-chooser></app-color-chooser>
+            </p-tabPanel>
+            <p-tabPanel header="Lalala">
+                aaaaaaaaaaa
+            </p-tabPanel>
+        </p-tabView>
     </ng-template>
 </p-sidebar>

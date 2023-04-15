@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule, MatIconModule } from '@angular/material';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -10,12 +11,14 @@ import { MatSliderModule } from '@angular/material/slider';
     CommonModule,
     MatIconModule,
     MatButtonModule,
-    MatSliderModule
+    MatSliderModule,
+    MatTabsModule
   ],
   exports: [
     MatIconModule,
     MatButtonModule,
-    MatSliderModule
+    MatSliderModule,
+    MatTabsModule
   ]
 })
 export class MaterialModule { }
