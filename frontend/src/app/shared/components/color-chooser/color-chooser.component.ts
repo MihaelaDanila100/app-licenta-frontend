@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActiveShapesService } from '../../services/active-shapes.service';
 import { ColorType } from '../../data/enums/color-types';
+import { ColorService } from '../../services/color.service';
 
 @Component({
   selector: 'app-color-chooser',
@@ -10,7 +11,7 @@ import { ColorType } from '../../data/enums/color-types';
 })
 export class ColorChooserComponent implements OnInit, OnDestroy {
 
-  constructor(private activeShapesService: ActiveShapesService) { }
+  constructor(private activeShapesService: ActiveShapesService, private colorService: ColorService) { }
 
   private subscription: Subscription = new Subscription();
   public isGroup: boolean = false;
@@ -47,7 +48,7 @@ export class ColorChooserComponent implements OnInit, OnDestroy {
       type: ColorType.FILL,
       value: this.fillColor
     };
-    this.activeShapesService.colorShape(newColor);
+    this.colorService.colorShape(newColor);
     if(!this.isFillSync && this.usedColors.findIndex((color) => color.value == this.fillColor) < 0) {
       this.usedColors.push(newColor);
     } 
@@ -58,7 +59,7 @@ export class ColorChooserComponent implements OnInit, OnDestroy {
       type: ColorType.STROKE,
       value: this.outlineColor
     };
-    this.activeShapesService.colorShape(newColor);
+    this.colorService.colorShape(newColor);
     if(!this.isOutlineSync && this.usedColors.findIndex((color) => color.value == this.outlineColor) < 0){
       this.usedColors.push(newColor);
     } 
@@ -69,7 +70,7 @@ export class ColorChooserComponent implements OnInit, OnDestroy {
       type: ColorType.TEXT,
       value: this.textColor
     };
-    this.activeShapesService.colorShape(newColor);
+    this.colorService.colorShape(newColor);
     if(!this.isTextSync && this.usedColors.findIndex((color) => color.value == this.textColor) < 0){
       this.usedColors.push(newColor);
     } 
@@ -93,22 +94,22 @@ export class ColorChooserComponent implements OnInit, OnDestroy {
       type: event.type,
       value: event.value
     };
-    this.activeShapesService.colorShape(newColor);
+    this.colorService.colorShape(newColor);
   }
 
   public toggleFillSync(value: boolean): void {
     this.isFillSync = value;
-    this.activeShapesService.syncFill(value);
+    this.colorService.syncFill(value);
   }
 
   public toggleStrokeSync(value: boolean): void {
     this.isOutlineSync = value;
-    this.activeShapesService.syncStroke(value);
+    this.colorService.syncStroke(value);
   }
 
   public toggleTextSync(value: boolean): void {
     this.isTextSync = value;
-    this.activeShapesService.syncText(value);
+    this.colorService.syncText(value);
   }
 
   public getColorIcon(color: any): string {

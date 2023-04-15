@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ShapeTypes } from '../data/enums/shape-types';
-import { ColorType } from '../data/enums/color-types';
 import { Node } from 'src/app/entities/node';
 
 @Injectable({
@@ -12,25 +11,13 @@ export class ActiveShapesService {
 
   private activeShapesSbj: Subject<fabric.Object> = new Subject<fabric.Object>();
   private selectedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private colorFillSbj: Subject<string> = new Subject<string>();
-  private colorStrokeSbj: Subject<string> = new Subject<string>();
-  private colorTextSbj: Subject<string> = new Subject<string>();
   private curentShapeRefSbj: Subject<any> = new Subject<any>();
-  private fillSyncSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private strokeSyncSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private textSyncSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private duplicateShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private deleteShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public textShapeSbj: Subject<any> = new Subject<any>();
   public activeShapes = this.activeShapesSbj.asObservable();
   public selectedShape = this.selectedShapeSbj.asObservable();
-  public colorFill = this.colorFillSbj.asObservable();
-  public colorStroke = this.colorStrokeSbj.asObservable();
-  public colorText = this.colorTextSbj.asObservable();
   public currentShapeRef = this.curentShapeRefSbj.asObservable();
-  public syncColorFill = this.fillSyncSbj.asObservable();
-  public syncColorStroke = this.strokeSyncSbj.asObservable();
-  public syncColorText = this.textSyncSbj.asObservable();
   public duplicatedShape = this.duplicateShapeSbj.asObservable();
   public deletedShape = this.deleteShapeSbj.asObservable();
   public textShape = this.textShapeSbj.asObservable();
@@ -119,44 +106,8 @@ export class ActiveShapesService {
     this.selectedShapeSbj.next(value);
   }
 
-  public colorShape(event: any): void {
-    switch (event.type) {
-      case ColorType.FILL:
-        this.colorFillSbj.next(event.value);
-        break;
-      
-      case ColorType.STROKE:
-        this.colorStrokeSbj.next(event.value);
-        break;
-      
-      case ColorType.TEXT:
-        this.colorTextSbj.next(event.value);
-        break;
-    
-      default:
-        break;
-    }
-  }
-
-  public clearAllColors(): void {
-    this.colorFillSbj.next('transparent');
-    this.colorStrokeSbj.next('transparent');
-  }
-
   public updateCurrentShape(shape: any): void {
     this.curentShapeRefSbj.next(shape);
-  }
-
-  public syncFill(value: boolean): void {
-    this.fillSyncSbj.next(value);
-  }
-
-  public syncStroke(value: boolean): void {
-    this.strokeSyncSbj.next(value);
-  }
-
-  public syncText(value: boolean): void {
-    this.textSyncSbj.next(value);
   }
 
   public duplicateShape(value?: boolean): void {

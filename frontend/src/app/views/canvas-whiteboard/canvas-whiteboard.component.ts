@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription, mergeMap, takeWhile } from 'rxjs';
 import { Shapes } from 'src/app/shared/data/constants/shapes';
 import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
+import { ColorService } from 'src/app/shared/services/color.service';
 import { DrawingService } from 'src/app/shared/services/drawing.service';
 import { ShapesService } from 'src/app/shared/services/shapes.service';
 
@@ -23,6 +24,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
 
   constructor(private drawingService: DrawingService,
     private activeShapesService: ActiveShapesService,
+    private colorService: ColorService,
     private shapesService: ShapesService) { }
   
 
@@ -75,7 +77,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
           this.activeShapesService.addShapeToWhiteboard(this.shapesService.createText(text));
         } 
       });
-      this.subscriptions.add(this.activeShapesService.colorFill.subscribe((color) => {
+      this.subscriptions.add(this.colorService.colorFill.subscribe((color) => {
         newShape.on("mousedown", () => {
             if(!newShape._objects) newShape.set('fill', color);
             else newShape._objects[0].set('fill', color);
@@ -88,7 +90,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         }
       }));
       if(!newShape._objects) {
-        this.subscriptions.add(this.activeShapesService.colorStroke.subscribe((color) => {
+        this.subscriptions.add(this.colorService.colorStroke.subscribe((color) => {
           newShape.on("mousedown", () => {
             newShape.set('stroke', color);
             this.whiteBoardCanvas.renderAll();
@@ -99,7 +101,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
           }
         }));
       } else {
-        this.subscriptions.add(this.activeShapesService.colorText.subscribe((color) => {
+        this.subscriptions.add(this.colorService.colorText.subscribe((color) => {
           newShape.on("mousedown", () => {
             newShape._objects[1].set('fill', color);
             this.whiteBoardCanvas.renderAll();
@@ -114,15 +116,15 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         newShape.hasControls = res;
         this.whiteBoardCanvas.renderAll();
       }));
-      this.subscriptions.add(this.activeShapesService.syncColorFill.subscribe((res: boolean) => {
+      this.subscriptions.add(this.colorService.syncColorFill.subscribe((res: boolean) => {
         this.isFillSync = res;
       }));
       if(!newShape._objects) {
-        this.subscriptions.add(this.activeShapesService.syncColorStroke.subscribe((res: boolean) => {
+        this.subscriptions.add(this.colorService.syncColorStroke.subscribe((res: boolean) => {
           this.isStrokeSync = res;
         }));
       } else {
-        this.subscriptions.add(this.activeShapesService.syncColorText.subscribe((res: boolean) => {
+        this.subscriptions.add(this.colorService.syncColorText.subscribe((res: boolean) => {
           this.isTextSync = res;
         }));
       }
