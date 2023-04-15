@@ -1,0 +1,10 @@
+.grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+
+.label {
+    font-size: 12px;
+    font-weight: 500;
+}

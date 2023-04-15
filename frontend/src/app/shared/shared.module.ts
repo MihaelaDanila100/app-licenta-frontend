@@ -12,6 +12,7 @@ import { OptionsNavbarComponent } from './components/options-navbar/options-navb
 import { InlinePopupComponent } from './components/inline-popup/inline-popup.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ColorChooserComponent } from './components/color-chooser/color-chooser.component';
+import { ShapeOptionsComponent } from './components/shape-options/shape-options.component';
 
 
 
@@ -25,7 +26,8 @@ import { ColorChooserComponent } from './components/color-chooser/color-chooser.
     SecondaryNavbarComponent,
     OptionsNavbarComponent,
     InlinePopupComponent,
-    ColorChooserComponent
+    ColorChooserComponent,
+    ShapeOptionsComponent
   ],
   imports: [
     CommonModule,

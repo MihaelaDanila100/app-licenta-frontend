@@ -10,6 +10,7 @@ import { ActiveShapesService } from '../../services/active-shapes.service';
 export class OptionsNavbarComponent {
   
   @Input() display: boolean = false;
+  @Input() selectedIndex: number = 0;
   @Output() displayChange: EventEmitter<any> = new EventEmitter<any>();
 
 
