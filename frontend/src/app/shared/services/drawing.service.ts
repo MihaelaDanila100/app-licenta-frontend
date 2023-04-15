@@ -11,7 +11,7 @@ export class DrawingService {
 
   public createCanvas(container: string, options?: any): fabric.Canvas {
     if(!options) options = {};
-    return new fabric.Canvas(container, {});
+    return new fabric.Canvas(container, options);
   }
 
   public createText(text: Text): fabric.IText {

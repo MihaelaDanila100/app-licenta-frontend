@@ -22,7 +22,8 @@ export class SidenavShapesComponent implements OnInit {
 
   ngOnInit(): void {
     this.shapesCanvas = this.drawingService.createCanvas('shapes_canvas', {
-      preserveObjectStacking: true
+      preserveObjectStacking: true,
+      width: 210
     });
     this.initShapes();
     this.shapes.forEach((shape) => {
