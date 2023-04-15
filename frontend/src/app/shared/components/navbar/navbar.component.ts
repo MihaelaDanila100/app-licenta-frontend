@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -9,15 +9,10 @@ export class NavbarComponent {
 
   constructor() { }
 
-  public displaySideNav: boolean = false;
-  public displaySettings: boolean = false;
-
-  public showColors(event: any): void {
-    this.displaySettings = event;
-  }
+  @Output() toggledMenu: EventEmitter<any> = new EventEmitter<any>();
 
   public toggleSideNav(): void {
-    this.displaySideNav = !this.displaySideNav;
+    this.toggledMenu.emit();
   }
 
 }

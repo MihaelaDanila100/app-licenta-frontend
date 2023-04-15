@@ -36,7 +36,9 @@ import { ShapeOptionsComponent } from './components/shape-options/shape-options.
     BrowserAnimationsModule
   ],
   exports: [
-    NavbarComponent
+    NavbarComponent,
+    MaterialModule,
+    SidenavComponent
   ]
 })
 export class SharedModule { }

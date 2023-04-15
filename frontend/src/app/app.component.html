@@ -1,4 +1,13 @@
 <div>
-    <app-navbar></app-navbar>
-    <app-canvas-whiteboard></app-canvas-whiteboard>
+    <app-navbar (toggledMenu) = "toggleMenu()"></app-navbar>
+
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+            <app-sidenav></app-sidenav>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <app-canvas-whiteboard></app-canvas-whiteboard>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 </div>

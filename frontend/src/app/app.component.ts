@@ -10,6 +10,11 @@ export class AppComponent {
 
   title = 'frontend';
   public blockedShape: boolean = true;
+  public opened: boolean = false;
 
   constructor(private matIconsService: IconService) {}
+
+  toggleMenu(): void {
+    this.opened = !this.opened;
+  }
 }
