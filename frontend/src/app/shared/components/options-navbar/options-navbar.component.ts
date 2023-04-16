@@ -1,11 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ColorType } from '../../data/enums/color-types';
-import { ActiveShapesService } from '../../services/active-shapes.service';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-options-navbar',
   templateUrl: './options-navbar.component.html',
-  styleUrls: ['./options-navbar.component.scss']
+  styleUrls: ['./options-navbar.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class OptionsNavbarComponent {
   
