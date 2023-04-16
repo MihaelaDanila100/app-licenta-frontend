@@ -1,4 +1,5 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-options-navbar',
@@ -10,7 +11,6 @@ export class OptionsNavbarComponent {
   
   @Input() display: boolean = false;
   @Input() selectedIndex: number = 0;
-
 
   constructor() { }
 

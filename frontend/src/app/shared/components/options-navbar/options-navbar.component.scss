@@ -1,9 +1,35 @@
 .menutabs {
-    width: 30%;
+    width: 200px;
+}
+
+.mat-tab-labels {
+    background-color: rgb(48, 48, 48);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 5px;
+    padding-bottom: 0px;
 }
 
 .mat-tab-label {
-    padding: 0px 4px !important;
+    padding: 0px 8px !important;
     min-width: 1px !important;
     font-size: 15px;
+    color: white;
+    opacity: 1 !important;
+}
+
+.mat-tab-label.mat-tab-label-active {
+    background-color: rgb(245, 245, 245);
+    color: black;
+    font-weight: 500;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.mat-tab-body-wrapper {
+    background-color: rgb(245, 245, 245);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 10px;
+    height: 77vh;
 }
