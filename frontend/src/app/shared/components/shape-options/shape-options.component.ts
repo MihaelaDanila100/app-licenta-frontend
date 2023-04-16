@@ -9,6 +9,7 @@ import { ShapeActionsService } from '../../services/shape-actions.service';
 export class ShapeOptionsComponent implements OnInit {
 
   public scaleUnit: any = 1;
+  public rotationUnit: any = 0;
 
   constructor(private shapeActionsService: ShapeActionsService) { }
 
@@ -29,6 +30,12 @@ export class ShapeOptionsComponent implements OnInit {
     if(this.scaleUnit != '') this.scaleUnit = Number(this.scaleUnit)
     else this.scaleUnit = 1;
     this.shapeActionsService.updateScaleShape(Number(this.scaleUnit));
+  }
+
+  updateRotation(): void {
+    if(this.scaleUnit != '') this.scaleUnit = Number(this.scaleUnit)
+    else this.scaleUnit = 0;
+    this.shapeActionsService.rotateShape(Number(this.rotationUnit));
   }
 
 }

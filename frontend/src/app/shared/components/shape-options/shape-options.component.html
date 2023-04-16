@@ -10,15 +10,14 @@
         </span>
     </div>
 
-    <div class="grid">
-        <span class = "label">Scale Y</span>
-        <span>aaaa</span>
-    </div>
-
     <div>
         <div class="grid">
             <span class = "label">Rotate</span>
-            <span>aaaa</span>
+            <span>
+                <mat-form-field appearance = "outline" class="scale_input">
+                    <input type="text" matInput [(ngModel)] = "rotationUnit" (ngModelChange) = "updateRotation()">
+                </mat-form-field>
+            </span>
         </div>
         <div class="flex_row">
             <span>aaaa</span>

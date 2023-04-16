@@ -6,12 +6,18 @@ import { Subject } from 'rxjs';
 })
 export class ShapeActionsService {
 
-  private scaleShapeSbjs: Subject<number> = new Subject<number>();
-  scaleShape = this.scaleShapeSbjs.asObservable();
+  private scaleShapeSbj: Subject<number> = new Subject<number>();
+  private rotationShapeSbj: Subject<number> = new Subject<number>();
+  scaleShape = this.scaleShapeSbj.asObservable();
+  rotationShape = this.rotationShapeSbj.asObservable();
 
   constructor() { }
 
   public updateScaleShape(value: number): void {
-    this.scaleShapeSbjs.next(value);
+    this.scaleShapeSbj.next(value);
+  }
+
+  public rotateShape(value: number): void {
+    this.rotationShapeSbj.next(value);
   }
 }
