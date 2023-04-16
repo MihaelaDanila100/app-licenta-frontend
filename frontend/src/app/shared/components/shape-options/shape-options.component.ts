@@ -10,6 +10,7 @@ export class ShapeOptionsComponent implements OnInit {
 
   public scaleUnit: any = 1;
   public rotationUnit: any = 0;
+  public opacityUnit: any = 1;
 
   constructor(private shapeActionsService: ShapeActionsService) { }
 
@@ -37,6 +38,12 @@ export class ShapeOptionsComponent implements OnInit {
     if(this.rotationUnit != '') this.rotationUnit = Number(this.rotationUnit)
     else this.rotationUnit = 0;
     this.shapeActionsService.rotateShape(Number(this.rotationUnit));
+  }
+
+  updateOpacity(): void {
+    if(this.opacityUnit != '') this.opacityUnit = Number(this.opacityUnit)
+    else this.opacityUnit = 1;
+    this.shapeActionsService.updateOpacityShape(Number(this.opacityUnit));
   }
 
 }

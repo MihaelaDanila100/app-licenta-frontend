@@ -62,6 +62,16 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.activeShapesService.currentShapeRef.pipe(
         mergeMap((newShapeRef) => {
           this.kill$.next(newShapeRef);
+          let opacityRequest = this.shapeActionsService.opacityShape.pipe(takeWhile(() => this.kill$.value == newShape));
+          return opacityRequest;
+        })
+      ).subscribe((requests) => {
+        newShape.opacity = requests;
+        this.whiteBoardCanvas.renderAll();
+      });
+      this.activeShapesService.currentShapeRef.pipe(
+        mergeMap((newShapeRef) => {
+          this.kill$.next(newShapeRef);
           let deletedRequest = this.activeShapesService.deletedShape.pipe(takeWhile(() => this.kill$.value == newShape));
           return deletedRequest;
         })

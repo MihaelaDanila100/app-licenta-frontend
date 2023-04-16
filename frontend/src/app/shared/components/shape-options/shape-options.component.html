@@ -29,6 +29,10 @@
 
     <div class="grid">
         <span class = "label">Opacity</span>
-        <span>aaaa</span>
+        <span>
+            <mat-form-field appearance = "outline" class="scale_input">
+                <input type="text" matInput [(ngModel)] = "opacityUnit" (ngModelChange) = "updateOpacity()">
+            </mat-form-field>
+        </span>
     </div>
 </div>
