@@ -32,9 +32,10 @@ export class ShapeOptionsComponent implements OnInit {
     this.shapeActionsService.updateScaleShape(Number(this.scaleUnit));
   }
 
-  updateRotation(): void {
-    if(this.scaleUnit != '') this.scaleUnit = Number(this.scaleUnit)
-    else this.scaleUnit = 0;
+  updateRotation(value?: number): void {
+    if(value) this.rotationUnit = Number(this.rotationUnit) + value;
+    if(this.rotationUnit != '') this.rotationUnit = Number(this.rotationUnit)
+    else this.rotationUnit = 0;
     this.shapeActionsService.rotateShape(Number(this.rotationUnit));
   }
 

@@ -69,6 +69,10 @@ export class IconService {
       'delete_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/delete_icon.svg')
     );
+    this.matIcons.addSvgIcon(
+      'rotate_right_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/rotate_right_icon.svg')
+    );
   }
 
   public useIconsService(): void {

@@ -17,13 +17,8 @@
                 <mat-form-field appearance = "outline" class="scale_input">
                     <input type="text" matInput [(ngModel)] = "rotationUnit" (ngModelChange) = "updateRotation()">
                 </mat-form-field>
+                <span class="pointer" (click) = "updateRotation(90)"><mat-icon svgIcon = "rotate_right_icon"></mat-icon></span>
             </span>
-        </div>
-        <div class="flex_row">
-            <span>aaaa</span>
-            <span>aaaa</span>
-            <span>aaaa</span>
-            <span>aaaa</span>
         </div>
     </div>
 
