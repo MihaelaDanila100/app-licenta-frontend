@@ -1,16 +1,20 @@
-<!-- <p-sidebar class="options_navbar" [(visible)]="display" [autoZIndex]="true" [baseZIndex]="-1" (onHide) = "updateVisibility()" position = "right">
-    <ng-template pTemplate = "content">
-        <p-tabView>
-            <p-tabPanel header="Colors">
-                <app-color-chooser></app-color-chooser>
-            </p-tabPanel>
-            <p-tabPanel header="Shape">
-                <app-shape-options></app-shape-options>
-            </p-tabPanel>
-        </p-tabView>
-    </ng-template>
-</p-sidebar> -->
+<!-- <mat-tab-group>
+    <mat-tab label="Colors">
+        <ng-container matTabContent>
+            <app-color-chooser></app-color-chooser>
+        </ng-container>
+    </mat-tab>
+    <mat-tab label="Shape"> 
+        <ng-container matTabContent>
+            <app-shape-options></app-shape-options>
+        </ng-container>
+    </mat-tab>
+    <mat-tab label="Text"> 
+        Content 3 
+    </mat-tab>
+    <mat-tab label="Symbols"> 
+        Content 3 
+    </mat-tab>
+  </mat-tab-group> -->
 
-<!-- <div *ngIf = "display"> -->
-    aaaa
-<!-- </div> -->
+  <app-color-chooser></app-color-chooser>
