@@ -4,6 +4,7 @@ import { Shapes } from 'src/app/shared/data/constants/shapes';
 import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
 import { ColorService } from 'src/app/shared/services/color.service';
 import { DrawingService } from 'src/app/shared/services/drawing.service';
+import { ShapeActionsService } from 'src/app/shared/services/shape-actions.service';
 import { ShapesService } from 'src/app/shared/services/shapes.service';
 
 @Component({
@@ -25,7 +26,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   constructor(private drawingService: DrawingService,
     private activeShapesService: ActiveShapesService,
     private colorService: ColorService,
-    private shapesService: ShapesService) { }
+    private shapesService: ShapesService,
+    private shapeActionsService: ShapeActionsService) { }
   
 
   ngOnInit(): void {
@@ -36,6 +38,17 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     });
     this.activeShapesService.activeShapes.subscribe((newShape: any) => {
       this.whiteBoardCanvas.add(newShape);
+      this.activeShapesService.currentShapeRef.pipe(
+        mergeMap((newShapeRef) => {
+          this.kill$.next(newShapeRef);
+          let scaleRequest = this.shapeActionsService.scaleShape.pipe(takeWhile(() => this.kill$.value == newShape));
+          return scaleRequest;
+        })
+      ).subscribe((requests) => {
+        let scaleValue = requests;
+        newShape.scale(scaleValue);
+        this.whiteBoardCanvas.renderAll();
+      });
       this.activeShapesService.currentShapeRef.pipe(
         mergeMap((newShapeRef) => {
           this.kill$.next(newShapeRef);

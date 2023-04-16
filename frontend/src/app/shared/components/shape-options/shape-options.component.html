@@ -1,9 +1,12 @@
 <div>
     <div class="grid">
-        <span class = "label">Scale X</span>
+        <span class = "label">Scale</span>
         <span>
-            <button>-</button>
-            <button>-</button>
+            <button mat-mini-fab class="unit_btn" (click) = "decreaseScale()">-</button>
+            <mat-form-field appearance = "outline" class="scale_input">
+                <input type="text" matInput [(ngModel)] = "scaleUnit" (ngModelChange) = "updateScale()">
+            </mat-form-field>
+            <button mat-mini-fab class="unit_btn" (click) = "increaseScale()">+</button>
         </span>
     </div>
 
