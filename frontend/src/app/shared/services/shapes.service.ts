@@ -50,6 +50,7 @@ export class ShapesService {
         stroke: line.stroke,
         top: line.top,
         left: line.left,
+        strokeWidth: line.strokeWidth,
         hasControls: line.showControls
       })
   }

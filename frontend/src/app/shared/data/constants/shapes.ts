@@ -28,6 +28,7 @@ export const Shapes = {
         showControls: false,
         top: 53,
         left: 165,
+        fill: 'white'
     },
     dashedCircle: {
         radius: 20,

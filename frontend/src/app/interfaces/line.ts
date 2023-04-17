@@ -1,5 +1,5 @@
 export interface Line {
-    points: number[],
+    points: any[],
     stroke: string,
     showControls: boolean,
     left?: number,

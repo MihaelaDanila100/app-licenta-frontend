@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription, mergeMap, takeWhile } from 'rxjs';
+import { Line } from 'src/app/interfaces/line';
 import { Shapes } from 'src/app/shared/data/constants/shapes';
 import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
 import { ColorService } from 'src/app/shared/services/color.service';
 import { DrawingService } from 'src/app/shared/services/drawing.service';
+import { GraphService } from 'src/app/shared/services/graph.service';
 import { ShapeActionsService } from 'src/app/shared/services/shape-actions.service';
 import { ShapesService } from 'src/app/shared/services/shapes.service';
 
@@ -27,7 +29,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     private activeShapesService: ActiveShapesService,
     private colorService: ColorService,
     private shapesService: ShapesService,
-    private shapeActionsService: ShapeActionsService) { }
+    private shapeActionsService: ShapeActionsService,
+    private graphService: GraphService) { }
   
 
   ngOnInit(): void {
@@ -168,6 +171,39 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.whiteBoardCanvas.on("mouse:down", (event) => {
       if(!event.target) this.activeShapesService.selectShape(false);
     });
+    this.observeEdges();
+  }
+
+  public observeEdges(): void {
+    this.subscriptions.add(
+      this.graphService.addEdgeObs.subscribe((res: boolean) => {
+        if(res) {
+          this.whiteBoardCanvas.on("mouse:up", (event) => {
+            if(this.whiteBoardCanvas.getActiveObjects().length === 1) {
+              let pointer = this.whiteBoardCanvas.getActiveObject();
+              let coords = [
+                pointer?.left, 
+                pointer?.top, 
+                200, 
+                200
+              ]
+              let newLine: Line = {
+                left: (pointer?.left || 0) + (pointer?.width || 0) / 2,
+                top: (pointer?.top || 0) + (pointer?.height || 0) / 2,
+                points: coords,
+                strokeWidth: 2,
+                stroke: 'black',
+                showControls: false
+              }
+              let newEdge = this.shapesService.createLine(newLine)
+              this.whiteBoardCanvas.add(newEdge);
+              newEdge.sendToBack();
+              this.whiteBoardCanvas.renderAll();
+            }
+          });
+        }
+      })
+    )
   }
 
   ngOnDestroy(): void {

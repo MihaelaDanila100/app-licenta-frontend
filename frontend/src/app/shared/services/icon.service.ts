@@ -84,6 +84,14 @@ export class IconService {
       'add_node_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_node_icon.svg')
     );
+    this.matIcons.addSvgIcon(
+      'add_edge_icon_on', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_edge_icon_on.svg')
+    );
+    this.matIcons.addSvgIcon(
+      'add_edge_icon_off', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_edge_icon_on.svg')
+    );
 
   }
 
