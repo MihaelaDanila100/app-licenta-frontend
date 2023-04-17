@@ -178,32 +178,59 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.graphService.addEdgeObs.subscribe((res: boolean) => {
         if(res) {
-          this.whiteBoardCanvas.on("mouse:up", (event) => {
-            if(this.whiteBoardCanvas.getActiveObjects().length === 1) {
-              let pointer = this.whiteBoardCanvas.getActiveObject();
-              let coords = [
-                pointer?.left, 
-                pointer?.top, 
-                200, 
-                200
-              ]
-              let newLine: Line = {
-                left: (pointer?.left || 0) + (pointer?.width || 0) / 2,
-                top: (pointer?.top || 0) + (pointer?.height || 0) / 2,
-                points: coords,
-                strokeWidth: 2,
-                stroke: 'black',
-                showControls: false
-              }
-              let newEdge = this.shapesService.createLine(newLine)
-              this.whiteBoardCanvas.add(newEdge);
-              newEdge.sendToBack();
-              this.whiteBoardCanvas.renderAll();
-            }
+          let newEdge!: any;
+          this.whiteBoardCanvas.on("mouse:up", () => {
+            if(this.whiteBoardCanvas.getActiveObjects().length === 1) newEdge = this.createEdge();
           });
+          this.whiteBoardCanvas.on("mouse:move", (event) => {
+            newEdge = this.connectEdge(event, newEdge);
+          })
         }
       })
     )
+  }
+
+  private createEdge(): any {
+    let pointer = this.whiteBoardCanvas.getActiveObject();
+    let coords = [
+      (pointer?.left || 0) + (pointer?.width || 0) / 2,
+      (pointer?.top || 0) + (pointer?.height || 0) / 2,
+      (pointer?.left || 0) + (pointer?.width || 0) / 2,
+      (pointer?.top || 0) + (pointer?.height || 0) / 2
+    ]
+    let newLine: Line = {
+      left: pointer?.left, 
+      top: pointer?.top, 
+      points: coords,
+      strokeWidth: 2,
+      stroke: 'black',
+      showControls: false
+    }
+    let newEdge = this.shapesService.createLine(newLine)
+    this.whiteBoardCanvas.add(newEdge);
+    newEdge.sendToBack();
+    this.whiteBoardCanvas.renderAll();
+    return newEdge;
+  }
+
+  private connectEdge(event: any, newEdge: any): any {
+    if(newEdge) {
+      if(event.target) {
+        newEdge.set({
+          x2: (event.target.left || 0) + ((event.target.width || 0) / 2),
+          y2: (event.target.top || 0) + ((event.target.height || 0) / 2)
+        });
+        this.whiteBoardCanvas.renderAll();
+      } else {
+        let coordsPoint = this.whiteBoardCanvas.getPointer(event.e);
+        newEdge.set({
+          x2: coordsPoint.x,
+          y2: coordsPoint.y
+        });
+        this.whiteBoardCanvas.renderAll();
+      }
+    }
+    return newEdge;
   }
 
   ngOnDestroy(): void {
