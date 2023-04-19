@@ -90,7 +90,7 @@ export class IconService {
     );
     this.matIcons.addSvgIcon(
       'add_edge_icon_off', 
-      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_edge_icon_on.svg')
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_edge_icon_off.svg')
     );
 
   }

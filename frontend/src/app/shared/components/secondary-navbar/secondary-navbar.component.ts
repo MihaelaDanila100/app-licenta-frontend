@@ -19,6 +19,7 @@ export class SecondaryNavbarComponent implements OnInit {
   public unlocked: boolean = true; 
   public showColorChooser: boolean = false;
   public chooseBorder: boolean = false;
+  public edgesMode: boolean = false;
   @Output() showColorChooserChange: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(InlinePopupComponent) strokeWidthRef: any;
 
@@ -62,6 +63,7 @@ export class SecondaryNavbarComponent implements OnInit {
 
   public addEdge(): void {
     this.graphService.toggleEdges();
+    this.edgesMode = !this.edgesMode;
   }
 
 }
