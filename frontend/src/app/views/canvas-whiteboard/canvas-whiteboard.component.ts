@@ -180,10 +180,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.graphService.addEdgeObs.subscribe((res: boolean) => {
         if(res === true) {
           this.whiteBoardCanvas.on("mouse:up", () => {
-            if(newEdge) {
-              newEdge = null;
-              this.graphService.toggleEdges();
-            } else if(this.whiteBoardCanvas.getActiveObjects().length === 1) newEdge = this.createEdge();
+            if(newEdge) newEdge = null;
+            else if(this.whiteBoardCanvas.getActiveObjects().length === 1) newEdge = this.createEdge();
           });
           this.whiteBoardCanvas.on("mouse:move", (event) => {
             newEdge = this.connectEdge(event, newEdge);
@@ -193,10 +191,6 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
               newEdge.set('opacity', 1);
             }
           });
-        } else {
-          newEdge = null;
-          this.whiteBoardCanvas.selection = false;
-          this.whiteBoardCanvas.renderAll();
         }
       })              
     )
