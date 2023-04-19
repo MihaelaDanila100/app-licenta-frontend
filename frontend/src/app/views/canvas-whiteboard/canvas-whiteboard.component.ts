@@ -176,21 +176,28 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
 
   public observeEdges(): void {
     let newEdge!: any;
+    let mouseUpHandler = () => {
+      if(newEdge) newEdge = null;
+      else if(this.whiteBoardCanvas.getActiveObjects().length === 1) newEdge = this.createEdge();
+    };
+    let mouseMoveHandler = (event: any) => {
+      newEdge = this.connectEdge(event, newEdge);
+    };
+    let mouseDownHandler = (event: any) => {
+      if(newEdge) {
+        newEdge.set('opacity', 1);
+      }
+    }
     this.subscriptions.add(
       this.graphService.addEdgeObs.subscribe((res: boolean) => {
         if(res === true) {
-          this.whiteBoardCanvas.on("mouse:up", () => {
-            if(newEdge) newEdge = null;
-            else if(this.whiteBoardCanvas.getActiveObjects().length === 1) newEdge = this.createEdge();
-          });
-          this.whiteBoardCanvas.on("mouse:move", (event) => {
-            newEdge = this.connectEdge(event, newEdge);
-          });
-          this.whiteBoardCanvas.on("mouse:down", (event) => {
-            if(newEdge) {
-              newEdge.set('opacity', 1);
-            }
-          });
+          this.whiteBoardCanvas.on("mouse:up", mouseUpHandler);
+          this.whiteBoardCanvas.on("mouse:move", mouseMoveHandler);
+          this.whiteBoardCanvas.on("mouse:down", mouseDownHandler);
+        } else {
+          this.whiteBoardCanvas.off("mouse:up", mouseUpHandler)
+          this.whiteBoardCanvas.off("mouse:move", mouseMoveHandler);
+          this.whiteBoardCanvas.off("mouse:down", mouseDownHandler);
         }
       })              
     )
