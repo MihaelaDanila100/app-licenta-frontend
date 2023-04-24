@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription, mergeMap, takeWhile } from 'rxjs';
+import { Edge } from 'src/app/entities/edge';
 import { Line } from 'src/app/interfaces/line';
 import { Shapes } from 'src/app/shared/data/constants/shapes';
 import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
@@ -24,6 +25,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   public isTextSync: boolean = false;
   private kill$ = new BehaviorSubject(null);
   private currentNodeNumber: number = 0;
+  private edges: Edge[] = [];
+  private currentNewEdge!: Edge;
 
   constructor(private drawingService: DrawingService,
     private activeShapesService: ActiveShapesService,
@@ -110,7 +113,10 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
           text.value = this.currentNodeNumber.toString();
           text.left = (newShape.left || 100) + (newShape.width || newShape.radius || 20) / 3;
           text.top = (newShape.top || 100) + (newShape.height || newShape.radius || 20) / 4;
-          this.activeShapesService.addShapeToWhiteboard(this.shapesService.createText(text));
+          let newText = this.shapesService.createText(text);
+          this.activeShapesService.addShapeToWhiteboard(newText);
+          newShape.set('fill', 'transparent');
+          this.whiteBoardCanvas.renderAll();
         } 
       });
       this.subscriptions.add(this.colorService.colorFill.subscribe((color) => {
@@ -178,7 +184,14 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     let newEdge!: any;
     let mouseUpHandler = () => {
       if(newEdge) newEdge = null;
-      else if(this.whiteBoardCanvas.getActiveObjects().length === 1) newEdge = this.createEdge();
+      else{
+        if(this.whiteBoardCanvas.getActiveObjects().length === 1){
+          let currentNode = this.whiteBoardCanvas.getActiveObjects()[0]
+          newEdge = this.createEdge();
+          this.currentNewEdge = new Edge(newEdge, currentNode);
+          this.edges.push(this.currentNewEdge);
+        } 
+      } 
     };
     let mouseMoveHandler = (event: any) => {
       newEdge = this.connectEdge(event, newEdge);
@@ -186,6 +199,27 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     let mouseDownHandler = (event: any) => {
       if(newEdge) {
         newEdge.set('opacity', 1);
+        this.currentNewEdge.setRightNode(event.target);
+        if(this.currentNewEdge.getLeftNode()) {
+          this.currentNewEdge.getLeftNode().on("moving", (event: any) => {
+            let pointer;
+            if(event.transform.target._objects) pointer = event.transform.target._objects[0].getCenterPoint();
+            else pointer = event.transform.target.getCenterPoint();
+            pointer.x = event.transform.target.left + pointer.x;
+            pointer.y = event.transform.target.top + pointer.y;
+            this.currentNewEdge.setLineCoords(pointer, true);
+          });
+        }
+        if(this.currentNewEdge.getRightNode()) {
+          this.currentNewEdge.getRightNode().on("moving", (event: any) => {
+            let pointer;
+            if(event.transform.target._objects) pointer = event.transform.target._objects[0].getCenterPoint();
+            else pointer = event.transform.target.getCenterPoint();
+            pointer.x = event.transform.target.left + pointer.x;
+            pointer.y = event.transform.target.top + pointer.y;
+            this.currentNewEdge.setLineCoords(pointer, false);
+          });
+        }
       }
     }
     this.subscriptions.add(

@@ -25,6 +25,10 @@ export class ActiveShapesService {
   constructor() { }
 
   public addShapeToWhiteboard(shape: any, positionRelative?: boolean): void {
+    if(shape._objects) {
+      this.addNodeToWhiteboard(shape, shape._objects[1]);
+      return;
+    }
     switch (shape.get('type')) {
       case ShapeTypes.RECTANGLE:
         let rectangle = new fabric.Rect({
@@ -88,7 +92,6 @@ export class ActiveShapesService {
           fontSize: shape.fontSize,
           fontWeight: shape.fontWeight
         });
-        console.log("daaa ", shape, text)
         this.activeShapesSbj.next(text);
         break;
 
@@ -97,8 +100,14 @@ export class ActiveShapesService {
     }
   }
 
-  public addNodeToWhiteboard(node: Node): void {
-    this.activeShapesSbj.next(node.getNodeDrawing());
+  public addNodeToWhiteboard(node: any, label?: any): void {
+    if(node.label){
+      node = node.getNodeDrawing();
+    } else {
+      node = new Node(label?.text || '');
+    }
+    
+    this.activeShapesSbj.next(node);
   }
 
   public selectShape(value?: boolean): void {

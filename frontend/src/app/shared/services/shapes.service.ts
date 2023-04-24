@@ -42,7 +42,7 @@ export class ShapesService {
     return newRectangle;
   }
 
-  public createLine(line: Line): fabric.Line {
+  public createLine(line: any): fabric.Line {
     if(!line.top) line.top = 0;
     if(!line.left) line.left = 0;
     return new fabric.Line(line.points,
