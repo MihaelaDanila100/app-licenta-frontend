@@ -1,14 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription, mergeMap, takeWhile } from 'rxjs';
 import { Edge } from 'src/app/entities/edge';
+import { Graph } from 'src/app/entities/graph';
 import { Line } from 'src/app/interfaces/line';
 import { Shapes } from 'src/app/shared/data/constants/shapes';
 import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
 import { ColorService } from 'src/app/shared/services/color.service';
 import { DrawingService } from 'src/app/shared/services/drawing.service';
-import { GraphService } from 'src/app/shared/services/graph.service';
+import { GraphService } from '../services/graph.service';
 import { ShapeActionsService } from 'src/app/shared/services/shape-actions.service';
 import { ShapesService } from 'src/app/shared/services/shapes.service';
+import { Node } from 'src/app/entities/node';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -177,7 +179,17 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.whiteBoardCanvas.on("mouse:down", (event) => {
       if(!event.target) this.activeShapesService.selectShape(false);
     });
-    this.observeEdges();
+    // this.observeEdges();
+    this.workWithGraph();
+  }
+
+  public workWithGraph() {
+    let myGraph = new Graph([]);
+    this.graphService.addNewGraph(myGraph);
+    this.graphService.currentNodeRef.subscribe((newNode: Node) => {
+      myGraph.addNewNode(newNode);
+      console.log("da, si la mine graful s-a schimbat: ", myGraph.numberOfNodes, myGraph.isOriented, myGraph.adjacency_list, myGraph.nodesList)
+    });
   }
 
   public observeEdges(): void {
@@ -222,19 +234,19 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         }
       }
     }
-    this.subscriptions.add(
-      this.graphService.addEdgeObs.subscribe((res: boolean) => {
-        if(res === true) {
-          this.whiteBoardCanvas.on("mouse:up", mouseUpHandler);
-          this.whiteBoardCanvas.on("mouse:move", mouseMoveHandler);
-          this.whiteBoardCanvas.on("mouse:down", mouseDownHandler);
-        } else {
-          this.whiteBoardCanvas.off("mouse:up", mouseUpHandler)
-          this.whiteBoardCanvas.off("mouse:move", mouseMoveHandler);
-          this.whiteBoardCanvas.off("mouse:down", mouseDownHandler);
-        }
-      })              
-    )
+    // this.subscriptions.add(
+    //   this.graphService.addEdgeObs.subscribe((res: boolean) => {
+    //     if(res === true) {
+    //       this.whiteBoardCanvas.on("mouse:up", mouseUpHandler);
+    //       this.whiteBoardCanvas.on("mouse:move", mouseMoveHandler);
+    //       this.whiteBoardCanvas.on("mouse:down", mouseDownHandler);
+    //     } else {
+    //       this.whiteBoardCanvas.off("mouse:up", mouseUpHandler)
+    //       this.whiteBoardCanvas.off("mouse:move", mouseMoveHandler);
+    //       this.whiteBoardCanvas.off("mouse:down", mouseDownHandler);
+    //     }
+    //   })              
+    // )
   }
 
   private createEdge(): any {

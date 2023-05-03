@@ -4,7 +4,7 @@ import { PopupService } from '../../services/popup.service';
 import { InlinePopupComponent } from '../inline-popup/inline-popup.component';
 import { Node } from 'src/app/entities/node';
 import { ShapesService } from '../../services/shapes.service';
-import { GraphService } from '../../services/graph.service';
+import { GraphService } from 'src/app/views/services/graph.service';
 
 @Component({
   selector: 'app-secondary-navbar',
@@ -54,7 +54,7 @@ export class SecondaryNavbarComponent implements OnInit {
 
   public addNode(): void {
     let node = new Node();
-    this.activeShapesService.addNodeToWhiteboard(node);
+    this.graphService.addNewNode(node);
   }
 
   public addTextInNode(): void {
@@ -62,7 +62,7 @@ export class SecondaryNavbarComponent implements OnInit {
   }
 
   public addEdge(): void {
-    this.graphService.toggleEdges();
+    // this.graphService.toggleEdges();
     this.edgesMode = !this.edgesMode;
   }
 
