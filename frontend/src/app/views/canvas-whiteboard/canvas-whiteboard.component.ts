@@ -190,6 +190,11 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       myGraph.addNewNode(newNode);
       console.log("da, si la mine graful s-a schimbat: ", myGraph.numberOfNodes, myGraph.isOriented, myGraph.adjacency_list, myGraph.nodesList)
     });
+    this.graphService.currentGraphicObjects.subscribe((newObject: fabric.Group) => {
+      this.whiteBoardCanvas.add(newObject);
+      newObject.set('hasControls', false);
+      newObject._render(this.whiteBoardCanvas.getContext());
+    });
   }
 
   public observeEdges(): void {
