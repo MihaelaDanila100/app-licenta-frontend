@@ -5,6 +5,7 @@ import { InlinePopupComponent } from '../inline-popup/inline-popup.component';
 import { Node } from 'src/app/entities/node';
 import { ShapesService } from '../../services/shapes.service';
 import { GraphService } from 'src/app/views/services/graph.service';
+import { MenuObservablesHelper } from 'src/app/helpers/menu-observables.helper';
 
 @Component({
   selector: 'app-secondary-navbar',
@@ -23,7 +24,9 @@ export class SecondaryNavbarComponent implements OnInit {
   @Output() showColorChooserChange: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(InlinePopupComponent) strokeWidthRef: any;
 
-  constructor(private activeShapesService: ActiveShapesService, private graphService: GraphService) { }
+  constructor(private activeShapesService: ActiveShapesService, 
+    private graphService: GraphService,
+    private menuHelper: MenuObservablesHelper) { }
 
   ngOnInit(): void {
     this.activeShapesService.selectedShape.subscribe((res: boolean) => {
@@ -62,7 +65,7 @@ export class SecondaryNavbarComponent implements OnInit {
   }
 
   public addEdge(): void {
-    // this.graphService.toggleEdges();
+    this.menuHelper.toggleEdgesMode();
     this.edgesMode = !this.edgesMode;
   }
 

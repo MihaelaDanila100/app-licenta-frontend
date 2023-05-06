@@ -11,6 +11,8 @@ import { GraphService } from '../services/graph.service';
 import { ShapeActionsService } from 'src/app/shared/services/shape-actions.service';
 import { ShapesService } from 'src/app/shared/services/shapes.service';
 import { Node } from 'src/app/entities/node';
+import { MenuObservablesHelper } from 'src/app/helpers/menu-observables.helper';
+import { EdgesHelper } from 'src/app/helpers/edges.helper';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -35,7 +37,9 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     private colorService: ColorService,
     private shapesService: ShapesService,
     private shapeActionsService: ShapeActionsService,
-    private graphService: GraphService) { }
+    private graphService: GraphService,
+    private menuHelper: MenuObservablesHelper,
+    private edgesHelper: EdgesHelper) { }
   
 
   ngOnInit(): void {
@@ -194,6 +198,16 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.whiteBoardCanvas.add(newObject);
       newObject.set('hasControls', false);
       newObject._render(this.whiteBoardCanvas.getContext());
+    });
+    let startNodeMouseDownHandler = (event: any) => this.edgesHelper.createEdges(event);
+    let endNodeMouseDownHandler = (event: any) => this.edgesHelper.updateEdgeOpacity(event);
+    let endNodeMouseUpHandler = (event: any) => this.edgesHelper.finishEdge(event);
+    let moveEdgeHandler = (event: any) => this.edgesHelper.moveEdge(event);
+    this.menuHelper.drawingEdgesMode.subscribe((isDrawingMode) => {
+      let newEdge!: any;
+      if(isDrawingMode) {
+        
+      }
     });
   }
 

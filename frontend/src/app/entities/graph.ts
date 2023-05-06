@@ -15,7 +15,6 @@ export class Graph {
             this.adjacency_list.push([]);
             this.adjacency_list.forEach((line) => line.push(false));
         });
-        console.log("My graph is ", this.numberOfNodes, this.isOriented, this.adjacency_list, this.nodesList)
     }
 
     public addNewNode(node: Node): void {
