@@ -81,7 +81,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.activeShapesService.currentShapeRef.pipe(
         mergeMap((newShapeRef) => {
           this.kill$.next(newShapeRef);
-          let deletedRequest = this.activeShapesService.deletedShape.pipe(takeWhile(() => this.kill$.value == newShape));
+          let deletedRequest = this.shapeActionsService.deletedShape.pipe(takeWhile(() => this.kill$.value == newShape));
           return deletedRequest;
         })
       ).subscribe((requests) => {
@@ -204,8 +204,6 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       } else{
         if(this.whiteBoardCanvas.getActiveObjects().length === 1){
           let currentNode = this.currentGraph.getNodeRefAt(this.currentGraph.getIndexForNodeDrawing(this.whiteBoardCanvas.getActiveObjects()[0]));
-          console.log("curent selected object ", this.whiteBoardCanvas.getActiveObjects()[0])
-          console.log("curent selected index of object ", this.currentGraph.getIndexForNodeDrawing(this.whiteBoardCanvas.getActiveObjects()[0]))
           newEdge = this.createEdge();
           this.currentNewEdge = new Edge(newEdge, currentNode);
         } 

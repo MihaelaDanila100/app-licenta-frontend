@@ -13,13 +13,11 @@ export class ActiveShapesService {
   private selectedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private curentShapeRefSbj: Subject<any> = new Subject<any>();
   private duplicateShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private deleteShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public textShapeSbj: Subject<any> = new Subject<any>();
   public activeShapes = this.activeShapesSbj.asObservable();
   public selectedShape = this.selectedShapeSbj.asObservable();
   public currentShapeRef = this.curentShapeRefSbj.asObservable();
   public duplicatedShape = this.duplicateShapeSbj.asObservable();
-  public deletedShape = this.deleteShapeSbj.asObservable();
   public textShape = this.textShapeSbj.asObservable();
 
   constructor() { }
@@ -123,12 +121,6 @@ export class ActiveShapesService {
     if(value === undefined) value = !this.duplicateShapeSbj.value;
     this.duplicateShapeSbj.next(value);
     this.duplicateShapeSbj.next(false);
-  }
-
-  public deleteShape(value?: boolean): void {
-    if(value === undefined) value = !this.deleteShapeSbj.value;
-    this.deleteShapeSbj.next(value);
-    this.deleteShapeSbj.next(false);
   }
 
   public addTextShape(): void {
