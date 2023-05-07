@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription, mergeMap, takeWhile } from 'rxjs';
+import { BehaviorSubject, Subscription, combineLatest, forkJoin, map, mergeMap, of, takeWhile } from 'rxjs';
 import { Edge } from 'src/app/entities/edge';
 import { Graph } from 'src/app/entities/graph';
 import { Line } from 'src/app/interfaces/line';
@@ -188,6 +188,14 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.currentGraph.addNewNode(node);
       this.whiteBoardCanvas.add(node.getNodeDrawing());
     });
+    this.graphService.newEdgeObs.subscribe((newEdge: Edge) => {
+      newEdge.getLeftNode().getNodeDrawing().on("moving", (event) =>  {
+        newEdge.setLineCoords(event.pointer, true);
+      });
+      newEdge.getRightNode().getNodeDrawing().on("moving", (event) => {
+        newEdge.setLineCoords(event.pointer, false);
+      });
+    })
     let newEdge!: any;
     let mouseUpHandler = () => {
       if(newEdge){
@@ -211,6 +219,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         newEdge.set('opacity', 1);
         this.currentNewEdge.setRightNode(this.currentGraph.getNodeRefAt(this.currentGraph.getIndexForNodeDrawing(event.target)));
         this.currentGraph.addNewEdge(this.currentNewEdge);
+        this.graphService.addEdge(this.currentNewEdge);
       }
     }
     this.subscriptions.add(
