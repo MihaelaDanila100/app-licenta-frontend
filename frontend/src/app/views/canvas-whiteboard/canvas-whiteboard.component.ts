@@ -24,13 +24,14 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   private whiteBoardCanvas!: fabric.Canvas;
   public drownShapes: fabric.Object[] = [];
   private subscriptions: Subscription = new Subscription();
+  private subscriptionsArray: Subscription[] = [];
   public isFillSync: boolean = false;
   public isStrokeSync: boolean = false;
   public isTextSync: boolean = false;
   private kill$ = new BehaviorSubject(null);
   private currentNodeNumber: number = 0;
   private edges: Edge[] = [];
-  private currentNewEdge!: Edge;
+  private newEdge: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private drawingService: DrawingService,
     private activeShapesService: ActiveShapesService,
@@ -193,66 +194,102 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.graphService.currentNodeRef.subscribe((newNode: Node) => {
       myGraph.addNewNode(newNode);
       console.log("da, si la mine graful s-a schimbat: ", myGraph.numberOfNodes, myGraph.isOriented, myGraph.adjacency_list, myGraph.nodesList)
+
     });
     this.graphService.currentGraphicObjects.subscribe((newObject: fabric.Group) => {
       this.whiteBoardCanvas.add(newObject);
       newObject.set('hasControls', false);
       newObject._render(this.whiteBoardCanvas.getContext());
-    });
-    let startNodeMouseDownHandler = (event: any) => this.edgesHelper.createEdges(event);
-    let endNodeMouseDownHandler = (event: any) => this.edgesHelper.updateEdgeOpacity(event);
-    let endNodeMouseUpHandler = (event: any) => this.edgesHelper.finishEdge(event);
-    let moveEdgeHandler = (event: any) => this.edgesHelper.moveEdge(event);
-    this.menuHelper.drawingEdgesMode.subscribe((isDrawingMode) => {
-      let newEdge!: any;
-      if(isDrawingMode) {
-        
-      }
+      this.menuHelper.drawingEdgesMode.subscribe((isDrawingMode) => {
+        let newSubscriptionIndex: number = -1;
+        if(isDrawingMode) {
+          newSubscriptionIndex = this.subscriptionsArray.push(this.edgesHelper.isNewEdgeObs.subscribe((isNewEdge) => {
+            console.log("is new edgeeee ", isNewEdge)
+            if(isNewEdge) {
+              newObject.off("mouseup", () => {
+                this.edgesHelper.createNewEdge(newObject, this.whiteBoardCanvas);
+                this.whiteBoardCanvas.renderAll();
+              });
+              newObject.on("mousedown", () => {
+                this.edgesHelper.updateEdgeOpacity();
+                this.whiteBoardCanvas.renderAll();
+              });
+              newObject.on("mouseup", (event) => {
+                this.edgesHelper.finishEdge(newObject, this.whiteBoardCanvas)
+                this.whiteBoardCanvas.renderAll();
+              });
+              this.whiteBoardCanvas.on("mouse:move", (event) => {
+                this.edgesHelper.moveEdge(event, this.whiteBoardCanvas)
+                this.whiteBoardCanvas.renderAll();
+              });
+            } else {
+              newObject.off("mouseup", (event) => {
+                this.edgesHelper.finishEdge(newObject, this.whiteBoardCanvas);
+                this.whiteBoardCanvas.renderAll();
+              });
+              newObject.off("mousedown", () => {
+                this.edgesHelper.updateEdgeOpacity();
+                this.whiteBoardCanvas.renderAll();
+              });
+              newObject.on("mouseup", () => {
+                this.edgesHelper.createNewEdge(newObject, this.whiteBoardCanvas);
+                this.whiteBoardCanvas.renderAll();
+              });
+              this.whiteBoardCanvas.off("mouse:move", (event) => {
+                this.edgesHelper.moveEdge(event, this.whiteBoardCanvas);
+                this.whiteBoardCanvas.renderAll();
+              });
+            }
+          })) - 1;
+        } else {
+          if(newSubscriptionIndex > -1) this.subscriptionsArray[newSubscriptionIndex].unsubscribe();
+        }
+      });
     });
   }
 
   public observeEdges(): void {
-    let newEdge!: any;
-    let mouseUpHandler = () => {
-      if(newEdge) newEdge = null;
-      else{
-        if(this.whiteBoardCanvas.getActiveObjects().length === 1){
-          let currentNode = this.whiteBoardCanvas.getActiveObjects()[0]
-          newEdge = this.createEdge();
-          this.currentNewEdge = new Edge(newEdge, currentNode);
-          this.edges.push(this.currentNewEdge);
-        } 
-      } 
-    };
-    let mouseMoveHandler = (event: any) => {
-      newEdge = this.connectEdge(event, newEdge);
-    };
-    let mouseDownHandler = (event: any) => {
-      if(newEdge) {
-        newEdge.set('opacity', 1);
-        this.currentNewEdge.setRightNode(event.target);
-        if(this.currentNewEdge.getLeftNode()) {
-          this.currentNewEdge.getLeftNode().on("moving", (event: any) => {
-            let pointer;
-            if(event.transform.target._objects) pointer = event.transform.target._objects[0].getCenterPoint();
-            else pointer = event.transform.target.getCenterPoint();
-            pointer.x = event.transform.target.left + pointer.x;
-            pointer.y = event.transform.target.top + pointer.y;
-            this.currentNewEdge.setLineCoords(pointer, true);
-          });
-        }
-        if(this.currentNewEdge.getRightNode()) {
-          this.currentNewEdge.getRightNode().on("moving", (event: any) => {
-            let pointer;
-            if(event.transform.target._objects) pointer = event.transform.target._objects[0].getCenterPoint();
-            else pointer = event.transform.target.getCenterPoint();
-            pointer.x = event.transform.target.left + pointer.x;
-            pointer.y = event.transform.target.top + pointer.y;
-            this.currentNewEdge.setLineCoords(pointer, false);
-          });
-        }
-      }
-    }
+    // let newEdge!: any;
+    // let mouseUpHandler = () => {
+    //   if(newEdge) newEdge = null;
+    //   else{
+    //     if(this.whiteBoardCanvas.getActiveObjects().length === 1){
+    //       let currentNode = this.whiteBoardCanvas.getActiveObjects()[0]
+    //       newEdge = this.createEdge();
+    //       this.currentNewEdge = new Edge(newEdge, currentNode);
+    //       this.edges.push(this.currentNewEdge);
+    //     } 
+    //   } 
+    // };
+    // let mouseMoveHandler = (event: any) => {
+    //   newEdge = this.connectEdge(event, newEdge);
+    // };
+    // let mouseDownHandler = (event: any) => {
+    //   if(newEdge) {
+    //     newEdge.set('opacity', 1);
+    //     this.currentNewEdge.setRightNode(event.target);
+    //     if(this.currentNewEdge.getLeftNode()) {
+    //       this.currentNewEdge.getLeftNode().on("moving", (event: any) => {
+    //         let pointer;
+    //         if(event.transform.target._objects) pointer = event.transform.target._objects[0].getCenterPoint();
+    //         else pointer = event.transform.target.getCenterPoint();
+    //         pointer.x = event.transform.target.left + pointer.x;
+    //         pointer.y = event.transform.target.top + pointer.y;
+    //         this.currentNewEdge.setLineCoords(pointer, true);
+    //       });
+    //     }
+    //     if(this.currentNewEdge.getRightNode()) {
+    //       this.currentNewEdge.getRightNode().on("moving", (event: any) => {
+    //         let pointer;
+    //         if(event.transform.target._objects) pointer = event.transform.target._objects[0].getCenterPoint();
+    //         else pointer = event.transform.target.getCenterPoint();
+    //         pointer.x = event.transform.target.left + pointer.x;
+    //         pointer.y = event.transform.target.top + pointer.y;
+    //         this.currentNewEdge.setLineCoords(pointer, false);
+    //       });
+    //     }
+    //   }
+    // }
     // this.subscriptions.add(
     //   this.graphService.addEdgeObs.subscribe((res: boolean) => {
     //     if(res === true) {

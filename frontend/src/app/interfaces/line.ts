@@ -5,7 +5,8 @@ export interface Line {
     left?: number,
     top?: number,
     scale?: number,
-    strokeWidth?: number
+    strokeWidth?: number,
+    opacity?: number
 }
 
 export interface DashedLine extends Line {

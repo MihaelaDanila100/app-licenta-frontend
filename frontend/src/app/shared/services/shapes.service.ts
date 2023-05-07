@@ -51,7 +51,8 @@ export class ShapesService {
         top: line.top,
         left: line.left,
         strokeWidth: line.strokeWidth,
-        hasControls: line.showControls
+        hasControls: line.showControls,
+        opacity: line.opacity
       })
   }
 
