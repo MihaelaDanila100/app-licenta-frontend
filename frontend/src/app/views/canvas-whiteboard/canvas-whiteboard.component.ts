@@ -94,7 +94,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.activeShapesService.currentShapeRef.pipe(
         mergeMap((newShapeRef) => {
           this.kill$.next(newShapeRef);
-          let duplicatedRequest = this.activeShapesService.duplicatedShape.pipe(takeWhile(() => this.kill$.value == newShape));
+          let duplicatedRequest = this.shapeActionsService.duplicatedShape.pipe(takeWhile(() => this.kill$.value == newShape));
           return duplicatedRequest;
         })
       ).subscribe((requests) => {
@@ -187,6 +187,9 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.graphService.newNodesObs.subscribe((node: Node) => {
       this.currentGraph.addNewNode(node);
       this.whiteBoardCanvas.add(node.getNodeDrawing());
+      node.getNodeDrawing().on("mousedown", () => {
+        this.activeShapesService.updateCurrentShape(node.getNodeDrawing());
+      });
     });
     this.graphService.newEdgeObs.subscribe((newEdge: Edge) => {
       newEdge.getLeftNode().getNodeDrawing().on("moving", (event) =>  {

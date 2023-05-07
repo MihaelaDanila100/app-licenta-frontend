@@ -39,7 +39,7 @@ export class SecondaryNavbarComponent implements OnInit {
   }
 
   public duplicateShape(): void {
-    this.activeShapesService.duplicateShape();
+    this.shapeActionsService.duplicateShape();
   }
 
   public deleteShape(): void {

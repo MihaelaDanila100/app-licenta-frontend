@@ -12,12 +12,10 @@ export class ActiveShapesService {
   private activeShapesSbj: Subject<fabric.Object> = new Subject<fabric.Object>();
   private selectedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private curentShapeRefSbj: Subject<any> = new Subject<any>();
-  private duplicateShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public textShapeSbj: Subject<any> = new Subject<any>();
   public activeShapes = this.activeShapesSbj.asObservable();
   public selectedShape = this.selectedShapeSbj.asObservable();
   public currentShapeRef = this.curentShapeRefSbj.asObservable();
-  public duplicatedShape = this.duplicateShapeSbj.asObservable();
   public textShape = this.textShapeSbj.asObservable();
 
   constructor() { }
@@ -115,12 +113,6 @@ export class ActiveShapesService {
 
   public updateCurrentShape(shape: any): void {
     this.curentShapeRefSbj.next(shape);
-  }
-
-  public duplicateShape(value?: boolean): void {
-    if(value === undefined) value = !this.duplicateShapeSbj.value;
-    this.duplicateShapeSbj.next(value);
-    this.duplicateShapeSbj.next(false);
   }
 
   public addTextShape(): void {
