@@ -52,16 +52,37 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       });
     });
     this.kill$.pipe(
-      mergeMap((newSelectedShape) => {
+      mergeMap((newSelectedShape: fabric.Group | fabric.Object) => {
         let deletedRequest = this.shapeActionsService.deletedShape.pipe(
           takeWhile(() => this.kill$.value == newSelectedShape),
-          map((result) => {
-            if(result) {
-              this.whiteBoardCanvas.remove(newSelectedShape);
-            }
+          map((result) => { if(result) this.whiteBoardCanvas.remove(newSelectedShape)})
+        );
+        let scaleRequest = this.shapeActionsService.scaleShape.pipe(
+          takeWhile(() => this.kill$.value == newSelectedShape),
+          map((result: number) => { 
+            newSelectedShape.scale(result);
+            this.whiteBoardCanvas.renderAll();
           })
         );
-        return merge(deletedRequest);
+        let rotationRequest: any = this.shapeActionsService.rotationShape.pipe(
+          takeWhile(() => this.kill$.value == newSelectedShape),
+          map((result: number) => { 
+            newSelectedShape.rotate(result);
+            this.whiteBoardCanvas.renderAll();
+          })
+        );
+        let opacityRequest = this.shapeActionsService.opacityShape.pipe(
+          takeWhile(() => this.kill$.value == newSelectedShape),
+          map((result: number) => { 
+            newSelectedShape.opacity = result;
+            this.whiteBoardCanvas.renderAll();
+          })
+        );
+        let duplicateRequest = this.shapeActionsService.duplicatedShape.pipe(
+          takeWhile(() => this.kill$.value == newSelectedShape),
+          map((isDuplicated: boolean) => { if(isDuplicated) this.activeShapesService.addShapeToWhiteboard(newSelectedShape, true) })
+        );
+        return merge(deletedRequest, scaleRequest, rotationRequest, opacityRequest, duplicateRequest);
       })
     ).subscribe((result) => { })
     // this.activeShapesService.activeShapes.subscribe((newShape: any) => {
