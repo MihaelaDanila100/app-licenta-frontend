@@ -54,7 +54,7 @@ export class SecondaryNavbarComponent implements OnInit {
 
   public addNode(): void {
     let node = new Node();
-    this.activeShapesService.addNodeToWhiteboard(node);
+    this.graphService.addNode(node);
   }
 
   public addTextInNode(): void {

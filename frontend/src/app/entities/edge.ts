@@ -4,28 +4,28 @@ import { fabric } from 'fabric';
 export class Edge {
 
     private representation!: fabric.Line;
-    private leftNode!: any;
-    private rightNode!: any;
+    private leftNode!: Node;
+    private rightNode!: Node;
 
-    constructor(representation: fabric.Line, leftNode?: any, rightNode?: any) {
+    constructor(representation: fabric.Line, leftNode?: Node, rightNode?: Node) {
         this.representation = representation;
         if(leftNode) this.leftNode = leftNode;
         if(rightNode) this.rightNode = rightNode;
     }
 
-    public setLeftNode(leftNode: any): void {
+    public setLeftNode(leftNode: Node): void {
         this.leftNode = leftNode;
     }
 
-    public setRightNode(rightNode: any): void {
+    public setRightNode(rightNode: Node): void {
         this.rightNode = rightNode;
     }
 
-    public getLeftNode(): any {
+    public getLeftNode(): Node {
         return this.leftNode;
     }
 
-    public getRightNode(): any {
+    public getRightNode(): Node {
         return this.rightNode;
     }
 

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription, mergeMap, takeWhile } from 'rxjs';
 import { Edge } from 'src/app/entities/edge';
+import { Graph } from 'src/app/entities/graph';
 import { Line } from 'src/app/interfaces/line';
 import { Shapes } from 'src/app/shared/data/constants/shapes';
 import { ActiveShapesService } from 'src/app/shared/services/active-shapes.service';
@@ -9,6 +10,7 @@ import { DrawingService } from 'src/app/shared/services/drawing.service';
 import { GraphService } from 'src/app/shared/services/graph.service';
 import { ShapeActionsService } from 'src/app/shared/services/shape-actions.service';
 import { ShapesService } from 'src/app/shared/services/shapes.service';
+import { Node } from 'src/app/entities/node';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -26,7 +28,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   private kill$ = new BehaviorSubject(null);
   private currentNodeNumber: number = 0;
   private edges: Edge[] = [];
-  private currentNewEdge!: Edge;
+  private currentNewEdge: any;
+  private currentGraph: Graph = new Graph([]);
 
   constructor(private drawingService: DrawingService,
     private activeShapesService: ActiveShapesService,
@@ -181,15 +184,22 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   }
 
   public observeEdges(): void {
+    this.graphService.newNodesObs.subscribe((node: Node) => {
+      this.currentGraph.addNewNode(node);
+      this.whiteBoardCanvas.add(node.getNodeDrawing());
+    });
     let newEdge!: any;
     let mouseUpHandler = () => {
-      if(newEdge) newEdge = null;
-      else{
+      if(newEdge){
+        newEdge = null;
+        this.currentNewEdge = null;
+      } else{
         if(this.whiteBoardCanvas.getActiveObjects().length === 1){
-          let currentNode = this.whiteBoardCanvas.getActiveObjects()[0]
+          let currentNode = this.currentGraph.getNodeRefAt(this.currentGraph.getIndexForNodeDrawing(this.whiteBoardCanvas.getActiveObjects()[0]));
+          console.log("curent selected object ", this.whiteBoardCanvas.getActiveObjects()[0])
+          console.log("curent selected index of object ", this.currentGraph.getIndexForNodeDrawing(this.whiteBoardCanvas.getActiveObjects()[0]))
           newEdge = this.createEdge();
           this.currentNewEdge = new Edge(newEdge, currentNode);
-          this.edges.push(this.currentNewEdge);
         } 
       } 
     };
@@ -199,27 +209,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     let mouseDownHandler = (event: any) => {
       if(newEdge) {
         newEdge.set('opacity', 1);
-        this.currentNewEdge.setRightNode(event.target);
-        if(this.currentNewEdge.getLeftNode()) {
-          this.currentNewEdge.getLeftNode().on("moving", (event: any) => {
-            let pointer;
-            if(event.transform.target._objects) pointer = event.transform.target._objects[0].getCenterPoint();
-            else pointer = event.transform.target.getCenterPoint();
-            pointer.x = event.transform.target.left + pointer.x;
-            pointer.y = event.transform.target.top + pointer.y;
-            this.currentNewEdge.setLineCoords(pointer, true);
-          });
-        }
-        if(this.currentNewEdge.getRightNode()) {
-          this.currentNewEdge.getRightNode().on("moving", (event: any) => {
-            let pointer;
-            if(event.transform.target._objects) pointer = event.transform.target._objects[0].getCenterPoint();
-            else pointer = event.transform.target.getCenterPoint();
-            pointer.x = event.transform.target.left + pointer.x;
-            pointer.y = event.transform.target.top + pointer.y;
-            this.currentNewEdge.setLineCoords(pointer, false);
-          });
-        }
+        this.currentNewEdge.setRightNode(this.currentGraph.getNodeRefAt(this.currentGraph.getIndexForNodeDrawing(event.target)));
+        this.currentGraph.addNewEdge(this.currentNewEdge);
       }
     }
     this.subscriptions.add(

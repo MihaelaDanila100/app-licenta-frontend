@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
+import { ICircleOptions } from 'fabric/fabric-impl';
 import { Circle, DashedCircle } from 'src/app/interfaces/circle';
 import { DashedEllipse, Ellipse } from 'src/app/interfaces/ellipse';
 import { DashedLine, Line } from 'src/app/interfaces/line';
@@ -60,14 +61,15 @@ export class ShapesService {
      if(!circle.fill) circle.fill = 'transparent';
      if(!circle.top) circle.top = 0;
      if(!circle.left) circle.left = 0;
-     return new fabric.Circle({
+     let options: any = {
       radius: circle.radius,
       hasControls: circle.showControls,
       stroke: circle.stroke,
       fill: circle.fill,
       top: circle.top,
       left: circle.left
-     });
+     };
+     return new fabric.Circle(options);
   }
 
   public createDashedCircle(circle: DashedCircle): fabric.Circle {

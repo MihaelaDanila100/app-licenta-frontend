@@ -8,6 +8,7 @@ export class Node {
     private value: any;
     private representation: fabric.Group = new fabric.Group([]);
     private shapesService: ShapesService = ShapesService.instance;
+    private indexInGraph: number = 0;
     static nodeIndex: number = 0;
 
     constructor(label?: string, value?: any, representation?: fabric.Group | fabric.Object[]) {
@@ -17,6 +18,7 @@ export class Node {
         if(label) this.label = label;
         else{
             this.label = Node.nodeIndex.toString();
+            this.indexInGraph = Node.nodeIndex;
             Node.nodeIndex++;
         } 
 
@@ -33,10 +35,16 @@ export class Node {
             } 
         } 
         this.representation = new fabric.Group(objects);
+        this.representation.set('hasControls', false);
     }
 
     public getNodeDrawing(): fabric.Group {
         return this.representation;
+    }
+
+    public getIndexOfNode(): number {
+        console.log("noddd ", this.label, " aflat la index ", this.indexInGraph)
+        return this.indexInGraph;
     }
 
 }
