@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription, combineLatest, forkJoin, map, mergeMap, of, takeWhile } from 'rxjs';
+import { BehaviorSubject, Subscription, combineLatest, forkJoin, map, merge, mergeMap, of, takeWhile } from 'rxjs';
 import { Edge } from 'src/app/entities/edge';
 import { Graph } from 'src/app/entities/graph';
 import { Line } from 'src/app/interfaces/line';
@@ -25,7 +25,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   public isFillSync: boolean = false;
   public isStrokeSync: boolean = false;
   public isTextSync: boolean = false;
-  private kill$ = new BehaviorSubject(null);
+  private kill$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
   private currentNodeNumber: number = 0;
   private edges: Edge[] = [];
   private currentNewEdge: any;
@@ -45,141 +45,160 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       width: window.innerWidth * 81 / 100,
       height: window.innerHeight * 82 / 100
     });
-    this.activeShapesService.activeShapes.subscribe((newShape: any) => {
+    this.activeShapesService.activeShapes.subscribe((newShape) => {
       this.whiteBoardCanvas.add(newShape);
-      this.activeShapesService.currentShapeRef.pipe(
-        mergeMap((newShapeRef) => {
-          this.kill$.next(newShapeRef);
-          let scaleRequest = this.shapeActionsService.scaleShape.pipe(takeWhile(() => this.kill$.value == newShape));
-          return scaleRequest;
-        })
-      ).subscribe((requests) => {
-        let scaleValue = requests;
-        newShape.scale(scaleValue);
-        this.whiteBoardCanvas.renderAll();
-      });
-      this.activeShapesService.currentShapeRef.pipe(
-        mergeMap((newShapeRef) => {
-          this.kill$.next(newShapeRef);
-          let rotationRequest = this.shapeActionsService.rotationShape.pipe(takeWhile(() => this.kill$.value == newShape));
-          return rotationRequest;
-        })
-      ).subscribe((requests) => {
-        newShape.rotate(requests);
-        this.whiteBoardCanvas.renderAll();
-      });
-      this.activeShapesService.currentShapeRef.pipe(
-        mergeMap((newShapeRef) => {
-          this.kill$.next(newShapeRef);
-          let opacityRequest = this.shapeActionsService.opacityShape.pipe(takeWhile(() => this.kill$.value == newShape));
-          return opacityRequest;
-        })
-      ).subscribe((requests) => {
-        newShape.opacity = requests;
-        this.whiteBoardCanvas.renderAll();
-      });
-      this.activeShapesService.currentShapeRef.pipe(
-        mergeMap((newShapeRef) => {
-          this.kill$.next(newShapeRef);
-          let deletedRequest = this.shapeActionsService.deletedShape.pipe(takeWhile(() => this.kill$.value == newShape));
-          return deletedRequest;
-        })
-      ).subscribe((requests) => {
-        let isDeleted = requests;
-        if(isDeleted){
-          this.whiteBoardCanvas.remove(newShape);
-          this.whiteBoardCanvas.renderAll();
-        } 
-      });
-      this.activeShapesService.currentShapeRef.pipe(
-        mergeMap((newShapeRef) => {
-          this.kill$.next(newShapeRef);
-          let duplicatedRequest = this.shapeActionsService.duplicatedShape.pipe(takeWhile(() => this.kill$.value == newShape));
-          return duplicatedRequest;
-        })
-      ).subscribe((requests) => {
-        let isDuplicated = requests;
-        if(isDuplicated){
-          this.activeShapesService.addShapeToWhiteboard(newShape, true);
-        } 
-      });
-      this.activeShapesService.currentShapeRef.pipe(
-        mergeMap((newShapeRef) => {
-          this.kill$.next(newShapeRef);
-          let textRequest = this.activeShapesService.textShape.pipe(takeWhile(() => this.kill$.value == newShape));
-          return textRequest;
-        })
-      ).subscribe((requests) => {
-        if(requests){
-          this.currentNodeNumber++;
-          let text = Object.assign({}, Shapes.text);
-          text.value = this.currentNodeNumber.toString();
-          text.left = (newShape.left || 100) + (newShape.width || newShape.radius || 20) / 3;
-          text.top = (newShape.top || 100) + (newShape.height || newShape.radius || 20) / 4;
-          let newText = this.shapesService.createText(text);
-          this.activeShapesService.addShapeToWhiteboard(newText);
-          newShape.set('fill', 'transparent');
-          this.whiteBoardCanvas.renderAll();
-        } 
-      });
-      this.subscriptions.add(this.colorService.colorFill.subscribe((color) => {
-        newShape.on("mousedown", () => {
-            if(!newShape._objects) newShape.set('fill', color);
-            else newShape._objects[0].set('fill', color);
-            this.whiteBoardCanvas.renderAll();
-        });
-        if(this.isFillSync) {
-          if(!newShape._objects) newShape.set('fill', color);
-          else newShape._objects[0].set('fill', color);
-          this.whiteBoardCanvas.renderAll();
-        }
-      }));
-      if(!newShape._objects) {
-        this.subscriptions.add(this.colorService.colorStroke.subscribe((color) => {
-          newShape.on("mousedown", () => {
-            newShape.set('stroke', color);
-            this.whiteBoardCanvas.renderAll();
-          });
-          if(this.isStrokeSync) {
-            newShape.set('stroke', color);
-            this.whiteBoardCanvas.renderAll();
-          }
-        }));
-      } else {
-        this.subscriptions.add(this.colorService.colorText.subscribe((color) => {
-          newShape.on("mousedown", () => {
-            newShape._objects[1].set('fill', color);
-            this.whiteBoardCanvas.renderAll();
-          });
-          if(this.isTextSync) {
-            newShape._objects[1].set('fill', color);
-            this.whiteBoardCanvas.renderAll();
-          }
-        }));
-      }
-      this.subscriptions.add(this.activeShapesService.selectedShape.subscribe((res: any) => {
-        newShape.hasControls = res;
-        this.whiteBoardCanvas.renderAll();
-      }));
-      this.subscriptions.add(this.colorService.syncColorFill.subscribe((res: boolean) => {
-        this.isFillSync = res;
-      }));
-      if(!newShape._objects) {
-        this.subscriptions.add(this.colorService.syncColorStroke.subscribe((res: boolean) => {
-          this.isStrokeSync = res;
-        }));
-      } else {
-        this.subscriptions.add(this.colorService.syncColorText.subscribe((res: boolean) => {
-          this.isTextSync = res;
-        }));
-      }
       newShape.on("mousedown", () => {
-        this.activeShapesService.updateCurrentShape(newShape);
+        this.kill$.next(newShape)
       });
     });
-    this.whiteBoardCanvas.on("mouse:down", (event) => {
-      if(!event.target) this.activeShapesService.selectShape(false);
-    });
+    this.kill$.pipe(
+      mergeMap((newSelectedShape) => {
+        let deletedRequest = this.shapeActionsService.deletedShape.pipe(
+          takeWhile(() => this.kill$.value == newSelectedShape),
+          map((result) => {
+            if(result) {
+              this.whiteBoardCanvas.remove(newSelectedShape);
+            }
+          })
+        );
+        return merge(deletedRequest);
+      })
+    ).subscribe((result) => { })
+    // this.activeShapesService.activeShapes.subscribe((newShape: any) => {
+    //   this.whiteBoardCanvas.add(newShape);
+    //   this.activeShapesService.currentShapeRef.pipe(
+    //     mergeMap((newShapeRef) => {
+    //       this.kill$.next(newShapeRef);
+    //       let scaleRequest = this.shapeActionsService.scaleShape.pipe(takeWhile(() => this.kill$.value == newShape));
+    //       return scaleRequest;
+    //     })
+    //   ).subscribe((requests) => {
+    //     let scaleValue = requests;
+    //     newShape.scale(scaleValue);
+    //     this.whiteBoardCanvas.renderAll();
+    //   });
+    //   this.activeShapesService.currentShapeRef.pipe(
+    //     mergeMap((newShapeRef) => {
+    //       this.kill$.next(newShapeRef);
+    //       let rotationRequest = this.shapeActionsService.rotationShape.pipe(takeWhile(() => this.kill$.value == newShape));
+    //       return rotationRequest;
+    //     })
+    //   ).subscribe((requests) => {
+    //     newShape.rotate(requests);
+    //     this.whiteBoardCanvas.renderAll();
+    //   });
+    //   this.activeShapesService.currentShapeRef.pipe(
+    //     mergeMap((newShapeRef) => {
+    //       this.kill$.next(newShapeRef);
+    //       let opacityRequest = this.shapeActionsService.opacityShape.pipe(takeWhile(() => this.kill$.value == newShape));
+    //       return opacityRequest;
+    //     })
+    //   ).subscribe((requests) => {
+    //     newShape.opacity = requests;
+    //     this.whiteBoardCanvas.renderAll();
+    //   });
+    //   this.activeShapesService.currentShapeRef.pipe(
+    //     mergeMap((newShapeRef) => {
+    //       this.kill$.next(newShapeRef);
+    //       let deletedRequest = this.shapeActionsService.deletedShape.pipe(takeWhile(() => this.kill$.value == newShape));
+    //       return deletedRequest;
+    //     })
+    //   ).subscribe((requests) => {
+    //     let isDeleted = requests;
+    //     if(isDeleted){
+    //       this.whiteBoardCanvas.remove(newShape);
+    //       this.whiteBoardCanvas.renderAll();
+    //     } 
+    //   });
+    //   this.activeShapesService.currentShapeRef.pipe(
+    //     mergeMap((newShapeRef) => {
+    //       this.kill$.next(newShapeRef);
+    //       let duplicatedRequest = this.shapeActionsService.duplicatedShape.pipe(takeWhile(() => this.kill$.value == newShape));
+    //       return duplicatedRequest;
+    //     })
+    //   ).subscribe((requests) => {
+    //     let isDuplicated = requests;
+    //     if(isDuplicated){
+    //       this.activeShapesService.addShapeToWhiteboard(newShape, true);
+    //     } 
+    //   });
+    //   this.activeShapesService.currentShapeRef.pipe(
+    //     mergeMap((newShapeRef) => {
+    //       this.kill$.next(newShapeRef);
+    //       let textRequest = this.activeShapesService.textShape.pipe(takeWhile(() => this.kill$.value == newShape));
+    //       return textRequest;
+    //     })
+    //   ).subscribe((requests) => {
+    //     if(requests){
+    //       this.currentNodeNumber++;
+    //       let text = Object.assign({}, Shapes.text);
+    //       text.value = this.currentNodeNumber.toString();
+    //       text.left = (newShape.left || 100) + (newShape.width || newShape.radius || 20) / 3;
+    //       text.top = (newShape.top || 100) + (newShape.height || newShape.radius || 20) / 4;
+    //       let newText = this.shapesService.createText(text);
+    //       this.activeShapesService.addShapeToWhiteboard(newText);
+    //       newShape.set('fill', 'transparent');
+    //       this.whiteBoardCanvas.renderAll();
+    //     } 
+    //   });
+    //   this.subscriptions.add(this.colorService.colorFill.subscribe((color) => {
+    //     newShape.on("mousedown", () => {
+    //         if(!newShape._objects) newShape.set('fill', color);
+    //         else newShape._objects[0].set('fill', color);
+    //         this.whiteBoardCanvas.renderAll();
+    //     });
+    //     if(this.isFillSync) {
+    //       if(!newShape._objects) newShape.set('fill', color);
+    //       else newShape._objects[0].set('fill', color);
+    //       this.whiteBoardCanvas.renderAll();
+    //     }
+    //   }));
+    //   if(!newShape._objects) {
+    //     this.subscriptions.add(this.colorService.colorStroke.subscribe((color) => {
+    //       newShape.on("mousedown", () => {
+    //         newShape.set('stroke', color);
+    //         this.whiteBoardCanvas.renderAll();
+    //       });
+    //       if(this.isStrokeSync) {
+    //         newShape.set('stroke', color);
+    //         this.whiteBoardCanvas.renderAll();
+    //       }
+    //     }));
+    //   } else {
+    //     this.subscriptions.add(this.colorService.colorText.subscribe((color) => {
+    //       newShape.on("mousedown", () => {
+    //         newShape._objects[1].set('fill', color);
+    //         this.whiteBoardCanvas.renderAll();
+    //       });
+    //       if(this.isTextSync) {
+    //         newShape._objects[1].set('fill', color);
+    //         this.whiteBoardCanvas.renderAll();
+    //       }
+    //     }));
+    //   }
+    //   this.subscriptions.add(this.activeShapesService.selectedShape.subscribe((res: any) => {
+    //     newShape.hasControls = res;
+    //     this.whiteBoardCanvas.renderAll();
+    //   }));
+    //   this.subscriptions.add(this.colorService.syncColorFill.subscribe((res: boolean) => {
+    //     this.isFillSync = res;
+    //   }));
+    //   if(!newShape._objects) {
+    //     this.subscriptions.add(this.colorService.syncColorStroke.subscribe((res: boolean) => {
+    //       this.isStrokeSync = res;
+    //     }));
+    //   } else {
+    //     this.subscriptions.add(this.colorService.syncColorText.subscribe((res: boolean) => {
+    //       this.isTextSync = res;
+    //     }));
+    //   }
+    //   newShape.on("mousedown", () => {
+    //     this.activeShapesService.updateCurrentShape(newShape);
+    //   });
+    // });
+    // this.whiteBoardCanvas.on("mouse:down", (event) => {
+    //   if(!event.target) this.activeShapesService.selectShape(false);
+    // });
     this.observeEdges();
   }
 
@@ -188,7 +207,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.currentGraph.addNewNode(node);
       this.whiteBoardCanvas.add(node.getNodeDrawing());
       node.getNodeDrawing().on("mousedown", () => {
-        this.activeShapesService.updateCurrentShape(node.getNodeDrawing());
+        this.kill$.next(node.getNodeDrawing())
       });
     });
     this.graphService.newEdgeObs.subscribe((newEdge: Edge) => {
