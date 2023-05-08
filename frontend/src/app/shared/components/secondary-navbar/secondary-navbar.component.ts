@@ -29,13 +29,13 @@ export class SecondaryNavbarComponent implements OnInit {
     private shapeActionsService: ShapeActionsService) { }
 
   ngOnInit(): void {
-    this.activeShapesService.selectedShape.subscribe((res: boolean) => {
+    this.shapeActionsService.blockedShape.subscribe((res: boolean) => {
       this.unlocked = res;
     });
   }
 
   public lockShape(): void {
-    this.activeShapesService.selectShape();
+    this.shapeActionsService.unblockShape();
   }
 
   public duplicateShape(): void {

@@ -11,11 +11,13 @@ export class ShapeActionsService {
   private opacityShapeSbj: Subject<number> = new Subject<number>();
   private deleteShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private duplicateShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private blockedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   scaleShape = this.scaleShapeSbj.asObservable();
   rotationShape = this.rotationShapeSbj.asObservable();
   opacityShape = this.opacityShapeSbj.asObservable();
   deletedShape = this.deleteShapeSbj.asObservable();
   duplicatedShape = this.duplicateShapeSbj.asObservable();
+  blockedShape = this.blockedShapeSbj.asObservable();
 
   constructor() { }
 
@@ -41,5 +43,10 @@ export class ShapeActionsService {
     if(value === undefined) value = !this.duplicateShapeSbj.value;
     this.duplicateShapeSbj.next(value);
     this.duplicateShapeSbj.next(false);
+  }
+
+  public unblockShape(value?: boolean): void {
+    if(value === undefined) value = !this.blockedShapeSbj.value;
+    this.blockedShapeSbj.next(value);
   }
 }

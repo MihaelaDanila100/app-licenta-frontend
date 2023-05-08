@@ -10,11 +10,9 @@ import { Node } from 'src/app/entities/node';
 export class ActiveShapesService {
 
   private activeShapesSbj: Subject<fabric.Object> = new Subject<fabric.Object>();
-  private selectedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private curentShapeRefSbj: Subject<any> = new Subject<any>();
   public textShapeSbj: Subject<any> = new Subject<any>();
   public activeShapes = this.activeShapesSbj.asObservable();
-  public selectedShape = this.selectedShapeSbj.asObservable();
   public currentShapeRef = this.curentShapeRefSbj.asObservable();
   public textShape = this.textShapeSbj.asObservable();
 
@@ -104,11 +102,6 @@ export class ActiveShapesService {
     }
     
     this.activeShapesSbj.next(node);
-  }
-
-  public selectShape(value?: boolean): void {
-    if(value === undefined) value = !this.selectedShapeSbj.value;
-    this.selectedShapeSbj.next(value);
   }
 
   public updateCurrentShape(shape: any): void {
