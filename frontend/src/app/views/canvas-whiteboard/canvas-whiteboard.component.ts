@@ -94,7 +94,6 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
               if(result){
                 this.whiteBoardCanvas.remove(newSelectedShape)
                 this.currentGraph.deleteNodeAt(this.currentGraph.getIndexForNodeDrawing(newSelectedShape)).forEach((edge) => {
-                  console.log("edgeeee ", edge)
                   this.whiteBoardCanvas.remove(edge);
                 });
               } 

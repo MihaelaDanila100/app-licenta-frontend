@@ -43,8 +43,11 @@ export class Node {
     }
 
     public getIndexOfNode(): number {
-        console.log("noddd ", this.label, " aflat la index ", this.indexInGraph)
         return this.indexInGraph;
+    }
+
+    public decreaseNodeIndex(): void {
+        this.indexInGraph--;
     }
 
 }
