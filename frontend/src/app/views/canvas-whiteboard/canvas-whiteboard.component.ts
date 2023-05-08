@@ -90,7 +90,15 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
           );
           let deletedRequest = this.shapeActionsService.deletedShape.pipe(
             takeWhile(() => this.kill$.value == newSelectedShape),
-            map((result) => { if(result) this.whiteBoardCanvas.remove(newSelectedShape)})
+            map((result) => { 
+              if(result){
+                this.whiteBoardCanvas.remove(newSelectedShape)
+                this.currentGraph.deleteNodeAt(this.currentGraph.getIndexForNodeDrawing(newSelectedShape)).forEach((edge) => {
+                  console.log("edgeeee ", edge)
+                  this.whiteBoardCanvas.remove(edge);
+                });
+              } 
+            })
           );
           let scaleRequest = this.shapeActionsService.scaleShape.pipe(
             takeWhile(() => this.kill$.value == newSelectedShape),

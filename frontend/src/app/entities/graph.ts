@@ -30,8 +30,8 @@ export class Graph {
 
     public addNewEdge(edge: Edge): void {
         console.log("edgeee === > ", edge)
-        this.adjacency_list[edge.getLeftNode().getIndexOfNode()][edge.getRightNode().getIndexOfNode()] = JSON.parse(JSON.stringify(edge.getLine()));
-        if(!this.isOriented) this.adjacency_list[edge.getRightNode().getIndexOfNode()][edge.getLeftNode().getIndexOfNode()] = JSON.parse(JSON.stringify(edge.getLine()));
+        this.adjacency_list[edge.getLeftNode().getIndexOfNode()][edge.getRightNode().getIndexOfNode()] = edge.getLine();
+        if(!this.isOriented) this.adjacency_list[edge.getRightNode().getIndexOfNode()][edge.getLeftNode().getIndexOfNode()] = edge.getLine();
         console.log("The new graph is ", this.numberOfNodes, this.isOriented, this.adjacency_list, this.nodesList)
     }
 
@@ -41,5 +41,19 @@ export class Graph {
 
     public getNodeRefAt(index: number): Node {
         return this.nodesList[index];
+    }
+
+    public deleteNodeAt(nodeIndex: number): fabric.Line[] {
+        let edgesList: fabric.Line[] = [];
+        console.log("The new graph is ", this.numberOfNodes, this.isOriented, this.adjacency_list, this.nodesList)
+        console.log("We want to delete ", nodeIndex, this.nodesList[nodeIndex])
+        if(!this.isOriented) {
+            this.adjacency_list[nodeIndex].forEach((line, lineIndex) => {
+                console.log("lineeee ", line)
+                if(line != false) edgesList.push(line)
+            });
+
+        }
+        return edgesList;
     }
 }
