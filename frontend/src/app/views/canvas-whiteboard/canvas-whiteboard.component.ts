@@ -51,7 +51,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       mergeMap((newShape) => {
         this.whiteBoardCanvas.add(newShape);
         this.kill$.next(newShape);
-        let colorRequest = this.colorService.colorFill.pipe(
+        let colorFillRequest = this.colorService.colorFill.pipe(
           map((fillColor: any) => {
             if(fillColor != false) {
               newShape.on("mousedown", () => this.shapeActionsHelper.observeFillColor(newShape, fillColor));
@@ -62,7 +62,14 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
             }
           })
         );
-        return merge(colorRequest);
+        let colorStrokeRequest = this.colorService.colorStroke.pipe(
+          map((strokeColor: any) => {
+            newShape.on("mousedown", () => this.shapeActionsHelper.observeStrokeColor(newShape, strokeColor));
+            this.shapeActionsHelper.observeStrokeSyncColor(newShape, strokeColor);
+            this.whiteBoardCanvas.renderAll();
+          })
+        )
+        return merge(colorFillRequest, colorStrokeRequest);
       })
     ).subscribe(() => { });
     this.kill$.pipe(
