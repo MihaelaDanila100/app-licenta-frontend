@@ -44,16 +44,16 @@ export class Graph {
     }
 
     public deleteNodeAt(nodeIndex: number): fabric.Line[] {
+        console.log("The old graph is ", this.numberOfNodes, this.isOriented, this.adjacency_list, this.nodesList)
         let edgesList: fabric.Line[] = [];
-        console.log("The new graph is ", this.numberOfNodes, this.isOriented, this.adjacency_list, this.nodesList)
-        console.log("We want to delete ", nodeIndex, this.nodesList[nodeIndex])
         if(!this.isOriented) {
             this.adjacency_list[nodeIndex].forEach((line, lineIndex) => {
-                console.log("lineeee ", line)
                 if(line != false) edgesList.push(line)
             });
-
         }
+        this.adjacency_list.splice(nodeIndex, 1);
+        this.adjacency_list.forEach((list) => list.splice(nodeIndex, 1));
+        console.log("The new graph is ", this.numberOfNodes, this.isOriented, this.adjacency_list, this.nodesList)
         return edgesList;
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription, combineLatest, forkJoin, map, merge, mergeMap, of, takeWhile } from 'rxjs';
+import { BehaviorSubject, Subscription, combineLatest, forkJoin, map, merge, mergeMap, of, switchMap, takeWhile } from 'rxjs';
 import { Edge } from 'src/app/entities/edge';
 import { Graph } from 'src/app/entities/graph';
 import { Line } from 'src/app/interfaces/line';
@@ -79,7 +79,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       })
     ).subscribe(() => { });
     this.kill$.pipe(
-      mergeMap((newSelectedShape: any) => {
+      switchMap((newSelectedShape: any) => {
         if(newSelectedShape != false) {
           let unblockRequest = this.shapeActionsService.blockedShape.pipe(
             takeWhile(() => this.kill$.value == newSelectedShape),
