@@ -3,6 +3,7 @@
         <div class="flex_row">
             <span>Fill color</span>
             <div class="buttons">
+                <button class="add_button stop_button" (click) = "stopColoring()">Stop</button>
                 <button class="add_button" (click) = "changeFillColor()">Add</button>
                 <span *ngIf = "!isFillSync" class="icon_btn" (click) = "toggleFillSync(true)"><mat-icon class="transitioned">sync</mat-icon></span>
                 <span *ngIf = "isFillSync" class="icon_btn" (click) = "toggleFillSync(false)"><mat-icon class="transitioned">sync_disabled</mat-icon></span>

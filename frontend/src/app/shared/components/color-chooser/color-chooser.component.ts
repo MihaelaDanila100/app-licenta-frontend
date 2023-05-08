@@ -112,6 +112,13 @@ export class ColorChooserComponent implements OnInit, OnDestroy {
     this.colorService.syncText(value);
   }
 
+  public stopColoring() {
+    this.colorService.colorShape({
+      type: ColorType.FILL,
+      value: false
+    });
+  }
+
   public getColorIcon(color: any): string {
     switch (color.type) {
       case ColorType.FILL:

@@ -11,6 +11,7 @@ import { GraphService } from 'src/app/shared/services/graph.service';
 import { ShapeActionsService } from 'src/app/shared/services/shape-actions.service';
 import { ShapesService } from 'src/app/shared/services/shapes.service';
 import { Node } from 'src/app/entities/node';
+import { ShapeActionsHelper } from 'src/app/helpers/shape-actions.helper';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -36,7 +37,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     private colorService: ColorService,
     private shapesService: ShapesService,
     private shapeActionsService: ShapeActionsService,
-    private graphService: GraphService) { }
+    private graphService: GraphService,
+    private shapeActionsHelper: ShapeActionsHelper) { }
   
 
   ngOnInit(): void {
@@ -45,14 +47,26 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       width: window.innerWidth * 81 / 100,
       height: window.innerHeight * 82 / 100
     });
-    this.activeShapesService.activeShapes.subscribe((newShape) => {
-      this.whiteBoardCanvas.add(newShape);
-      newShape.on("mousedown", () => {
-        this.kill$.next(newShape)
-      });
-    });
+    this.activeShapesService.activeShapes.pipe(
+      mergeMap((newShape) => {
+        this.whiteBoardCanvas.add(newShape);
+        this.kill$.next(newShape);
+        let colorRequest = this.colorService.colorFill.pipe(
+          map((fillColor: any) => {
+            if(fillColor != false) {
+              newShape.on("mousedown", () => this.shapeActionsHelper.observeFillColor(newShape, fillColor));
+              this.shapeActionsHelper.observeFillSyncColor(newShape, fillColor);
+              this.whiteBoardCanvas.renderAll();
+            } else {
+              newShape.off("mousedown", () => this.shapeActionsHelper.observeFillColor(newShape, fillColor));
+            }
+          })
+        );
+        return merge(colorRequest);
+      })
+    ).subscribe(() => { });
     this.kill$.pipe(
-      mergeMap((newSelectedShape: fabric.Group | fabric.Object) => {
+      mergeMap((newSelectedShape: any) => {
         let deletedRequest = this.shapeActionsService.deletedShape.pipe(
           takeWhile(() => this.kill$.value == newSelectedShape),
           map((result) => { if(result) this.whiteBoardCanvas.remove(newSelectedShape)})
