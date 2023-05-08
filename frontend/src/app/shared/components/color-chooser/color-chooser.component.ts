@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { ActiveShapesService } from '../../services/active-shapes.service';
 import { ColorType } from '../../data/enums/color-types';
 import { ColorService } from '../../services/color.service';
+import { GraphService } from '../../services/graph.service';
+import { Node } from 'src/app/entities/node';
 
 @Component({
   selector: 'app-color-chooser',
@@ -11,7 +13,9 @@ import { ColorService } from '../../services/color.service';
 })
 export class ColorChooserComponent implements OnInit, OnDestroy {
 
-  constructor(private activeShapesService: ActiveShapesService, private colorService: ColorService) { }
+  constructor(private activeShapesService: ActiveShapesService, 
+    private colorService: ColorService,
+    private graphService: GraphService) { }
 
   private subscription: Subscription = new Subscription();
   public isGroup: boolean = false;
@@ -26,17 +30,15 @@ export class ColorChooserComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription.add(
-      this.activeShapesService.activeShapes.subscribe((res: any) => {
-        if(res._objects) this.isGroup = true;
-        else this.isGroup = false;
+      this.activeShapesService.activeShapes.subscribe((newShape: any) => {
+        newShape.on("mousedown", () => this.isGroup = false);
       })
     );
     this.subscription.add(
-      this.activeShapesService.currentShapeRef.subscribe((res: any) => {
-        if(res._objects) this.isGroup = true;
-        else this.isGroup = false;
+      this.graphService.newNodesObs.subscribe((newNode: Node) => {
+        newNode.getNodeDrawing().on("mousedown", () => this.isGroup = true);
       })
-    )
+    );
   };
 
   ngOnDestroy(): void {

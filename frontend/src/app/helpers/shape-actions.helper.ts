@@ -9,6 +9,7 @@ export class ShapeActionsHelper {
 
     private isFillSync: boolean = false;
     private isStrokeSync: boolean = false;
+    private isTextSync: boolean = false;
     
     constructor(private colorService: ColorService) {
         this.colorService.syncColorFill.subscribe((res: boolean) => {
@@ -16,6 +17,9 @@ export class ShapeActionsHelper {
         });
         this.colorService.syncColorStroke.subscribe((res) => {
             this.isStrokeSync = res;
+        });
+        this.colorService.syncColorText.subscribe((res) => {
+            this.isTextSync = res;
         });
     }
 
@@ -35,6 +39,14 @@ export class ShapeActionsHelper {
 
     public observeStrokeSyncColor(shapeRef: any, strokeColor: any): void {
         if(this.isStrokeSync) this.observeStrokeColor(shapeRef, strokeColor);
+    }
+
+    public observeTextColor(shapeRef: any, textColor: any): void {
+        shapeRef._objects[1].set('fill', textColor);
+    }
+
+    public observeTextSyncColor(shapeRef: any, textColor: any): void {
+        if(this.isTextSync) this.observeTextColor(shapeRef, textColor);
     }
     
 }

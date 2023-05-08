@@ -68,8 +68,15 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
             this.shapeActionsHelper.observeStrokeSyncColor(newShape, strokeColor);
             this.whiteBoardCanvas.renderAll();
           })
+        );
+        let colorTextRequest = this.colorService.colorText.pipe(
+          map((textColor: any) => {
+            newShape.on("mousedown", () => this.shapeActionsHelper.observeTextColor(newShape, textColor));
+            this.shapeActionsHelper.observeTextSyncColor(newShape, textColor);
+            this.whiteBoardCanvas.renderAll();
+          })
         )
-        return merge(colorFillRequest, colorStrokeRequest);
+        return merge(colorFillRequest, colorStrokeRequest, colorTextRequest);
       })
     ).subscribe(() => { });
     this.kill$.pipe(
@@ -245,13 +252,34 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   }
 
   public observeEdges(): void {
-    this.graphService.newNodesObs.subscribe((node: Node) => {
-      this.currentGraph.addNewNode(node);
-      this.whiteBoardCanvas.add(node.getNodeDrawing());
-      node.getNodeDrawing().on("mousedown", () => {
-        this.kill$.next(node.getNodeDrawing())
-      });
-    });
+    this.graphService.newNodesObs.pipe(
+      mergeMap((node: Node) => {
+        this.currentGraph.addNewNode(node);
+        this.whiteBoardCanvas.add(node.getNodeDrawing());
+        node.getNodeDrawing().on("mousedown", () => {
+          this.kill$.next(node.getNodeDrawing())
+        });
+        let colorFillRequest = this.colorService.colorFill.pipe(
+          map((fillColor: any) => {
+            if(fillColor != false) {
+              node.getNodeDrawing().on("mousedown", () => this.shapeActionsHelper.observeFillColor(node.getNodeDrawing(), fillColor));
+              this.shapeActionsHelper.observeFillSyncColor(node.getNodeDrawing(), fillColor);
+              this.whiteBoardCanvas.renderAll();
+            } else {
+              node.getNodeDrawing().off("mousedown", () => this.shapeActionsHelper.observeFillColor(node.getNodeDrawing(), fillColor));
+            }
+          })
+        );
+        let colorTextRequest = this.colorService.colorText.pipe(
+          map((textColor: any) => {
+            node.getNodeDrawing().on("mousedown", () => this.shapeActionsHelper.observeTextColor(node.getNodeDrawing(), textColor));
+            this.shapeActionsHelper.observeTextSyncColor(node.getNodeDrawing(), textColor);
+            this.whiteBoardCanvas.renderAll();
+          })
+        )
+        return merge(colorFillRequest, colorTextRequest);
+      })
+    ).subscribe(() => { });
     this.graphService.newEdgeObs.subscribe((newEdge: Edge) => {
       newEdge.getLeftNode().getNodeDrawing().on("moving", (event) =>  {
         newEdge.setLineCoords(event.pointer, true);
