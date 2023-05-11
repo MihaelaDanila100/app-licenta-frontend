@@ -18,10 +18,9 @@ import { ShapeActionsService } from '../../services/shape-actions.service';
 export class SecondaryNavbarComponent implements OnInit {
 
   public unlocked: boolean = true; 
-  public showColorChooser: boolean = false;
+  public colorMode: boolean = false;
   public chooseBorder: boolean = false;
   public edgesMode: boolean = false;
-  @Output() showColorChooserChange: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(InlinePopupComponent) strokeWidthRef: any;
 
   constructor(private activeShapesService: ActiveShapesService, 
@@ -31,6 +30,9 @@ export class SecondaryNavbarComponent implements OnInit {
   ngOnInit(): void {
     this.shapeActionsService.blockedShape.subscribe((res: boolean) => {
       this.unlocked = res;
+    });
+    this.shapeActionsService.toggleColorsObs.subscribe((res: boolean) => {
+      this.colorMode = res;
     });
   }
 
@@ -47,8 +49,8 @@ export class SecondaryNavbarComponent implements OnInit {
   }
 
   public toggleColors(): void {
-    this.showColorChooser = !this.showColorChooser;
-    this.showColorChooserChange.emit(this.showColorChooser);
+    this.colorMode = !this.colorMode;
+    this.shapeActionsService.toggleColor(this.colorMode);
   }
 
   public openShapeSettings(): void {

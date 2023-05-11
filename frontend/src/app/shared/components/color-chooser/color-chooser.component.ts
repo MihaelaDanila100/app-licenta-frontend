@@ -5,6 +5,7 @@ import { ColorType } from '../../data/enums/color-types';
 import { ColorService } from '../../services/color.service';
 import { GraphService } from '../../services/graph.service';
 import { Node } from 'src/app/entities/node';
+import { ShapeActionsService } from '../../services/shape-actions.service';
 
 @Component({
   selector: 'app-color-chooser',
@@ -15,7 +16,8 @@ export class ColorChooserComponent implements OnInit, OnDestroy {
 
   constructor(private activeShapesService: ActiveShapesService, 
     private colorService: ColorService,
-    private graphService: GraphService) { }
+    private graphService: GraphService,
+    private shapeActionsService: ShapeActionsService) { }
 
   private subscription: Subscription = new Subscription();
   public isGroup: boolean = false;
@@ -97,28 +99,25 @@ export class ColorChooserComponent implements OnInit, OnDestroy {
       value: event.value
     };
     this.colorService.colorShape(newColor);
+    this.shapeActionsService.toggleColor(true);
   }
 
   public toggleFillSync(value: boolean): void {
     this.isFillSync = value;
     this.colorService.syncFill(value);
+    this.shapeActionsService.toggleColor(true);
   }
 
   public toggleStrokeSync(value: boolean): void {
     this.isOutlineSync = value;
     this.colorService.syncStroke(value);
+    this.shapeActionsService.toggleColor(true);
   }
 
   public toggleTextSync(value: boolean): void {
     this.isTextSync = value;
     this.colorService.syncText(value);
-  }
-
-  public stopColoring() {
-    this.colorService.colorShape({
-      type: ColorType.FILL,
-      value: false
-    });
+    this.shapeActionsService.toggleColor(true);
   }
 
   public getColorIcon(color: any): string {

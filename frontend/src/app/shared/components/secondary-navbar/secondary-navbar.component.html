@@ -1,6 +1,6 @@
 <div class="scd_navbar">
     <mat-icon [svgIcon]="unlocked ? 'unlock_icon' : 'lock_icon'" (click) = "lockShape()"></mat-icon>
-    <mat-icon [svgIcon] = "showColorChooser ? 'full_pallete_icon' : 'pallette_icon'" (click) = "toggleColors()"></mat-icon>
+    <mat-icon [svgIcon] = "colorMode ? 'full_pallete_icon' : 'pallette_icon'" (click) = "toggleColors()"></mat-icon>
     <mat-icon svgIcon = "shape_settings_icon" (click) = "openShapeSettings()"></mat-icon>
     <mat-icon svgIcon = "duplicate_icon" (click) = "duplicateShape()"></mat-icon>
     <mat-icon svgIcon = "delete_icon" (click) = "deleteShape()"></mat-icon>
