@@ -71,16 +71,24 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         );
         let colorStrokeRequest = this.colorService.colorStroke.pipe(
           map((strokeColor: any) => {
-            newShape.on("mousedown", () => this.shapeActionsHelper.observeStrokeColor(newShape, strokeColor));
-            this.shapeActionsHelper.observeStrokeSyncColor(newShape, strokeColor);
-            this.whiteBoardCanvas.renderAll();
+            newShape.on("mousedown", () => {
+              if(this.isColorMode) this.shapeActionsHelper.observeStrokeColor(newShape, strokeColor)
+            });
+            if(this.isColorMode) {
+              this.shapeActionsHelper.observeStrokeSyncColor(newShape, strokeColor);
+              this.whiteBoardCanvas.renderAll();
+            }
           })
         );
         let colorTextRequest = this.colorService.colorText.pipe(
           map((textColor: any) => {
-            newShape.on("mousedown", () => this.shapeActionsHelper.observeTextColor(newShape, textColor));
-            this.shapeActionsHelper.observeTextSyncColor(newShape, textColor);
-            this.whiteBoardCanvas.renderAll();
+            newShape.on("mousedown", () => {
+              if(this.isColorMode) this.shapeActionsHelper.observeTextColor(newShape, textColor)
+            });
+            if(this.isColorMode) {
+              this.shapeActionsHelper.observeTextSyncColor(newShape, textColor);
+              this.whiteBoardCanvas.renderAll();
+            }
           })
         )
         return merge(colorFillRequest, colorStrokeRequest, colorTextRequest);
@@ -150,26 +158,30 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         });
         let colorFillRequest = this.colorService.colorFill.pipe(
           map((fillColor: any) => {
-            if(fillColor != false) {
-              node.getNodeDrawing().on("mousedown", () => {
+            node.getNodeDrawing().on("mousedown", () => {
+              if(this.isColorMode) {
                 this.shapeActionsHelper.observeFillColor(node.getNodeDrawing(), fillColor);
                 this.whiteBoardCanvas.renderAll()
-              });
+              }
+            });
+            if(this.isColorMode) {
               this.shapeActionsHelper.observeFillSyncColor(node.getNodeDrawing(), fillColor);
               this.whiteBoardCanvas.renderAll();
-            } else {
-              node.getNodeDrawing().off("mousedown", () => this.shapeActionsHelper.observeFillColor(node.getNodeDrawing(), fillColor));
             }
           })
         );
         let colorTextRequest = this.colorService.colorText.pipe(
           map((textColor: any) => {
             node.getNodeDrawing().on("mousedown", () => {
-              this.shapeActionsHelper.observeTextColor(node.getNodeDrawing(), textColor)
-              this.whiteBoardCanvas.renderAll()
+              if(this.isColorMode) {
+                this.shapeActionsHelper.observeTextColor(node.getNodeDrawing(), textColor)
+                this.whiteBoardCanvas.renderAll()
+              }
             });
-            this.shapeActionsHelper.observeTextSyncColor(node.getNodeDrawing(), textColor);
-            this.whiteBoardCanvas.renderAll();
+            if(this.isColorMode) {
+              this.shapeActionsHelper.observeTextSyncColor(node.getNodeDrawing(), textColor);
+              this.whiteBoardCanvas.renderAll();
+            }
           })
         )
         return merge(colorFillRequest, colorTextRequest);
