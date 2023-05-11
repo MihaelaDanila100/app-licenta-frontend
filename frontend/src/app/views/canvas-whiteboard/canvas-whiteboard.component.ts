@@ -26,6 +26,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   public isFillSync: boolean = false;
   public isStrokeSync: boolean = false;
   public isTextSync: boolean = false;
+  private isColorMode: boolean = false;
   private kill$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
   private currentNodeNumber: number = 0;
   private edges: Edge[] = [];
@@ -42,6 +43,9 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   
 
   ngOnInit(): void {
+    this.shapeActionsService.toggleColorsObs.subscribe((res) => {
+      this.isColorMode = res;
+    });
     this.whiteBoardCanvas = this.drawingService.createCanvas('whiteboard_canvas', {});
     this.whiteBoardCanvas.setDimensions({
       width: window.innerWidth * 81 / 100,
@@ -54,11 +58,15 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         let colorFillRequest = this.colorService.colorFill.pipe(
           map((fillColor: any) => {
             newShape.on("mousedown", () => {
-              this.shapeActionsHelper.observeFillColor(newShape, fillColor);
-              this.whiteBoardCanvas.renderAll();
+              if(this.isColorMode) {
+                this.shapeActionsHelper.observeFillColor(newShape, fillColor);
+                this.whiteBoardCanvas.renderAll();
+              }
             });
-            this.shapeActionsHelper.observeFillSyncColor(newShape, fillColor);
-            this.whiteBoardCanvas.renderAll();
+            if(this.isColorMode) { 
+              this.shapeActionsHelper.observeFillSyncColor(newShape, fillColor);
+              this.whiteBoardCanvas.renderAll();
+            }
           })
         );
         let colorStrokeRequest = this.colorService.colorStroke.pipe(
