@@ -52,7 +52,7 @@ export class ColorChooserComponent implements OnInit, OnDestroy {
       type: ColorType.FILL,
       value: this.fillColor
     };
-    this.colorService.colorShape(newColor);
+    if(this.isFillSync) this.colorService.colorShape(newColor);
     if(!this.isFillSync && this.usedColors.findIndex((color) => color.value == this.fillColor) < 0) {
       this.usedColors.push(newColor);
     } 
@@ -63,7 +63,7 @@ export class ColorChooserComponent implements OnInit, OnDestroy {
       type: ColorType.STROKE,
       value: this.outlineColor
     };
-    this.colorService.colorShape(newColor);
+    if(this.isOutlineSync) this.colorService.colorShape(newColor);
     if(!this.isOutlineSync && this.usedColors.findIndex((color) => color.value == this.outlineColor) < 0){
       this.usedColors.push(newColor);
     } 
@@ -74,7 +74,7 @@ export class ColorChooserComponent implements OnInit, OnDestroy {
       type: ColorType.TEXT,
       value: this.textColor
     };
-    this.colorService.colorShape(newColor);
+    if(this.isTextSync) this.colorService.colorShape(newColor);
     if(!this.isTextSync && this.usedColors.findIndex((color) => color.value == this.textColor) < 0){
       this.usedColors.push(newColor);
     } 
