@@ -13,6 +13,7 @@ import { InlinePopupComponent } from './components/inline-popup/inline-popup.com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ColorChooserComponent } from './components/color-chooser/color-chooser.component';
 import { ShapeOptionsComponent } from './components/shape-options/shape-options.component';
+import { EdgesTypesComponent } from './components/edges-types/edges-types.component';
 
 
 
@@ -27,7 +28,8 @@ import { ShapeOptionsComponent } from './components/shape-options/shape-options.
     OptionsNavbarComponent,
     InlinePopupComponent,
     ColorChooserComponent,
-    ShapeOptionsComponent
+    ShapeOptionsComponent,
+    EdgesTypesComponent
   ],
   imports: [
     CommonModule,

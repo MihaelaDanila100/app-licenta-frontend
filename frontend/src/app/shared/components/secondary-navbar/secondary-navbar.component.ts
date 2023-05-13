@@ -22,6 +22,7 @@ export class SecondaryNavbarComponent implements OnInit {
   public chooseBorder: boolean = false;
   public edgesMode: boolean = false;
   @ViewChild(InlinePopupComponent) strokeWidthRef: any;
+  @Output() changedEdgeMode: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private activeShapesService: ActiveShapesService, 
     private graphService: GraphService,
@@ -67,8 +68,8 @@ export class SecondaryNavbarComponent implements OnInit {
   }
 
   public addEdge(): void {
-    this.graphService.toggleEdges();
     this.edgesMode = !this.edgesMode;
+    this.changedEdgeMode.emit(this.edgesMode);
   }
 
 }

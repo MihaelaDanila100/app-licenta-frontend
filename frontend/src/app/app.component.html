@@ -2,11 +2,11 @@
     <app-navbar (toggledMenu) = "toggleMenu()"></app-navbar>
     
     <div class="flex_row">
-        <app-secondary-navbar></app-secondary-navbar>
+        <app-secondary-navbar (changedEdgeMode) = "openMenu($event)"></app-secondary-navbar>
     
         <mat-sidenav-container [autosize] = "true">
             <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="sidenavbar">
-                <app-sidenav></app-sidenav>
+                <app-sidenav [defaultSelectedIndex] = "selectedNavbarIndex"></app-sidenav>
             </mat-sidenav>
     
             <mat-sidenav-content class="flex_row no_scroll">

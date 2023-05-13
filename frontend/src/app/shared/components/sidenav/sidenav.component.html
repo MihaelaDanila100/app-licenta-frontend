@@ -4,8 +4,10 @@
             <app-sidenav-shapes></app-sidenav-shapes>
         </ng-template>
     </p-accordionTab>
-        <p-accordionTab header="Arrows">
-        Content 2
+        <p-accordionTab header="Arrows" [selected] = "defaultSelectedIndex === 2">
+            <ng-template pTemplate = "content">
+                <app-edges-types></app-edges-types>
+            </ng-template>
         </p-accordionTab>
     <p-accordionTab header="Text">
         <ng-template pTemplate="content">
