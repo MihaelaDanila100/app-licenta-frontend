@@ -1,6 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GraphService } from '../../services/graph.service';
 import { DrawingService } from '../../services/drawing.service';
+import { ShapesService } from '../../services/shapes.service';
+import { Edges } from '../../data/constants/edges';
 
 @Component({
   selector: 'app-edges-types',
@@ -10,7 +12,8 @@ import { DrawingService } from '../../services/drawing.service';
 export class EdgesTypesComponent implements OnInit {
 
   constructor(private graphService: GraphService, 
-    private drawingService: DrawingService) { }
+    private drawingService: DrawingService,
+    private shapeService: ShapesService) { }
   
   private edgesCanvas!: fabric.Canvas;
   private edges: fabric.Object[] = [];
@@ -21,6 +24,10 @@ export class EdgesTypesComponent implements OnInit {
       width: 210
     });
     this.initEdges();
+    this.edges.forEach((edge) => {
+      this.edgesCanvas.add(edge);
+    });
+    this.edges[0].on("mousedown", () => this.toggleEdgeMode());
   }
 
   public toggleEdgeMode(): void {
@@ -28,7 +35,7 @@ export class EdgesTypesComponent implements OnInit {
   }
 
   private initEdges() {
-    console.log("ahaaaa ", this.edgesCanvas)
+    this.edges.push(this.shapeService.createLine(Edges.line));
   }
 
 }
