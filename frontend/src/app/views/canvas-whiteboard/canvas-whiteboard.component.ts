@@ -12,6 +12,7 @@ import { ShapeActionsService } from 'src/app/shared/services/shape-actions.servi
 import { ShapesService } from 'src/app/shared/services/shapes.service';
 import { Node } from 'src/app/entities/node';
 import { ShapeActionsHelper } from 'src/app/helpers/shape-actions.helper';
+import { EdgeTypes } from 'src/app/shared/data/enums/edge-types';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -220,8 +221,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       }
     }
     this.subscriptions.add(
-      this.graphService.addEdgeObs.subscribe((res: boolean) => {
-        if(res === true) {
+      this.graphService.addEdgeObs.subscribe((res: any) => {
+        if(res === EdgeTypes.UNORIENTED_WITH_NO_COST) {
           this.whiteBoardCanvas.on("mouse:up", mouseUpHandler);
           this.whiteBoardCanvas.on("mouse:move", mouseMoveHandler);
           this.whiteBoardCanvas.on("mouse:down", mouseDownHandler);

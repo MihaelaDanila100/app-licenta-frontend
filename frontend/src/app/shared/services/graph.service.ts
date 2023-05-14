@@ -8,7 +8,7 @@ import { Node } from 'src/app/entities/node';
 })
 export class GraphService {
 
-  private addEdgeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private addEdgeSbj: BehaviorSubject<any> = new BehaviorSubject<any>(false);
   addEdgeObs = this.addEdgeSbj.asObservable();
   private newNodesSbj: Subject<Node> = new Subject<Node>();
   newNodesObs = this.newNodesSbj.asObservable();
@@ -17,9 +17,11 @@ export class GraphService {
 
   constructor() { }
 
-  public toggleEdges(value?: boolean): void {
-    if(value) this.addEdgeSbj.next(value);
-    this.addEdgeSbj.next(!this.addEdgeSbj.value);
+  public toggleEdges(value?: any): void {
+    if(value){
+      if(this.addEdgeSbj.value === value) this.addEdgeSbj.next(false);
+      else this.addEdgeSbj.next(value);
+    } else this.addEdgeSbj.next(false);
   }
 
   public addNode(newNode: Node): void {

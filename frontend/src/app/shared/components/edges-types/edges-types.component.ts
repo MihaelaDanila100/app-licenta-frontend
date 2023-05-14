@@ -4,6 +4,7 @@ import { DrawingService } from '../../services/drawing.service';
 import { ShapesService } from '../../services/shapes.service';
 import { Edges } from '../../data/constants/edges';
 import { BehaviorSubject } from 'rxjs';
+import { EdgeTypes } from '../../data/enums/edge-types';
 
 @Component({
   selector: 'app-edges-types',
@@ -60,7 +61,7 @@ export class EdgesTypesComponent implements OnInit {
 
         switch (newIndex) {
           case 0:
-            this.graphService.toggleEdges();
+            this.graphService.toggleEdges(EdgeTypes.UNORIENTED_WITH_NO_COST);
             break;
         
           default:
