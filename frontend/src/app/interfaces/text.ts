@@ -6,5 +6,7 @@ export interface Text {
     fill?: string,
     showControls: boolean,
     fontSize?: number,
-    fontWeight?: string | number
+    fontWeight?: string | number,
+    borderColor?: string,
+    borderDashArray?: number[]
 }

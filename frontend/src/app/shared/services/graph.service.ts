@@ -17,7 +17,8 @@ export class GraphService {
 
   constructor() { }
 
-  public toggleEdges(): void {
+  public toggleEdges(value?: boolean): void {
+    if(value) this.addEdgeSbj.next(value);
     this.addEdgeSbj.next(!this.addEdgeSbj.value);
   }
 

@@ -55,6 +55,12 @@ export class ShapesService {
         hasControls: line.showControls
       })
   }
+  
+  public createLineWithText(line: Line, text: Text): fabric.Group {
+    let edgeLine = this.createLine(line);
+    let edgeText =this.createText(text);
+    return new fabric.Group([edgeLine, edgeText]);
+  }
 
   public createCircle(circle: Circle): fabric.Circle {
      if(!circle.stroke) circle.stroke = 'black';
