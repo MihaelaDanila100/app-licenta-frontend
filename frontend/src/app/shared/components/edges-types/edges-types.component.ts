@@ -63,6 +63,10 @@ export class EdgesTypesComponent implements OnInit {
           case 0:
             this.graphService.toggleEdges(EdgeTypes.UNORIENTED_WITH_NO_COST);
             break;
+          
+          case 1:
+            this.graphService.toggleEdges(EdgeTypes.UNORIENTED_WITH_COST);
+            break;
         
           default:
             break;

@@ -13,6 +13,7 @@ import { ShapesService } from 'src/app/shared/services/shapes.service';
 import { Node } from 'src/app/entities/node';
 import { ShapeActionsHelper } from 'src/app/helpers/shape-actions.helper';
 import { EdgeTypes } from 'src/app/shared/data/enums/edge-types';
+import { EdgesHelper } from 'src/app/helpers/edges.helper';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -29,8 +30,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   public isTextSync: boolean = false;
   private isColorMode: boolean = false;
   private kill$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
-  private currentNodeNumber: number = 0;
-  private edges: Edge[] = [];
+  private currentSelectedEdgeType!: EdgeTypes;
   private currentNewEdge: any;
   private currentGraph: Graph = new Graph([]);
 
@@ -40,7 +40,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     private shapesService: ShapesService,
     private shapeActionsService: ShapeActionsService,
     private graphService: GraphService,
-    private shapeActionsHelper: ShapeActionsHelper) { }
+    private shapeActionsHelper: ShapeActionsHelper,
+    private edgesHelper: EdgesHelper) { }
   
 
   ngOnInit(): void {
@@ -204,7 +205,12 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       } else{
         if(this.whiteBoardCanvas.getActiveObjects().length === 1){
           let currentNode = this.currentGraph.getNodeRefAt(this.currentGraph.getIndexForNodeDrawing(this.whiteBoardCanvas.getActiveObjects()[0]));
-          newEdge = this.createEdge();
+          let pointer = this.whiteBoardCanvas.getActiveObject();
+          if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_NO_COST) newEdge = this.edgesHelper.createEdge(pointer);
+          if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_COST) newEdge = this.edgesHelper.createEdgeWithCost(pointer);
+          this.whiteBoardCanvas.add(newEdge);
+          newEdge.sendToBack();
+          this.whiteBoardCanvas.renderAll();
           this.currentNewEdge = new Edge(newEdge, currentNode);
         } 
       } 
@@ -222,7 +228,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     }
     this.subscriptions.add(
       this.graphService.addEdgeObs.subscribe((res: any) => {
-        if(res === EdgeTypes.UNORIENTED_WITH_NO_COST) {
+        this.currentSelectedEdgeType = res;
+        if(res != false) {
           this.whiteBoardCanvas.on("mouse:up", mouseUpHandler);
           this.whiteBoardCanvas.on("mouse:move", mouseMoveHandler);
           this.whiteBoardCanvas.on("mouse:down", mouseDownHandler);
@@ -233,29 +240,6 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         }
       })              
     )
-  }
-
-  private createEdge(): any {
-    let pointer = this.whiteBoardCanvas.getActiveObject();
-    let coords = [
-      (pointer?.left || 0) + (pointer?.width || 0) / 2,
-      (pointer?.top || 0) + (pointer?.height || 0) / 2,
-      (pointer?.left || 0) + (pointer?.width || 0) / 2,
-      (pointer?.top || 0) + (pointer?.height || 0) / 2
-    ]
-    let newLine: Line = {
-      left: pointer?.left, 
-      top: pointer?.top, 
-      points: coords,
-      strokeWidth: 2,
-      stroke: 'black',
-      showControls: false
-    }
-    let newEdge = this.shapesService.createLine(newLine)
-    this.whiteBoardCanvas.add(newEdge);
-    newEdge.sendToBack();
-    this.whiteBoardCanvas.renderAll();
-    return newEdge;
   }
 
   private connectEdge(event: any, newEdge: any): any {
