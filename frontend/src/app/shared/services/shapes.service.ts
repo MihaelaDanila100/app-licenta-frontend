@@ -122,4 +122,18 @@ export class ShapesService {
       fontWeight: text.fontWeight
     })
   }
+
+  public createArrow(lineObject: Line): fabric.Group {
+    let arrowhead = new fabric.Triangle({
+      width: 10,
+      height: 15,
+      fill: 'black',
+      left: (lineObject.left || 0) + lineObject.points[2] + 8,
+      top: (lineObject.top || 0) + lineObject.points[3],
+      angle: 135,
+      selectable: false
+    });
+    let line = this.createLine(lineObject);
+    return new fabric.Group([arrowhead, line]);
+  }
 }

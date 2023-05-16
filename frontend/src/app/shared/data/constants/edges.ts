@@ -30,5 +30,15 @@ export const Edges = {
             fontWeight: 'normal',
             borderColor: 'red'
         }
+    },
+    arrowLine: {
+        points: [0, 0, 30, 30],
+        stroke: 'black',
+        top: 50,
+        left: 5,
+        scale: 2.5,
+        strokeWidth: 1,
+        showControls: false,
+        fill: 'red'
     }
 }
