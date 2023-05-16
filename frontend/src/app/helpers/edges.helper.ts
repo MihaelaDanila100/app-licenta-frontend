@@ -46,4 +46,23 @@ export class EdgesHelper {
         let newEdge = this.shapesService.createLine(newLine);
         return newEdge;
     }
+
+    public createOrientedEdge(pointer: any): any {
+        let coords = [
+            (pointer?.left || 0) + (pointer?.width || 0) / 2,
+            (pointer?.top || 0) + (pointer?.height || 0) / 2,
+            (pointer?.left || 0) + (pointer?.width || 0) / 2,
+            (pointer?.top || 0) + (pointer?.height || 0) / 2
+        ]
+        let newLine: Line = {
+            left: pointer?.left, 
+            top: pointer?.top, 
+            points: coords,
+            strokeWidth: 2,
+            stroke: 'green',
+            showControls: false
+        }
+        let newEdge = this.shapesService.createLine(newLine);
+        return newEdge;
+    }
 }

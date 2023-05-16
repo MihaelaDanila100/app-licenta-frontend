@@ -208,6 +208,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
           let pointer = this.whiteBoardCanvas.getActiveObject();
           if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_NO_COST) newEdge = this.edgesHelper.createEdge(pointer);
           if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_COST) newEdge = this.edgesHelper.createEdgeWithCost(pointer);
+          if(this.currentSelectedEdgeType === EdgeTypes.ORIENTED_WITH_NO_COST) newEdge = this.edgesHelper.createOrientedEdge(pointer);
           this.whiteBoardCanvas.add(newEdge);
           newEdge.sendToBack();
           this.whiteBoardCanvas.renderAll();
