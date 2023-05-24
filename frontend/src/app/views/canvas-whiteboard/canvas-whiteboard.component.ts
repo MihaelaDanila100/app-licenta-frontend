@@ -31,7 +31,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   private isColorMode: boolean = false;
   private kill$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
   private currentSelectedEdgeType!: EdgeTypes;
-  private currentNewEdge: any;
+  private currentNewEdge!: Edge | null;
   private currentGraph: Graph = new Graph([]);
 
   constructor(private drawingService: DrawingService,
@@ -199,30 +199,33 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     })
     let newEdge!: any;
     let mouseUpHandler = () => {
-      if(newEdge){
+      if(newEdge != null && this.currentNewEdge?.getRightNode()){
         newEdge = null;
         this.currentNewEdge = null;
-      } else{
+      } else {
         if(this.whiteBoardCanvas.getActiveObjects().length === 1){
+
           let currentNode = this.currentGraph.getNodeRefAt(this.currentGraph.getIndexForNodeDrawing(this.whiteBoardCanvas.getActiveObjects()[0]));
           let pointer = this.whiteBoardCanvas.getActiveObject();
           if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_NO_COST) newEdge = this.edgesHelper.createEdge(pointer);
           if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_COST) newEdge = this.edgesHelper.createEdgeWithCost(pointer);
           if(this.currentSelectedEdgeType === EdgeTypes.ORIENTED_WITH_NO_COST) newEdge = this.edgesHelper.createOrientedEdge(pointer);
+
           this.whiteBoardCanvas.add(newEdge);
           newEdge.sendToBack();
           this.whiteBoardCanvas.renderAll();
           this.currentNewEdge = new Edge(newEdge, currentNode);
+
         } 
-      } 
+      }
     };
     let mouseMoveHandler = (event: any) => {
-      newEdge = this.connectEdge(event, newEdge);
+      if(newEdge != null) newEdge = this.connectEdge(event, newEdge);
     };
     let mouseDownHandler = (event: any) => {
-      if(newEdge) {
+      if(this.currentNewEdge != null) {
         newEdge.set('opacity', 1);
-        this.currentNewEdge.setRightNode(this.currentGraph.getNodeRefAt(this.currentGraph.getIndexForNodeDrawing(event.target)));
+        this.currentNewEdge?.setRightNode(this.currentGraph.getNodeRefAt(this.currentGraph.getIndexForNodeDrawing(event.target)));
         this.currentGraph.addNewEdge(this.currentNewEdge);
         this.graphService.addEdge(this.currentNewEdge);
       }
@@ -230,15 +233,14 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.graphService.addEdgeObs.subscribe((res: any) => {
         this.currentSelectedEdgeType = res;
+        this.whiteBoardCanvas.off("mouse:up", mouseUpHandler)
+        this.whiteBoardCanvas.off("mouse:move", mouseMoveHandler);
+        this.whiteBoardCanvas.off("mouse:down", mouseDownHandler);
         if(res != false) {
           this.whiteBoardCanvas.on("mouse:up", mouseUpHandler);
           this.whiteBoardCanvas.on("mouse:move", mouseMoveHandler);
           this.whiteBoardCanvas.on("mouse:down", mouseDownHandler);
-        } else {
-          this.whiteBoardCanvas.off("mouse:up", mouseUpHandler)
-          this.whiteBoardCanvas.off("mouse:move", mouseMoveHandler);
-          this.whiteBoardCanvas.off("mouse:down", mouseDownHandler);
-        }
+        } 
       })              
     )
   }

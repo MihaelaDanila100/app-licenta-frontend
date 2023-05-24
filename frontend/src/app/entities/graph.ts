@@ -29,7 +29,7 @@ export class Graph {
     }
 
     public addNewEdge(edge: Edge): void {
-        console.log("edgeee === > ", edge)
+        console.log("adaug in matricea de adiacenta new edgeee === > ", edge)
         this.adjacency_list[edge.getLeftNode().getIndexOfNode()][edge.getRightNode().getIndexOfNode()] = edge.getLine();
         if(!this.isOriented) this.adjacency_list[edge.getRightNode().getIndexOfNode()][edge.getLeftNode().getIndexOfNode()] = edge.getLine();
         console.log("The new graph is ", this.numberOfNodes, this.isOriented, this.adjacency_list, this.nodesList)
