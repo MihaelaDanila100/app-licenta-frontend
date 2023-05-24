@@ -9,6 +9,17 @@ export const Edges = {
         showControls: false,
         fill: 'red'
     },
+    dashedLine: {
+        points: [0, 0, 30, 30],
+        stroke: 'black',
+        top: 100,
+        left: 5,
+        scale: 2.5,
+        strokeWidth: 1,
+        showControls: false,
+        fill: 'red',
+        dashes: [3, 3]
+    },
     lineWithCosts: {
         line: {
             points: [0, 0, 30, 30],

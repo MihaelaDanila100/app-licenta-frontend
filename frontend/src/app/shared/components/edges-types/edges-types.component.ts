@@ -50,6 +50,7 @@ export class EdgesTypesComponent implements OnInit {
     this.edges.push(this.shapeService.createLine(Edges.line));
     this.edges.push(this.shapeService.createLineWithText(Edges.lineWithCosts.line, Edges.lineWithCosts.text));
     this.edges.push(this.shapeService.createArrow(Edges.arrowLine));
+    this.edges.push(this.shapeService.createDashedLine(Edges.dashedLine));
   }
 
   private observeEdgeModeChanging(): void {
@@ -71,6 +72,10 @@ export class EdgesTypesComponent implements OnInit {
           
           case 2:
             this.graphService.toggleEdges(EdgeTypes.ORIENTED_WITH_NO_COST);
+            break;
+          
+          case 3:
+            this.graphService.toggleEdges(EdgeTypes.DASHED_EDGE);
             break;
         
           default:

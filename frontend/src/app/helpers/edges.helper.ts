@@ -59,10 +59,10 @@ export class EdgesHelper {
             top: pointer?.top, 
             points: coords,
             strokeWidth: 2,
-            stroke: 'green',
+            stroke: 'black',
             showControls: false
         }
-        let newEdge = this.shapesService.createLine(newLine);
+        let newEdge = this.shapesService.createArrow(newLine);
         return newEdge;
     }
 }
