@@ -49,7 +49,7 @@ export class EdgesTypesComponent implements OnInit {
   private initEdges() {
     this.edges.push(this.shapeService.createLine(Edges.line));
     this.edges.push(this.shapeService.createLineWithText(Edges.lineWithCosts.line, Edges.lineWithCosts.text));
-    this.edges.push(this.shapeService.createArrow(Edges.arrowLine));
+    this.edges.push(this.shapeService.createArrow(Edges.arrowLine, true));
     this.edges.push(this.shapeService.createDashedLine(Edges.dashedLine));
   }
 

@@ -211,17 +211,18 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
           if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_COST) newEdge = this.edgesHelper.createEdgeWithCost(pointer);
           if(this.currentSelectedEdgeType === EdgeTypes.ORIENTED_WITH_NO_COST) newEdge = this.edgesHelper.createOrientedEdge(pointer);
           if(this.currentSelectedEdgeType === EdgeTypes.DASHED_EDGE) newEdge = this.edgesHelper.createDashedEdge(pointer);
-
           this.whiteBoardCanvas.add(newEdge);
           newEdge.sendToBack();
           this.whiteBoardCanvas.renderAll();
           this.currentNewEdge = new Edge(newEdge, currentNode);
-
         } 
       }
     };
     let mouseMoveHandler = (event: any) => {
-      if(newEdge != null) newEdge = this.connectEdge(event, newEdge);
+      if(newEdge != null){
+        if(newEdge._objects) newEdge._objects[1] = this.connectEdge(event, newEdge._objects[1]);
+        else newEdge = this.connectEdge(event, newEdge);
+      } 
     };
     let mouseDownHandler = (event: any) => {
       if(this.currentNewEdge != null) {

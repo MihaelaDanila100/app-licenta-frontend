@@ -66,6 +66,25 @@ export class EdgesHelper {
         return newEdge;
     }
 
+    public updateOrientedEdge(pointer: any, oldEdge: any): any {
+        let coords = [
+            oldEdge.x1,
+            oldEdge.y1,
+            pointer.x,
+            pointer.y
+        ]
+        let newLine: Line = {
+            left: pointer?.left, 
+            top: pointer?.top, 
+            points: coords,
+            strokeWidth: 2,
+            stroke: 'black',
+            showControls: false
+        }
+        let newEdge = this.shapesService.createArrow(newLine);
+        return newEdge;
+    }
+
     public createDashedEdge(pointer: any): any {
         let coords = [
             (pointer?.left || 0) + (pointer?.width || 0) / 2,
