@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IconService } from './shared/services/icon.service';
 import { GraphService } from './shared/services/graph.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ExportOptionsDialogComponent } from './shared/components/export-options-dialog/export-options-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ export class AppComponent {
   public closed: boolean = true;
   public selectedNavbarIndex: any;
 
-  constructor(private matIconsService: IconService, private graphService: GraphService) {}
+  constructor(private graphService: GraphService) {}
 
   toggleMenu(): void {
     this.opened = !this.opened;

@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ExportOptionsDialogComponent } from '../export-options-dialog/export-options-dialog.component';
 
 @Component({
   selector: 'app-navbar',
@@ -7,12 +9,19 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class NavbarComponent {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   @Output() toggledMenu: EventEmitter<any> = new EventEmitter<any>();
 
   public toggleSideNav(): void {
     this.toggledMenu.emit();
+  }
+
+  public openExportDialog(): void {
+    let dialogConfig = new MatDialogConfig()
+    dialogConfig.width = '40vw';
+    dialogConfig.height = '50vh';
+    let dialogRef = this.dialog.open(ExportOptionsDialogComponent, dialogConfig);
   }
 
 }

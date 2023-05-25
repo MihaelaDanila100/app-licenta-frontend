@@ -14,6 +14,7 @@ export class IconService {
     this.useMeasurementIcons();
     this.useActionsIcons();
     this.useIconsService();
+    this.useMainActions();
   }
 
   public useLockIcon(): void {
@@ -93,6 +94,13 @@ export class IconService {
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_edge_icon_off.svg')
     );
 
+  }
+
+  public useMainActions(): void {
+    this.matIcons.addSvgIcon(
+      'export_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/export_icon.svg')
+    );
   }
 
 }
