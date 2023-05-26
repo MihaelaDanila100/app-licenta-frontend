@@ -16,6 +16,8 @@ export class GraphService {
   newNodesObs = this.newNodesSbj.asObservable();
   private newEdgeSbj: Subject<Edge> = new Subject<Edge>();
   newEdgeObs = this.newEdgeSbj.asObservable();
+  private currentGraphDrawingSbj: BehaviorSubject<any> = new BehaviorSubject<any>(false);
+  currentGraphDrawingObs = this.currentGraphDrawingSbj.asObservable();
 
   constructor() { }
 
@@ -61,5 +63,9 @@ export class GraphService {
 
   private copyEdgeRepresentationJSON(edge: any): any {
     return JSON.stringify(`<svg>${edge.toSVG()}</svg>`)
+  }
+
+  public addNewGraph(graphDrawing: any): void {
+    this.currentGraphDrawingSbj.next(graphDrawing);
   }
 }

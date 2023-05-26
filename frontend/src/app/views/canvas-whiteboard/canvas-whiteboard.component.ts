@@ -14,6 +14,8 @@ import { EdgeTypes } from 'src/app/shared/data/enums/edge-types';
 import { EdgesHelper } from 'src/app/helpers/edges.helper';
 import { FileService } from 'src/app/shared/services/file.service';
 import { fabric } from 'fabric';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SaveJpgPopupComponent } from 'src/app/shared/components/save-jpg-popup/save-jpg-popup.component';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -38,6 +40,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     private activeShapesService: ActiveShapesService,
     private colorService: ColorService,
     private shapesService: ShapesService,
+    private dialog: MatDialog,
     private shapeActionsService: ShapeActionsService,
     private graphService: GraphService,
     private shapeActionsHelper: ShapeActionsHelper,
@@ -272,17 +275,30 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
 
   public observeFileActions(): void {
     this.fileService.exportFileObs.subscribe((res) => {
-      if(res === 'svg') {
-        let myLink = document.createElement("a");
-        console.log("graph ", this.currentGraph)  
-        let myCopy =  this.graphService.copyGraphJSON(this.currentGraph)  
-        console.log("copy ", myCopy)
-        let file = new Blob([myCopy], {type:"text/json"});
-        myLink.href = URL.createObjectURL(file);
-        myLink.download = "myCanvas.txt";
-        document.body.appendChild(myLink);
-        myLink.click();
-        document.body.removeChild(myLink);
+      switch (res) {
+        case 'svg':
+          let myLink = document.createElement("a");
+          console.log("graph ", this.currentGraph)  
+          let myCopy =  this.graphService.copyGraphJSON(this.currentGraph)  
+          console.log("copy ", myCopy)
+          let file = new Blob([myCopy], {type:"text/json"});
+          myLink.href = URL.createObjectURL(file);
+          myLink.download = "myCanvas.txt";
+          document.body.appendChild(myLink);
+          myLink.click();
+          document.body.removeChild(myLink);
+          break;
+        
+        case 'png':
+          this.graphService.addNewGraph(JSON.stringify(`${this.whiteBoardCanvas.toSVG().replace('<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n',"")}`));
+          let dialogConfig = new MatDialogConfig();
+          dialogConfig.width = '60vw';
+          dialogConfig.height = '65vh';
+          this.dialog.open(SaveJpgPopupComponent, dialogConfig);
+          break;
+      
+        default:
+          break;
       }
     });
     this.fileService.filesObs.subscribe((svgFile) => {
