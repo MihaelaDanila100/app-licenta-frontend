@@ -1,4 +1,5 @@
 <div>
+    <input type="file" hidden #file (change) = "uploadFile($event)">
     <app-navbar (toggledMenu) = "toggleMenu()"></app-navbar>
     
     <div class="flex_row">

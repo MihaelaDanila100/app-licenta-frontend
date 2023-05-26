@@ -1,0 +1,42 @@
+.dialog_header {
+    text-align: center;
+}
+
+.cards_grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.option_card {
+    height: 20vh;
+    object-fit: contain;
+    padding-bottom: 20px;
+}
+
+.option_card:hover {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    transition: box-shadow 0.5s;
+}
+
+.flex_row {
+    margin-top: 20px;
+    justify-content: center;
+    gap: 15px;
+}
+
+.pdf_file {
+    width: 4vw;
+    height: auto;
+    margin: auto;
+}
+
+.card_header {
+    font-weight: 600;
+}
+
+.selected_card {
+    background-color: rgb(238, 237, 237);
+}

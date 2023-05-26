@@ -1,1 +1,28 @@
-<p>export-options-dialog works!</p>
+<h3 class="dialog_header">Choose export format:</h3>
+<div class="cards_grid">
+    <mat-card class="option_card" (click) = "selectMode('pdf')" [ngClass] = "{'selected_card': chosenExportMode === 'pdf'}">
+        <mat-card-content class="flex_row">
+            <img src = "../../../../assets/images/adobe_format.png" class="pdf_file">
+        </mat-card-content>
+        <mat-card-header class="card_header">PDF format</mat-card-header>
+    </mat-card>
+    
+    <mat-card class="option_card" (click) = "selectMode('svg')" [ngClass] = "{'selected_card': chosenExportMode === 'svg'}">
+        <mat-card-content class="flex_row">
+            <img src = "../../../../assets/images/svg.png" class="pdf_file">
+        </mat-card-content>
+        <mat-card-header class="card_header">Draw format</mat-card-header>
+    </mat-card>
+    
+    <mat-card class="option_card" (click) = "selectMode('png')" [ngClass] = "{'selected_card': chosenExportMode === 'png'}">
+        <mat-card-content class="flex_row">
+            <img src = "../../../../assets/images/picture.png" class="pdf_file">
+        </mat-card-content>
+        <mat-card-header class="card_header">JPG format</mat-card-header>
+    </mat-card>
+</div>
+
+<div class="flex_row">
+    <button mat-raised-button color = "basic" (click) = "closeDialog()">Cancel</button>
+    <button mat-raised-button color = "accent" [disabled] = "!chosenExportMode" (click) = "exportCanvas()">Export</button>
+</div>

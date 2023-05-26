@@ -17,7 +17,7 @@ export class AppComponent {
   public closed: boolean = true;
   public selectedNavbarIndex: any;
 
-  constructor(private graphService: GraphService) {}
+  constructor(private graphService: GraphService, private iconService: IconService) {}
 
   toggleMenu(): void {
     this.opened = !this.opened;
@@ -35,5 +35,9 @@ export class AppComponent {
       this.selectedNavbarIndex = null;
       this.graphService.toggleEdges();
     }
+  }
+
+  uploadFile(event: any): any {
+
   }
 }

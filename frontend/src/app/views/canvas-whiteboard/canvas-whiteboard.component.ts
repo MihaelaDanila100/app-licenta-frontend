@@ -14,6 +14,7 @@ import { Node } from 'src/app/entities/node';
 import { ShapeActionsHelper } from 'src/app/helpers/shape-actions.helper';
 import { EdgeTypes } from 'src/app/shared/data/enums/edge-types';
 import { EdgesHelper } from 'src/app/helpers/edges.helper';
+import { FileService } from 'src/app/shared/services/file.service';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -41,7 +42,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     private shapeActionsService: ShapeActionsService,
     private graphService: GraphService,
     private shapeActionsHelper: ShapeActionsHelper,
-    private edgesHelper: EdgesHelper) { }
+    private edgesHelper: EdgesHelper,
+    private fileService: FileService) { }
   
 
   ngOnInit(): void {
@@ -148,6 +150,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       })
     ).subscribe((result) => { })
     this.observeEdges();
+    this.observeFileActions();
   }
 
   public observeEdges(): void {
@@ -266,6 +269,20 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       }
     }
     return newEdge;
+  }
+
+  public observeFileActions(): void {
+    this.fileService.exportFileObs.subscribe((res) => {
+      if(res === 'svg') {
+        let myLink = document.createElement("a");
+        let file = new Blob([JSON.stringify(this.whiteBoardCanvas.toSVG())], {type:"image/svg+xml;charset=utf-8"});
+        myLink.href = URL.createObjectURL(file);
+        myLink.download = "myCanvas.svg";
+        document.body.appendChild(myLink);
+        myLink.click();
+        document.body.removeChild(myLink);
+      }
+    });
   }
 
   ngOnDestroy(): void {
