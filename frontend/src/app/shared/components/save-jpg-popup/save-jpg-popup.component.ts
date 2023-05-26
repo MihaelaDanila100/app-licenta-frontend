@@ -19,6 +19,8 @@ export class SaveJpgPopupComponent implements OnInit, OnDestroy {
   public currentSliderValue: number = 1.0;
   private subscription: Subscription = new Subscription();
   public graphCanvas!: fabric.Canvas;
+  public currentSelectedColor: string = 'transparent';
+  public currentDocumentName: string = "myCanvas";
 
   ngOnInit(): void {
     this.graphCanvas = this.drawingService.createCanvas('graph_canvas', {});
@@ -44,13 +46,24 @@ export class SaveJpgPopupComponent implements OnInit, OnDestroy {
   public downloadCanvas(): void {
     let myLink = document.createElement("a");
     let imageData = this.graphCanvas.toDataURL({
-      format: 'png'
+      format: 'png',
+      multiplier: this.currentSliderValue
     })
     myLink.href = imageData;
-    myLink.download = "myCanvas.png";
+    myLink.download = this.currentDocumentName.concat(".png");
     document.body.appendChild(myLink);
     myLink.click();
     document.body.removeChild(myLink);
+  }
+
+  public updateBackgroundColor(): void {
+    this.graphCanvas.backgroundColor = this.currentSelectedColor;
+    this.graphCanvas.renderAll();
+  }
+
+  public updateZoomScale(): void {
+    this.graphCanvas.setZoom(this.currentSliderValue);
+    this.graphCanvas.renderAll();
   }
 
 }
