@@ -39,6 +39,13 @@ export class GraphService {
     graphCopy.numberOfNodes = graph.numberOfNodes;
     graphCopy.isOriented = graph.isOriented;
     graphCopy.nodesList = graph.nodesList.map((node) => this.copyNodeJSON(node));
+    graphCopy.adjacency_list = graph.adjacency_list.map((edgesList) => {
+      return edgesList.map((edge: any) => {
+        if(edge != false) return this.copyEdgeRepresentationJSON(edge);
+        return false;
+      });
+    });
+    console.log("EDGES LIST ", graphCopy)
     return JSON.stringify(graphCopy);
   }
 
@@ -50,5 +57,9 @@ export class GraphService {
       indexInGraph: node.getIndexOfNode()
     }
     return newNode;
+  }
+
+  private copyEdgeRepresentationJSON(edge: any): any {
+    return JSON.stringify(`<svg>${edge.toSVG()}</svg>`)
   }
 }

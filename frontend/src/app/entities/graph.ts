@@ -59,4 +59,8 @@ export class Graph {
         }
         return edgesList;
     }
+
+    public updateAdjacencyList(newAdjacencyList: any[]) {
+        this.adjacency_list = newAdjacencyList;
+    }
 }
