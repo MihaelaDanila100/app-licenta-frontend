@@ -28,4 +28,8 @@ export class NavbarComponent {
     });
   }
 
+  public handleChosenFile(event: any): void {
+    this.fileService.updateImportedFile(event.target.files[0]);
+  }
+
 }

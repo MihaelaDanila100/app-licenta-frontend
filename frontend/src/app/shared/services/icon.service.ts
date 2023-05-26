@@ -101,6 +101,10 @@ export class IconService {
       'export_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/export_icon.svg')
     );
+    this.matIcons.addSvgIcon(
+      'import_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/import_icon.svg')
+    );
   }
 
 }

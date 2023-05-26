@@ -2,6 +2,8 @@
     <div>
         <mat-icon class="menu_icon icon" (click) = "toggleSideNav()">menu</mat-icon>
         <mat-icon class="icon" svgIcon = "export_icon" (click) = "openExportDialog()"></mat-icon>
+        <input type = "file" hidden #file (change) = "handleChosenFile($event)">
+        <mat-icon class="icon" svgIcon = "import_icon" (click) = "file.click()"></mat-icon>
     </div>
     <div class="data">
         <div class="username">Username</div>
