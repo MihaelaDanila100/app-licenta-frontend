@@ -289,11 +289,24 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       let fileReader = new FileReader()
       fileReader.onload = (event) => {
         let fileString: any = fileReader.result;
-        let newGraph = this.fileService.uploadGraphFromJSON(fileString);
-        console.log("new graphhh ", newGraph)
+        this.currentGraph = this.fileService.uploadGraphFromJSON(fileString);
+        this.renderGraph();
       }
       fileReader.readAsText(svgFile);
     })
+  }
+
+  private renderGraph(): void {
+    this.whiteBoardCanvas.clear();
+    this.currentGraph.nodesList.forEach((node) => {
+      this.whiteBoardCanvas.add(node.getNodeDrawing());
+    });
+    this.currentGraph.adjacency_list.forEach((edgesList) => {
+      edgesList.forEach((edge) => {
+        if(edge != false) this.whiteBoardCanvas.add(edge);
+      });
+    });
+    this.whiteBoardCanvas.renderAll();
   }
 
   ngOnDestroy(): void {
