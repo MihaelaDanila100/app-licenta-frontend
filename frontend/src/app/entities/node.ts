@@ -11,7 +11,7 @@ export class Node {
     private indexInGraph: number = 0;
     static nodeIndex: number = 0;
 
-    constructor(label?: string, value?: any, representation?: fabric.Group | fabric.Object[]) {
+    constructor(label?: string, value?: any, representation?: fabric.Group | fabric.Object[], indexInGraph?: number) {
         let objects: fabric.Object[];
         this.value = value;
         
@@ -21,6 +21,8 @@ export class Node {
             this.indexInGraph = Node.nodeIndex;
             Node.nodeIndex++;
         } 
+
+        if(indexInGraph) this.indexInGraph = indexInGraph;
 
         if(representation instanceof Array) objects = [...representation]
         else {
@@ -44,6 +46,10 @@ export class Node {
 
     public getIndexOfNode(): number {
         return this.indexInGraph;
+    }
+
+    public getNodeLabel(): string {
+        return this.label;
     }
 
     public decreaseNodeIndex(): void {

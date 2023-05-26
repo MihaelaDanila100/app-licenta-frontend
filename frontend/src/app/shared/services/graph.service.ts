@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Edge } from 'src/app/entities/edge';
+import { Graph } from 'src/app/entities/graph';
 import { Node } from 'src/app/entities/node';
+import { fabric } from 'fabric';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +32,23 @@ export class GraphService {
 
   public addEdge(edge: Edge): void {
     this.newEdgeSbj.next(edge);
+  }
+
+  public copyGraphJSON(graph: Graph): any {
+    let graphCopy: any = {}
+    graphCopy.numberOfNodes = graph.numberOfNodes;
+    graphCopy.isOriented = graph.isOriented;
+    graphCopy.nodesList = graph.nodesList.map((node) => this.copyNodeJSON(node));
+    return JSON.stringify(graphCopy);
+  }
+
+  private copyNodeJSON(node: Node): any {
+    let nodeRepresentation = JSON.stringify(`<svg>${node.getNodeDrawing().toSVG()}</svg>`)
+    let newNode: any = {
+      label: node.getNodeLabel(),
+      representation: nodeRepresentation,
+      indexInGraph: node.getIndexOfNode()
+    }
+    return newNode;
   }
 }
