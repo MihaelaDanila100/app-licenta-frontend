@@ -74,6 +74,14 @@ export class IconService {
       'rotate_right_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/rotate_right_icon.svg')
     );
+    this.matIcons.addSvgIcon(
+      'brush_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/brush_icon.svg')
+    );
+    this.matIcons.addSvgIcon(
+      'brush_fill_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/brush_fill_icon.svg')
+    );
   }
 
   public useIconsService(): void {

@@ -20,6 +20,7 @@ export class SecondaryNavbarComponent implements OnInit {
   public unlocked: boolean = true; 
   public colorMode: boolean = false;
   public chooseBorder: boolean = false;
+  public drawingMode: boolean = false;
   public edgesMode: boolean = false;
   @ViewChild(InlinePopupComponent) strokeWidthRef: any;
   @Output() changedEdgeMode: EventEmitter<any> = new EventEmitter<any>();
@@ -70,6 +71,11 @@ export class SecondaryNavbarComponent implements OnInit {
   public addEdge(): void {
     this.edgesMode = !this.edgesMode;
     this.changedEdgeMode.emit(this.edgesMode);
+  }
+
+  public startDrawing(): void {
+    this.drawingMode = !this.drawingMode;
+    this.shapeActionsService.updateDrawingMode(this.drawingMode);
   }
 
 }

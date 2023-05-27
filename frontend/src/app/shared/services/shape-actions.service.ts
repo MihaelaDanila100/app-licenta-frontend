@@ -13,6 +13,8 @@ export class ShapeActionsService {
   private duplicateShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private blockedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private toggleColorsSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private toggleDrawingSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   scaleShape = this.scaleShapeSbj.asObservable();
   rotationShape = this.rotationShapeSbj.asObservable();
   opacityShape = this.opacityShapeSbj.asObservable();
@@ -20,6 +22,7 @@ export class ShapeActionsService {
   duplicatedShape = this.duplicateShapeSbj.asObservable();
   blockedShape = this.blockedShapeSbj.asObservable();
   toggleColorsObs = this.toggleColorsSbj.asObservable();
+  toggleDrawingObs = this.toggleDrawingSbj.asObservable();
 
   constructor() { }
 
@@ -55,5 +58,10 @@ export class ShapeActionsService {
   public toggleColor(value?: boolean): void {
     if(value === undefined) value = !this.toggleColorsSbj.value;
     this.toggleColorsSbj.next(value);
+  }
+
+  public updateDrawingMode(mode?: boolean): void {
+    if(mode) this.toggleDrawingSbj.next(mode);
+    else this.toggleDrawingSbj.next(!this.toggleDrawingSbj.value);
   }
 }

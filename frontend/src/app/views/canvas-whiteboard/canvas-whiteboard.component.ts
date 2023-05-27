@@ -31,6 +31,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   public isFillSync: boolean = false;
   public isStrokeSync: boolean = false;
   public isTextSync: boolean = false;
+  public isDrawSync: boolean = false;
   private isColorMode: boolean = false;
   private kill$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
   private currentSelectedEdgeType!: EdgeTypes;
@@ -70,6 +71,10 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
                 this.whiteBoardCanvas.renderAll();
               }
             });
+            if(this.isDrawSync) {
+              this.whiteBoardCanvas.freeDrawingBrush.color = 'red';
+              this.whiteBoardCanvas.renderAll();
+            }
             if(this.isColorMode) { 
               this.shapeActionsHelper.observeFillSyncColor(newShape, fillColor);
               this.whiteBoardCanvas.renderAll();
@@ -81,6 +86,10 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
             newShape.on("mousedown", () => {
               if(this.isColorMode) this.shapeActionsHelper.observeStrokeColor(newShape, strokeColor)
             });
+            if(this.isDrawSync) {
+              this.whiteBoardCanvas.freeDrawingBrush.color = strokeColor;
+              this.whiteBoardCanvas.renderAll();
+            }
             if(this.isColorMode) {
               this.shapeActionsHelper.observeStrokeSyncColor(newShape, strokeColor);
               this.whiteBoardCanvas.renderAll();
@@ -154,6 +163,13 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     ).subscribe((result) => { })
     this.observeEdges();
     this.observeFileActions();
+    this.subscriptions.add(
+      this.shapeActionsService.toggleDrawingObs.subscribe((res) => {
+        this.whiteBoardCanvas.isDrawingMode = res;
+        this.isDrawSync = res;
+        this.whiteBoardCanvas.renderAll();
+      })
+    )
   }
 
   public observeEdges(): void {
@@ -172,6 +188,10 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
                 this.whiteBoardCanvas.renderAll()
               }
             });
+            if(this.isDrawSync) {
+              this.whiteBoardCanvas.freeDrawingBrush.color = fillColor;
+              this.whiteBoardCanvas.renderAll();
+            }
             if(this.isColorMode) {
               this.shapeActionsHelper.observeFillSyncColor(node.getNodeDrawing(), fillColor);
               this.whiteBoardCanvas.renderAll();
