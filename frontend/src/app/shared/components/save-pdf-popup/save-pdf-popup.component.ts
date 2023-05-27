@@ -16,7 +16,7 @@ export class SavePdfPopupComponent implements OnInit, OnDestroy {
   public graphCanvas!: fabric.Canvas;
   public currentSelectedColor: string = 'transparent';
   public currentDocumentName: string = "myCanvas";
-  public currentSliderValue: number = 5.0;
+  public currentSliderValue: number = 3.0;
 
   constructor(private drawingService: DrawingService, 
     private graphService: GraphService) { }
@@ -45,12 +45,14 @@ export class SavePdfPopupComponent implements OnInit, OnDestroy {
 
   public downloadAsPDF() {
     let myLink = document.createElement("a");
+    this.graphCanvas.setZoom(0.25);
+    // this.graphCanvas.renderAll();
     let imageData = this.graphCanvas.toDataURL({
       format: 'png',
       multiplier: this.currentSliderValue
     });
     let pdfConverter = new jsPDF();
-    pdfConverter.addImage(imageData, 'png', 10, 78, 12, 15);
+    pdfConverter.addImage(imageData, 'png', 0, 0, this.graphCanvas.getWidth(), this.graphCanvas.getHeight());
     pdfConverter.save("result.pdf");
   }
 
