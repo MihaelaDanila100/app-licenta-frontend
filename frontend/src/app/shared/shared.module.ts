@@ -16,6 +16,7 @@ import { ShapeOptionsComponent } from './components/shape-options/shape-options.
 import { EdgesTypesComponent } from './components/edges-types/edges-types.component';
 import { ExportOptionsDialogComponent } from './components/export-options-dialog/export-options-dialog.component';
 import { SaveJpgPopupComponent } from './components/save-jpg-popup/save-jpg-popup.component';
+import { SavePdfPopupComponent } from './components/save-pdf-popup/save-pdf-popup.component';
 
 
 
@@ -33,7 +34,8 @@ import { SaveJpgPopupComponent } from './components/save-jpg-popup/save-jpg-popu
     ShapeOptionsComponent,
     EdgesTypesComponent,
     ExportOptionsDialogComponent,
-    SaveJpgPopupComponent
+    SaveJpgPopupComponent,
+    SavePdfPopupComponent
   ],
   imports: [
     CommonModule,

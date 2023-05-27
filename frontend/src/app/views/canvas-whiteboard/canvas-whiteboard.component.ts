@@ -16,6 +16,7 @@ import { FileService } from 'src/app/shared/services/file.service';
 import { fabric } from 'fabric';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SaveJpgPopupComponent } from 'src/app/shared/components/save-jpg-popup/save-jpg-popup.component';
+import { SavePdfPopupComponent } from 'src/app/shared/components/save-pdf-popup/save-pdf-popup.component';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -332,6 +333,14 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
           dialogConfig.width = '60vw';
           dialogConfig.height = '70vh';
           this.dialog.open(SaveJpgPopupComponent, dialogConfig);
+          break;
+        
+        case 'pdf':
+          this.graphService.addNewGraph(JSON.stringify(`${this.whiteBoardCanvas.toSVG().replace('<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n',"")}`));
+          let pdfDialogConfig = new MatDialogConfig();
+          pdfDialogConfig.width = '60vw';
+          pdfDialogConfig.height = '70vh';
+          this.dialog.open(SavePdfPopupComponent, pdfDialogConfig);
           break;
       
         default:
