@@ -33,8 +33,8 @@ export class EdgesHelper {
         let coords = [
             (pointer?.left || 0) + (pointer?.width || 0) / 2,
             (pointer?.top || 0) + (pointer?.height || 0) / 2,
-            (pointer?.left || 0) + (pointer?.width || 0) / 2,
-            (pointer?.top || 0) + (pointer?.height || 0) / 2
+            (pointer?.left || 0) + (pointer?.width || 0) / 2 + 30,
+            (pointer?.top || 0) + (pointer?.height || 0) / 2 + 30
         ]
         let newLine: Line = {
             left: pointer?.left, 

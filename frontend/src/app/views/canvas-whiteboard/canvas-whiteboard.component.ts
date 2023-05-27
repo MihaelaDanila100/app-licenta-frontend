@@ -225,7 +225,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     };
     let mouseMoveHandler = (event: any) => {
       if(newEdge != null){
-        this.connectEdge(event, newEdge);
+        if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_NO_COST) this.connectEdge(event, newEdge);
+        if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_COST) this.connectCostEdge(event, newEdge);
       } 
     };
     let mouseDownHandler = (event: any) => {
@@ -254,44 +255,60 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   private connectEdge(event: any, newEdge: any): any {
     newEdge.set('opacity', 0.4);
     if(event.target) {
-      if(newEdge._objects) {
-        this.connectEdgeWithCost(newEdge, event)
-      } else {
-        newEdge.set({
-          x2: (event.target.left || 0) + ((event.target.width || 0) / 2),
-          y2: (event.target.top || 0) + ((event.target.height || 0) / 2)
-        });
-      }
+      newEdge.set({
+        x2: (event.target.left || 0) + ((event.target.width || 0) / 2),
+        y2: (event.target.top || 0) + ((event.target.height || 0) / 2)
+      });
       this.whiteBoardCanvas.renderAll();
     } else {
-      if(newEdge._objects) {
-        this.connectEdgeWithCost(newEdge, event)
-      } else {
-        let coordsPoint = this.whiteBoardCanvas.getPointer(event.e);
-        newEdge.set({
-          x2: coordsPoint.x,
-          y2: coordsPoint.y
-        });
-      }
+      let coordsPoint = this.whiteBoardCanvas.getPointer(event.e);
+      newEdge.set({
+        x2: coordsPoint.x,
+        y2: coordsPoint.y
+      });
       this.whiteBoardCanvas.renderAll();
     }
     return newEdge;
   }
 
-  private connectEdgeWithCost(newEdge: fabric.Group, event: any) {
-    let coordsPoint = this.whiteBoardCanvas.getPointer(event.e);
-    let lineObj: any = newEdge._objects[0];
-    let textObj = newEdge._objects[1];
-    textObj.set('fill', 'red');
-    lineObj.set('stroke', 'red');
-    lineObj.set({
-      x2: coordsPoint.x,
-      y2: coordsPoint.y
-    });
-    newEdge.addWithUpdate();
-    this.whiteBoardCanvas.renderAll();
-    console.log("ahaaa ", lineObj, coordsPoint)
+  private connectCostEdge(event: any, newEdge: any): any {
+    newEdge.set('opacity', 0.4);
+    if(event.target) {
+      // newEdge._objects[0].set({
+      //   x2: (event.target.left || 0) + ((event.target.width || 0) / 2),
+      //   y2: (event.target.top || 0) + ((event.target.height || 0) / 2)
+      // });
+      newEdge._objects[0].set('stroke', 'red');
+      newEdge.addWithUpdate();
+      this.whiteBoardCanvas.renderAll();
+    } else {
+      let coordsPoint = this.whiteBoardCanvas.getPointer(event.e);
+      console.log("eventtt ", event, coordsPoint)
+      // newEdge._objects[0].set({
+      //   x2: coordsPoint.x,
+      //   y2: coordsPoint.y
+      // });
+      newEdge._objects[0].set('stroke', 'red');
+      newEdge.addWithUpdate();
+      this.whiteBoardCanvas.renderAll();
+    }
+    return newEdge;
   }
+
+  // private connectEdgeWithCost(newEdge: fabric.Group, event: any) {
+  //   let coordsPoint = this.whiteBoardCanvas.getPointer(event.e);
+  //   let lineObj: any = newEdge._objects[0];
+  //   let textObj = newEdge._objects[1];
+  //   textObj.set('fill', 'red');
+  //   lineObj.set('stroke', 'red');
+  //   lineObj.set({
+  //     x2: coordsPoint.x,
+  //     y2: coordsPoint.y
+  //   });
+  //   newEdge.addWithUpdate();
+  //   this.whiteBoardCanvas.renderAll();
+  //   console.log("ahaaa ", lineObj, coordsPoint)
+  // }
 
   public observeFileActions(): void {
     this.fileService.exportFileObs.subscribe((res) => {
