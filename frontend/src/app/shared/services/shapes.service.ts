@@ -118,6 +118,8 @@ export class ShapesService {
       left: text.left ? text.left : 100, 
       top: text.top ? text.top : 100,
       hasControls: text.showControls,
+      fill: text.fill ? text.fill : 'black',
+      opacity: text.opacity ? text.opacity : 1,
       fontSize: text.fontSize ? text.fontSize : 40,
       fontWeight: text.fontWeight
     })
