@@ -59,7 +59,7 @@ export class ShapesService {
   public createLineWithText(line: Line, text: Text): fabric.Group {
     let edgeLine = this.createLine(line);
     let edgeText =this.createText(text);
-    return new fabric.Group([edgeLine, edgeText]);
+    return new fabric.Group([edgeLine, edgeText], { objectCaching: false });
   }
 
   public createCircle(circle: Circle): fabric.Circle {

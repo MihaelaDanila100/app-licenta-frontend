@@ -225,8 +225,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     };
     let mouseMoveHandler = (event: any) => {
       if(newEdge != null){
-        if(newEdge._objects) newEdge._objects[1] = this.connectEdge(event, newEdge._objects[1]);
-        else newEdge = this.connectEdge(event, newEdge);
+        this.connectEdge(event, newEdge);
       } 
     };
     let mouseDownHandler = (event: any) => {
@@ -253,24 +252,45 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   }
 
   private connectEdge(event: any, newEdge: any): any {
-    if(newEdge) {
-      newEdge.set('opacity', 0.4);
-      if(event.target) {
+    newEdge.set('opacity', 0.4);
+    if(event.target) {
+      if(newEdge._objects) {
+        this.connectEdgeWithCost(newEdge, event)
+      } else {
         newEdge.set({
           x2: (event.target.left || 0) + ((event.target.width || 0) / 2),
           y2: (event.target.top || 0) + ((event.target.height || 0) / 2)
         });
-        this.whiteBoardCanvas.renderAll();
+      }
+      this.whiteBoardCanvas.renderAll();
+    } else {
+      if(newEdge._objects) {
+        this.connectEdgeWithCost(newEdge, event)
       } else {
         let coordsPoint = this.whiteBoardCanvas.getPointer(event.e);
         newEdge.set({
           x2: coordsPoint.x,
           y2: coordsPoint.y
         });
-        this.whiteBoardCanvas.renderAll();
       }
+      this.whiteBoardCanvas.renderAll();
     }
     return newEdge;
+  }
+
+  private connectEdgeWithCost(newEdge: fabric.Group, event: any) {
+    let coordsPoint = this.whiteBoardCanvas.getPointer(event.e);
+    let lineObj: any = newEdge._objects[0];
+    let textObj = newEdge._objects[1];
+    textObj.set('fill', 'red');
+    lineObj.set('stroke', 'red');
+    lineObj.set({
+      x2: coordsPoint.x,
+      y2: coordsPoint.y
+    });
+    newEdge.addWithUpdate();
+    this.whiteBoardCanvas.renderAll();
+    console.log("ahaaa ", lineObj, coordsPoint)
   }
 
   public observeFileActions(): void {
