@@ -68,18 +68,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       mergeMap((newShape) => {
         this.whiteBoardCanvas.add(newShape);
         if(newShape) this.kill$.next(newShape);
-        let colorTextRequest = this.colorService.colorText.pipe(
-          map((textColor: any) => {
-            newShape.on("mousedown", () => {
-              if(this.isColorMode) this.shapeActionsHelper.observeTextColor(newShape, textColor)
-            });
-            if(this.isColorMode) {
-              this.shapeActionsHelper.observeTextSyncColor(newShape, textColor);
-              this.whiteBoardCanvas.renderAll();
-            }
-          })
-        )
-        return merge(this.colorsHelper.colorFillRequest(newShape), this.colorsHelper.colorStrokeRequest(newShape), colorTextRequest);
+        return merge(this.colorsHelper.colorFillRequest(newShape), this.colorsHelper.colorStrokeRequest(newShape));
       })
     ).subscribe(() => { });
     this.kill$.pipe(

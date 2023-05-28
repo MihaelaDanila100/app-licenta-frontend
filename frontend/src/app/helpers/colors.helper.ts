@@ -52,4 +52,18 @@ export class ColorsHelper {
           );
     } 
 
+    public colorTextRequest = (newShape: any) => {
+        return this.colorService.colorText.pipe(
+            map((textColor: any) => {
+              newShape.on("mousedown", () => {
+                if(this.isColorMode) this.shapeActionsHelper.observeTextColor(newShape, textColor)
+              });
+              if(this.isColorMode) {
+                this.shapeActionsHelper.observeTextSyncColor(newShape, textColor);
+                this.shapeActionsService.triggerActionOnCanvas();
+              }
+            })
+          )
+    } 
+
 }
