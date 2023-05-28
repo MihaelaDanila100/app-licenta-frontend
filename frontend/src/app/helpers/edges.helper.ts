@@ -2,8 +2,9 @@ import { Injectable } from "@angular/core";
 import { DashedLine, Line } from "../interfaces/line";
 import { ShapesService } from "../shared/services/shapes.service";
 import { Text } from "../interfaces/text";
-import { Subject } from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import { ShapeActionsService } from "../shared/services/shape-actions.service";
+import { ColorService } from "../shared/services/color.service";
 
 @Injectable({
     providedIn:'root'
@@ -11,7 +12,10 @@ import { ShapeActionsService } from "../shared/services/shape-actions.service";
 export class EdgesHelper { 
     
     constructor(private shapesService: ShapesService, 
-        private shapeActionsService: ShapeActionsService) { }
+        private shapeActionsService: ShapeActionsService,
+        private colorService: ColorService) { }
+    
+    private subscription: Subscription = new Subscription();
 
     public createEdge(pointer: any): any {
         let coords = [
@@ -70,7 +74,7 @@ export class EdgesHelper {
                 edgeText.set('opacity', 0.6);
             }
             this.shapeActionsService.triggerActionOnCanvas();
-        })
+        });
         return [this.shapesService.createLine(newLine), edgeText];
     }
 
