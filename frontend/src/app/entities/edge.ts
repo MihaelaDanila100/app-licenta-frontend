@@ -56,10 +56,8 @@ export class Edge {
     } 
 
     public setAdditionalSymbols(symbol: fabric.Object): void {
-        // this.additionalSymbolsToRepresentation = JSON.parse(JSON.stringify(symbol));
         this.additionalSymbolsToRepresentation = symbol;
     }
-
     public getAdditionalSymbols(): any {
         return this.additionalSymbolsToRepresentation;
     }

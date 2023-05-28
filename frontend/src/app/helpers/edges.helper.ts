@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { DashedLine, Line } from "../interfaces/line";
 import { ShapesService } from "../shared/services/shapes.service";
 import { Text } from "../interfaces/text";
+import { Subject } from "rxjs";
 
 @Injectable({
     providedIn:'root'
@@ -9,6 +10,9 @@ import { Text } from "../interfaces/text";
 export class EdgesHelper { 
     
     constructor(private shapesService: ShapesService) { }
+
+    private currentNewSymbol: Subject<any> = new Subject<any>();
+    public changedNewSymbol = this.currentNewSymbol.asObservable();
 
     public createEdge(pointer: any): any {
         let coords = [
@@ -45,17 +49,30 @@ export class EdgesHelper {
             showControls: false
         }
         let text: Text = {
-            value: '2',
+            value: 'type here cost...',
             fontStyle: 'bodoni mt',
             left: (pointer?.left || 0) + (pointer?.width || 0) / 2,
             top: (pointer?.top || 0) + (pointer?.height || 0) / 2,
             showControls: false,
-            fontSize: 20,
+            fontSize: 14,
             fontWeight: 'normal',
             fill: 'black',
-            opacity: 1
+            opacity: 0.6,
+            editable: true
         }
-        return [this.shapesService.createLine(newLine), this.shapesService.createText(text)];
+        let edgeText: any = this.shapesService.createText(text);
+        edgeText.on("changed", () => {
+            edgeText.set('fontSize', 20);
+            edgeText.set('opacity', 1);
+            edgeText.set('text', edgeText.text.replace("type here cost...",""))
+            if(edgeText.text.trim() === "") {
+                edgeText.set('text', "type here cost...")
+                edgeText.set('fontSize', 14);
+                edgeText.set('opacity', 0.6);
+            }
+            this.currentNewSymbol.next(true);
+        })
+        return [this.shapesService.createLine(newLine), edgeText];
     }
 
     public createOrientedEdge(pointer: any): any {

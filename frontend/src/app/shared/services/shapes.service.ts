@@ -121,7 +121,8 @@ export class ShapesService {
       fill: text.fill ? text.fill : 'black',
       opacity: text.opacity ? text.opacity : 1,
       fontSize: text.fontSize ? text.fontSize : 40,
-      fontWeight: text.fontWeight
+      fontWeight: text.fontWeight,
+      editable: text.editable ? text.editable : false
     })
   }
 

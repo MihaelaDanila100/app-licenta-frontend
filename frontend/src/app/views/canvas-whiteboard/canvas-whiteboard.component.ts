@@ -51,6 +51,10 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   
 
   ngOnInit(): void {
+    this.edgesHelper.changedNewSymbol.subscribe(() => {
+      console.log("iiiii")
+      this.whiteBoardCanvas.renderAll();
+    });
     this.shapeActionsService.toggleColorsObs.subscribe((res) => {
       this.isColorMode = res;
     });
@@ -273,6 +277,11 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         this.currentNewEdge?.setRightNode(this.currentGraph.getNodeRefAt(this.currentGraph.getIndexForNodeDrawing(event.target)));
         if(adjacentSymbols){
           this.currentNewEdge.setAdditionalSymbols(adjacentSymbols);
+          if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_COST) {
+            this.whiteBoardCanvas.setActiveObject(adjacentSymbols);
+            adjacentSymbols.enterEditing()
+            adjacentSymbols.hiddenTextarea.focus();
+          }
         }
         this.currentGraph.addNewEdge(this.currentNewEdge);
         this.graphService.addEdge(this.currentNewEdge);

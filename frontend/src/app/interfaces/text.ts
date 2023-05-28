@@ -9,5 +9,6 @@ export interface Text {
     fontWeight?: string | number,
     borderColor?: string,
     borderDashArray?: number[],
-    opacity?: number
+    opacity?: number,
+    editable?: boolean
 }
