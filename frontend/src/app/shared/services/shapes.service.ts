@@ -125,17 +125,26 @@ export class ShapesService {
     })
   }
 
-  public createArrow(lineObject: Line, isSample?: boolean): fabric.Group {
-    let arrowhead = new fabric.Triangle({
+  public createArrow(lineObject: Line, isSample?: boolean): any {
+    if(isSample) {
+      return new fabric.Group([this.createLine(lineObject), new fabric.Triangle({
+        width: 10,
+        height: 15,
+        fill: 'black',
+        left: (lineObject.left || 0) + lineObject.points[2] + 8,
+        top: (lineObject.top || 0) + lineObject.points[3],
+        angle: 135,
+        selectable: false
+      })])
+    }
+    return new fabric.Triangle({
       width: 10,
       height: 15,
       fill: 'black',
-      left: isSample ? (lineObject.left || 0) + lineObject.points[2] + 8 : (lineObject.left || 0) + 20,
-      top: isSample ? (lineObject.top || 0) + lineObject.points[3] : (lineObject.top || 0) + 20,
+      left: (lineObject.left || 0) + 20,
+      top: (lineObject.top || 0) + 20,
       angle: 135,
       selectable: false
     });
-    let line = this.createLine(lineObject);
-    return new fabric.Group([arrowhead, line]);
   }
 }

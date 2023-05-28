@@ -73,8 +73,7 @@ export class EdgesHelper {
             stroke: 'black',
             showControls: false
         }
-        let newEdge = this.shapesService.createArrow(newLine);
-        return newEdge;
+        return [this.shapesService.createLine(newLine), this.shapesService.createArrow(newLine)];
     }
 
     public updateOrientedEdge(pointer: any, oldEdge: any): any {
@@ -135,6 +134,12 @@ export class EdgesHelper {
     public updateLabelOfCost(symbol: any, newEdge: any): any {
         symbol.set('left', (newEdge?.left || 0) + (newEdge?.width || 0) / 2)
         symbol.set('top', (newEdge?.top || 0) + (newEdge?.height || 0) / 2)
+        return symbol;
+    }
+
+    public updateArrowHead(symbol: any, newEdge: any): any {
+        symbol.set('left', (newEdge.left || 0) + (newEdge?.width || 0) + 10)
+        symbol.set('top', (newEdge.top || 0) + (newEdge?.height || 0))
         return symbol;
     }
 }

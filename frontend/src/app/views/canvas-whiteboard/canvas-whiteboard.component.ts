@@ -241,7 +241,11 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
             newEdge = myNewEdge[0];
             adjacentSymbols = myNewEdge[1];
           } 
-          if(this.currentSelectedEdgeType === EdgeTypes.ORIENTED_WITH_NO_COST) newEdge = this.edgesHelper.createOrientedEdge(pointer);
+          if(this.currentSelectedEdgeType === EdgeTypes.ORIENTED_WITH_NO_COST){
+            let myNewEdge = this.edgesHelper.createOrientedEdge(pointer);
+            newEdge = myNewEdge[0];
+            adjacentSymbols = myNewEdge[1];
+          } 
           if(this.currentSelectedEdgeType === EdgeTypes.DASHED_EDGE) newEdge = this.edgesHelper.createDashedEdge(pointer);
           this.whiteBoardCanvas.add(newEdge);
           newEdge.sendToBack();
@@ -256,7 +260,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         // if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_NO_COST){
           newEdge = this.edgesHelper.connectEdge(event, newEdge, this.whiteBoardCanvas.getPointer(event.e));
           if(adjacentSymbols) {
-            adjacentSymbols = this.edgesHelper.updateLabelOfCost(adjacentSymbols, newEdge);
+            if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_COST) adjacentSymbols = this.edgesHelper.updateLabelOfCost(adjacentSymbols, newEdge);
+            if(this.currentSelectedEdgeType === EdgeTypes.ORIENTED_WITH_NO_COST) adjacentSymbols = this.edgesHelper.updateArrowHead(adjacentSymbols, newEdge);
           }
           this.whiteBoardCanvas.renderAll();
         // } 
