@@ -55,8 +55,7 @@ export class EdgesHelper {
             fill: 'black',
             opacity: 1
         }
-        let newEdge = this.shapesService.createLineWithText(newLine, text);
-        return newEdge;
+        return [this.shapesService.createLine(newLine), this.shapesService.createText(text)];
     }
 
     public createOrientedEdge(pointer: any): any {

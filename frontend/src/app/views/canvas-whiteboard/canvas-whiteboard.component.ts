@@ -224,9 +224,11 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       });
     })
     let newEdge!: any;
+    let adjacentSymbols!: any;
     let mouseUpHandler = () => {
       if(newEdge != null && this.currentNewEdge?.getRightNode()){
         newEdge = null;
+        adjacentSymbols = null;
         this.currentNewEdge = null;
       } else {
         if(this.whiteBoardCanvas.getActiveObjects().length === 1){
@@ -234,11 +236,16 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
           let currentNode = this.currentGraph.getNodeRefAt(this.currentGraph.getIndexForNodeDrawing(this.whiteBoardCanvas.getActiveObjects()[0]));
           let pointer = this.whiteBoardCanvas.getActiveObject();
           if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_NO_COST) newEdge = this.edgesHelper.createEdge(pointer);
-          if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_COST) newEdge = this.edgesHelper.createEdgeWithCost(pointer);
+          if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_COST){
+            let myNewEdge = this.edgesHelper.createEdgeWithCost(pointer);
+            newEdge = myNewEdge[0];
+            adjacentSymbols = myNewEdge[1];
+          } 
           if(this.currentSelectedEdgeType === EdgeTypes.ORIENTED_WITH_NO_COST) newEdge = this.edgesHelper.createOrientedEdge(pointer);
           if(this.currentSelectedEdgeType === EdgeTypes.DASHED_EDGE) newEdge = this.edgesHelper.createDashedEdge(pointer);
           this.whiteBoardCanvas.add(newEdge);
           newEdge.sendToBack();
+          if(adjacentSymbols) this.whiteBoardCanvas.add(adjacentSymbols);
           this.whiteBoardCanvas.renderAll();
           this.currentNewEdge = new Edge(newEdge, currentNode);
         } 
@@ -246,10 +253,10 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     };
     let mouseMoveHandler = (event: any) => {
       if(newEdge != null){
-        if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_NO_COST){
+        // if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_NO_COST){
           newEdge = this.edgesHelper.connectEdge(event, newEdge, this.whiteBoardCanvas.getPointer(event.e));
           this.whiteBoardCanvas.renderAll();
-        } 
+        // } 
       } 
     };
     let mouseDownHandler = (event: any) => {
