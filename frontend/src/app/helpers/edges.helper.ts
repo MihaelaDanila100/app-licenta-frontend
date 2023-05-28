@@ -116,4 +116,20 @@ export class EdgesHelper {
         let newEdge = this.shapesService.createDashedLine(newLine);
         return newEdge;
     }
+
+    public connectEdge(event: any, newEdge: any, coordsPoint: any): any {
+      newEdge.set('opacity', 0.4);
+      if(event.target) {
+        newEdge.set({
+          x2: (event.target.left || 0) + ((event.target.width || 0) / 2),
+          y2: (event.target.top || 0) + ((event.target.height || 0) / 2)
+        });
+      } else {
+        newEdge.set({
+          x2: coordsPoint.x,
+          y2: coordsPoint.y
+        });
+      }
+      return newEdge;
+    }
 }
