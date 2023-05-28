@@ -255,6 +255,9 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       if(newEdge != null){
         // if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_NO_COST){
           newEdge = this.edgesHelper.connectEdge(event, newEdge, this.whiteBoardCanvas.getPointer(event.e));
+          if(adjacentSymbols) {
+            adjacentSymbols = this.edgesHelper.updateLabelOfCost(adjacentSymbols, newEdge);
+          }
           this.whiteBoardCanvas.renderAll();
         // } 
       } 

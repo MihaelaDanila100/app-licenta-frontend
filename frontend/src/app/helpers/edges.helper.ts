@@ -131,4 +131,10 @@ export class EdgesHelper {
       }
       return newEdge;
     }
+
+    public updateLabelOfCost(symbol: any, newEdge: any): any {
+        symbol.set('left', (newEdge?.left || 0) + (newEdge?.width || 0) / 2)
+        symbol.set('top', (newEdge?.top || 0) + (newEdge?.height || 0) / 2)
+        return symbol;
+    }
 }
