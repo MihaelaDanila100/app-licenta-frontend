@@ -50,9 +50,9 @@ export class Edge {
     }
 
     private updateSymbol(): void {
-        console.log("reprrr ", this.additionalSymbolsToRepresentation)
         this.additionalSymbolsToRepresentation.set('left', (this.representation?.left || 0) + (this.representation?.width || 0) / 2)
         this.additionalSymbolsToRepresentation.set('top', (this.representation?.top || 0) + (this.representation?.height || 0) / 2)
+        this.additionalSymbolsToRepresentation.setCoords();
     } 
 
     public setAdditionalSymbols(symbol: fabric.Object): void {
