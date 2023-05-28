@@ -39,4 +39,21 @@ export class GraphHelper {
           );
     } 
 
+    public colorTextRequest = (node: any) => {
+        return this.colorService.colorText.pipe(
+            map((textColor: any) => {
+              node.getNodeDrawing().on("mousedown", () => {
+                if(this.isColorMode) {
+                  this.shapeActionsHelper.observeTextColor(node.getNodeDrawing(), textColor)
+                  this.shapeActionsService.triggerActionOnCanvas();
+                }
+              });
+              if(this.isColorMode) {
+                this.shapeActionsHelper.observeTextSyncColor(node.getNodeDrawing(), textColor);
+                this.shapeActionsService.triggerActionOnCanvas();
+              }
+            })
+          )
+    }
+
 }

@@ -134,7 +134,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       })
     )
   }
-//________________________________________________________________________
+
   public observeEdges(): void {
     this.graphService.newNodesObs.pipe(
       mergeMap((node: Node) => {
@@ -143,23 +143,10 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         node.getNodeDrawing().on("mousedown", () => {
           this.kill$.next(node.getNodeDrawing())
         });
-        let colorTextRequest = this.colorService.colorText.pipe(
-          map((textColor: any) => {
-            node.getNodeDrawing().on("mousedown", () => {
-              if(this.isColorMode) {
-                this.shapeActionsHelper.observeTextColor(node.getNodeDrawing(), textColor)
-                this.whiteBoardCanvas.renderAll()
-              }
-            });
-            if(this.isColorMode) {
-              this.shapeActionsHelper.observeTextSyncColor(node.getNodeDrawing(), textColor);
-              this.whiteBoardCanvas.renderAll();
-            }
-          })
-        )
-        return merge(this.graphHelper.colorFillRequest(node), colorTextRequest);
+        return merge(this.graphHelper.colorFillRequest(node), this.graphHelper.colorTextRequest(node));
       })
     ).subscribe(() => { });
+//________________________________________________________________________
     this.graphService.newEdgeObs.subscribe((newEdge: Edge) => {
       newEdge.getLeftNode().getNodeDrawing().on("moving", (event) =>  {
         newEdge.setLineCoords(event.pointer, true);
