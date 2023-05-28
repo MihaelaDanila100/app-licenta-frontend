@@ -4,6 +4,7 @@ import { fabric } from 'fabric';
 export class Edge {
 
     private representation!: fabric.Line;
+    private additionalSymbolsToRepresentation!: any;
     private leftNode!: Node;
     private rightNode!: Node;
 
@@ -45,6 +46,22 @@ export class Edge {
                 y1: coords.y
             });
         }
+        if(this.additionalSymbolsToRepresentation) this.updateSymbol();
+    }
+
+    private updateSymbol(): void {
+        console.log("reprrr ", this.additionalSymbolsToRepresentation)
+        this.additionalSymbolsToRepresentation.set('left', (this.representation?.left || 0) + (this.representation?.width || 0) / 2)
+        this.additionalSymbolsToRepresentation.set('top', (this.representation?.top || 0) + (this.representation?.height || 0) / 2)
+    } 
+
+    public setAdditionalSymbols(symbol: fabric.Object): void {
+        // this.additionalSymbolsToRepresentation = JSON.parse(JSON.stringify(symbol));
+        this.additionalSymbolsToRepresentation = symbol;
+    }
+
+    public getAdditionalSymbols(): any {
+        return this.additionalSymbolsToRepresentation;
     }
 
 }

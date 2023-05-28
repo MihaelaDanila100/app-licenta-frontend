@@ -271,6 +271,9 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       if(this.currentNewEdge != null) {
         newEdge.set('opacity', 1);
         this.currentNewEdge?.setRightNode(this.currentGraph.getNodeRefAt(this.currentGraph.getIndexForNodeDrawing(event.target)));
+        if(adjacentSymbols){
+          this.currentNewEdge.setAdditionalSymbols(adjacentSymbols);
+        }
         this.currentGraph.addNewEdge(this.currentNewEdge);
         this.graphService.addEdge(this.currentNewEdge);
       }
