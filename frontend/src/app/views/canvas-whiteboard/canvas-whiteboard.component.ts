@@ -18,6 +18,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SaveJpgPopupComponent } from 'src/app/shared/components/save-jpg-popup/save-jpg-popup.component';
 import { SavePdfPopupComponent } from 'src/app/shared/components/save-pdf-popup/save-pdf-popup.component';
 import { ColorsHelper } from 'src/app/helpers/colors.helper';
+import { GraphHelper } from 'src/app/helpers/graph.helper';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -49,7 +50,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     private shapeActionsHelper: ShapeActionsHelper,
     private edgesHelper: EdgesHelper,
     private fileService: FileService,
-    private colorsHelper: ColorsHelper) { }
+    private colorsHelper: ColorsHelper,
+    private graphHelper: GraphHelper) { }
   
 
   ngOnInit(): void {
@@ -132,7 +134,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       })
     )
   }
-
+//________________________________________________________________________
   public observeEdges(): void {
     this.graphService.newNodesObs.pipe(
       mergeMap((node: Node) => {
@@ -141,24 +143,6 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         node.getNodeDrawing().on("mousedown", () => {
           this.kill$.next(node.getNodeDrawing())
         });
-        let colorFillRequest = this.colorService.colorFill.pipe(
-          map((fillColor: any) => {
-            node.getNodeDrawing().on("mousedown", () => {
-              if(this.isColorMode) {
-                this.shapeActionsHelper.observeFillColor(node.getNodeDrawing(), fillColor);
-                this.whiteBoardCanvas.renderAll()
-              }
-            });
-            if(this.isDrawSync) {
-              this.whiteBoardCanvas.freeDrawingBrush.color = fillColor;
-              this.whiteBoardCanvas.renderAll();
-            }
-            if(this.isColorMode) {
-              this.shapeActionsHelper.observeFillSyncColor(node.getNodeDrawing(), fillColor);
-              this.whiteBoardCanvas.renderAll();
-            }
-          })
-        );
         let colorTextRequest = this.colorService.colorText.pipe(
           map((textColor: any) => {
             node.getNodeDrawing().on("mousedown", () => {
@@ -173,7 +157,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
             }
           })
         )
-        return merge(colorFillRequest, colorTextRequest);
+        return merge(this.graphHelper.colorFillRequest(node), colorTextRequest);
       })
     ).subscribe(() => { });
     this.graphService.newEdgeObs.subscribe((newEdge: Edge) => {
