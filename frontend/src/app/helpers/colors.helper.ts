@@ -38,4 +38,18 @@ export class ColorsHelper {
           );
     } 
 
+    public colorStrokeRequest = (newShape: any) => {
+        return this.colorService.colorStroke.pipe(
+            map((strokeColor: any) => {
+              newShape.on("mousedown", () => {
+                if(this.isColorMode) this.shapeActionsHelper.observeStrokeColor(newShape, strokeColor)
+              });
+              if(this.isColorMode) {
+                this.shapeActionsHelper.observeStrokeSyncColor(newShape, strokeColor);
+                this.shapeActionsService.triggerActionOnCanvas();
+              }
+            })
+          );
+    } 
+
 }
