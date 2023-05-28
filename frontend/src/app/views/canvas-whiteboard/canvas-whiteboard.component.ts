@@ -51,8 +51,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
   
 
   ngOnInit(): void {
-    this.edgesHelper.changedNewSymbol.subscribe(() => {
-      console.log("iiiii")
+    this.shapeActionsService.actionTriggeredObs.subscribe(() => {
       this.whiteBoardCanvas.renderAll();
     });
     this.shapeActionsService.toggleColorsObs.subscribe((res) => {

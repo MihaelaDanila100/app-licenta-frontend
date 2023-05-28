@@ -15,6 +15,9 @@ export class ShapeActionsService {
   private toggleColorsSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private toggleDrawingSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  private actionTriggeredSbj: Subject<any> = new Subject<any>();
+  public actionTriggeredObs = this.actionTriggeredSbj.asObservable();
+
   scaleShape = this.scaleShapeSbj.asObservable();
   rotationShape = this.rotationShapeSbj.asObservable();
   opacityShape = this.opacityShapeSbj.asObservable();
@@ -63,5 +66,9 @@ export class ShapeActionsService {
   public updateDrawingMode(mode?: boolean): void {
     if(mode) this.toggleDrawingSbj.next(mode);
     else this.toggleDrawingSbj.next(!this.toggleDrawingSbj.value);
+  }
+
+  public triggerActionOnCanvas(): void {
+    this.actionTriggeredSbj.next(true);
   }
 }

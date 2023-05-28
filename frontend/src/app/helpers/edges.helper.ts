@@ -3,16 +3,15 @@ import { DashedLine, Line } from "../interfaces/line";
 import { ShapesService } from "../shared/services/shapes.service";
 import { Text } from "../interfaces/text";
 import { Subject } from "rxjs";
+import { ShapeActionsService } from "../shared/services/shape-actions.service";
 
 @Injectable({
     providedIn:'root'
 })
 export class EdgesHelper { 
     
-    constructor(private shapesService: ShapesService) { }
-
-    private currentNewSymbol: Subject<any> = new Subject<any>();
-    public changedNewSymbol = this.currentNewSymbol.asObservable();
+    constructor(private shapesService: ShapesService, 
+        private shapeActionsService: ShapeActionsService) { }
 
     public createEdge(pointer: any): any {
         let coords = [
@@ -70,7 +69,7 @@ export class EdgesHelper {
                 edgeText.set('fontSize', 14);
                 edgeText.set('opacity', 0.6);
             }
-            this.currentNewSymbol.next(true);
+            this.shapeActionsService.triggerActionOnCanvas();
         })
         return [this.shapesService.createLine(newLine), edgeText];
     }
