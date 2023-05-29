@@ -63,6 +63,9 @@ export class GraphHelper {
             newEdge.getLine().on("mousedown", () => {
               if(this.isColorMode) {
                 this.shapeActionsHelper.observeStrokeColor(newEdge.getLine(), textColor)
+                if(!newEdge.getAdditionalSymbols().fontSize) {
+                  this.shapeActionsHelper.observeFillColor(newEdge.getAdditionalSymbols(), textColor);
+                }
                 this.shapeActionsService.triggerActionOnCanvas();
               }
             });
