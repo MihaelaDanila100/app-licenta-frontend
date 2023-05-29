@@ -138,13 +138,16 @@ export class ShapesService {
         selectable: false
       })])
     }
-    return new fabric.Triangle({
-      width: 10,
-      height: 7,
+    return new fabric.Polygon([
+      {x: 0, y: 0},
+      {x: -15, y: -7},
+      {x: -15, y: 7}
+    ], {
       fill: 'black',
       left: (lineObject.left || 0),
       top: (lineObject.top || 0),
-      selectable: false
-    });
+      selectable: false,
+      opacity: 0.6
+    })
   }
 }
