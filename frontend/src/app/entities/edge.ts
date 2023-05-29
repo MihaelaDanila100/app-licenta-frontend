@@ -46,6 +46,7 @@ export class Edge {
                 y1: coords.y
             });
         }
+        this.representation.setCoords();
         if(this.additionalSymbolsToRepresentation) this.updateSymbol();
     }
 

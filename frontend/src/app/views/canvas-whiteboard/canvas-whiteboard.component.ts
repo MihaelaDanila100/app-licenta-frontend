@@ -221,6 +221,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
             adjacentSymbols.hiddenTextarea.focus();
           }
         }
+        this.currentNewEdge.getLine().setCoords();
         this.currentGraph.addNewEdge(this.currentNewEdge);
         this.graphService.addEdge(this.currentNewEdge);
       }
