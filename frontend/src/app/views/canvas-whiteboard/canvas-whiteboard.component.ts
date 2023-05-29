@@ -61,7 +61,9 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.shapeActionsService.toggleColorsObs.subscribe((res) => {
       this.isColorMode = res;
     });
-    this.whiteBoardCanvas = this.drawingService.createCanvas('whiteboard_canvas', {});
+    this.whiteBoardCanvas = this.drawingService.createCanvas('whiteboard_canvas', {
+      preserveObjectStacking: true
+    });
     this.whiteBoardCanvas.setDimensions({
       width: window.innerWidth * 81 / 100,
       height: window.innerHeight * 82 / 100
