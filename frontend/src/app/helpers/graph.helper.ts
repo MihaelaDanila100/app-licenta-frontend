@@ -4,6 +4,7 @@ import { ColorService } from "../shared/services/color.service";
 import { map } from "rxjs";
 import { ShapeActionsService } from "../shared/services/shape-actions.service";
 import { ShapeActionsHelper } from "./shape-actions.helper";
+import { Edge } from "../entities/edge";
 
 @Injectable({
     providedIn:'root'
@@ -55,5 +56,30 @@ export class GraphHelper {
             })
           )
     }
+
+    public colorEdgeRequest = (newEdge: Edge) => {
+      return this.colorService.colorText.pipe(
+          map((textColor: any) => {
+            newEdge.getLine().on("mousedown", () => {
+              if(this.isColorMode) {
+                this.shapeActionsHelper.observeStrokeColor(newEdge.getLine(), textColor)
+                this.shapeActionsService.triggerActionOnCanvas();
+              }
+            });
+            if(newEdge.getAdditionalSymbols()){
+              newEdge.getAdditionalSymbols().on("mousedown", () => {
+                if(this.isColorMode) {
+                  this.shapeActionsHelper.observeFillColor(newEdge.getAdditionalSymbols(), textColor)
+                  this.shapeActionsService.triggerActionOnCanvas();
+                }
+              });
+            }
+            if(this.isColorMode) {
+              this.shapeActionsHelper.observeStrokeSyncColor(newEdge.getLine(), textColor);
+              this.shapeActionsService.triggerActionOnCanvas();
+            }
+          })
+        )
+  }
 
 }

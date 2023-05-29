@@ -58,9 +58,9 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.shapeActionsService.actionTriggeredObs.subscribe(() => {
       this.whiteBoardCanvas.renderAll();
     });
-    // this.shapeActionsService.toggleColorsObs.subscribe((res) => {
-    //   this.isColorMode = res;
-    // });
+    this.shapeActionsService.toggleColorsObs.subscribe((res) => {
+      this.isColorMode = res;
+    });
     this.whiteBoardCanvas = this.drawingService.createCanvas('whiteboard_canvas', {});
     this.whiteBoardCanvas.setDimensions({
       width: window.innerWidth * 81 / 100,
@@ -146,15 +146,25 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         return merge(this.graphHelper.colorFillRequest(node), this.graphHelper.colorTextRequest(node));
       })
     ).subscribe(() => { });
-//________________________________________________________________________
-    this.graphService.newEdgeObs.subscribe((newEdge: Edge) => {
-      newEdge.getLeftNode().getNodeDrawing().on("moving", (event) =>  {
-        newEdge.setLineCoords(event.pointer, true);
-      });
-      newEdge.getRightNode().getNodeDrawing().on("moving", (event) => {
-        newEdge.setLineCoords(event.pointer, false);
-      });
-    })
+    this.graphService.newEdgeObs.pipe(
+      mergeMap((newEdge: Edge) => {
+        newEdge.getLeftNode().getNodeDrawing().on("moving", (event) =>  {
+          newEdge.setLineCoords(event.pointer, true);
+        });
+        newEdge.getLine().on("mousedown", () => {
+          this.kill$.next(newEdge.getLine())
+        });
+        if(newEdge.getAdditionalSymbols()){
+          newEdge.getAdditionalSymbols().on("mousedown", () => {
+            this.kill$.next(newEdge.getAdditionalSymbols())
+          });
+        }
+        newEdge.getRightNode().getNodeDrawing().on("moving", (event) => {
+          newEdge.setLineCoords(event.pointer, false);
+        });
+        return merge(this.graphHelper.colorEdgeRequest(newEdge));
+      })
+    ).subscribe(() => { })
     let newEdge!: any;
     let adjacentSymbols!: any;
     let mouseUpHandler = () => {
