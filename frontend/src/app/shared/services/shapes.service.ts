@@ -140,11 +140,10 @@ export class ShapesService {
     }
     return new fabric.Triangle({
       width: 10,
-      height: 15,
+      height: 7,
       fill: 'black',
-      left: (lineObject.left || 0) + 20,
-      top: (lineObject.top || 0) + 20,
-      angle: 135,
+      left: (lineObject.left || 0),
+      top: (lineObject.top || 0),
       selectable: false
     });
   }

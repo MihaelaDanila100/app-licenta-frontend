@@ -157,9 +157,27 @@ export class EdgesHelper {
         return symbol;
     }
 
-    public updateArrowHead(symbol: any, newEdge: any): any {
-        symbol.set('left', (newEdge.left || 0) + (newEdge?.width || 0) + 10)
-        symbol.set('top', (newEdge.top || 0) + (newEdge?.height || 0))
+    public updateArrowHead(symbol: any, newEdge: any, pointer: any): any {
+        let x1 = newEdge.x1;
+        let y1 = newEdge.y1;
+        let x2 = pointer.x;
+        let y2 = pointer.y;
+        let height = Math.abs(y2 - y1); 
+        let width = Math.abs(x2 - x1);
+        let tanAngle = height / width;
+        let angle = Math.atan(tanAngle)*180/Math.PI;
+        symbol.set('left', pointer.x)
+        symbol.set('top', pointer.y)
+        if(x2 > x1) {
+            if(y2 < y1) symbol.set('angle', -angle);
+            else if(y2 === y1) symbol.set('angle', 0);
+            else if(y2 > y1) symbol.set('angle', angle);
+        } else if(x2 < x1) {
+            if(y2 > y1) symbol.set('angle', 180 - angle);
+            else if(y2 === y1) symbol.set('angle', 0);
+            else if(y2 < y1) symbol.set('angle', 180 + angle);
+        }
+        symbol.setCoords();
         return symbol;
     }
 }
