@@ -224,6 +224,8 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
           }
         }
         this.currentNewEdge.getLine().setCoords();
+        this.currentNewEdge.getLine().set('lockMovementX', true);
+        this.currentNewEdge.getLine().set('lockMovementY', true);
         this.currentGraph.addNewEdge(this.currentNewEdge);
         this.graphService.addEdge(this.currentNewEdge);
       }
