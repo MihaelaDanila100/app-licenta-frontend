@@ -56,7 +56,10 @@ export class Edge {
         this.additionalSymbolsToRepresentation.setCoords();
     } 
 
-    public setAdditionalSymbols(symbol: fabric.Object): void {
+    public setAdditionalSymbols(symbol: any): void {
+        if(!symbol.fontSize) {
+            symbol.set('top', symbol.top-20)
+        }
         this.additionalSymbolsToRepresentation = symbol;
     }
     public getAdditionalSymbols(): any {

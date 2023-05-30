@@ -167,9 +167,13 @@ export class EdgesHelper {
         let tanAngle = height / width;
         let angle = Math.atan(tanAngle)*180/Math.PI;
         symbol.set('left', pointer.x + 15)
-        symbol.set('top', pointer.y)
+        symbol.set('top', pointer.y - 20)
         if(x2 > x1) {
-            if(y2 < y1) symbol.set('angle', -angle);
+            if(y2 < y1){
+                symbol.set('angle', -angle);
+                symbol.set('left', pointer.x + 37)
+                symbol.set('top', pointer.y + 20)
+            }
             else if(y2 === y1) symbol.set('angle', 0);
             else if(y2 > y1) symbol.set('angle', angle);
         } else if(x2 < x1) {
