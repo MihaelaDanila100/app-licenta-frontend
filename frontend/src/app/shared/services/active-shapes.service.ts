@@ -11,10 +11,8 @@ export class ActiveShapesService {
 
   private activeShapesSbj: Subject<fabric.Object> = new Subject<fabric.Object>();
   private curentShapeRefSbj: Subject<any> = new Subject<any>();
-  public textShapeSbj: Subject<any> = new Subject<any>();
   public activeShapes = this.activeShapesSbj.asObservable();
   public currentShapeRef = this.curentShapeRefSbj.asObservable();
-  public textShape = this.textShapeSbj.asObservable();
 
   constructor() { }
 
@@ -106,10 +104,5 @@ export class ActiveShapesService {
 
   public updateCurrentShape(shape: any): void {
     this.curentShapeRefSbj.next(shape);
-  }
-
-  public addTextShape(): void {
-    this.textShapeSbj.next(true);
-    this.textShapeSbj.next(false);
   }
 }

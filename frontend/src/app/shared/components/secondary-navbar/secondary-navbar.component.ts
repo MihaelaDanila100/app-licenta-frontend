@@ -25,8 +25,7 @@ export class SecondaryNavbarComponent implements OnInit {
   @ViewChild(InlinePopupComponent) strokeWidthRef: any;
   @Output() changedEdgeMode: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private activeShapesService: ActiveShapesService, 
-    private graphService: GraphService,
+  constructor(private graphService: GraphService,
     private shapeActionsService: ShapeActionsService) { }
 
   ngOnInit(): void {
@@ -65,7 +64,7 @@ export class SecondaryNavbarComponent implements OnInit {
   }
 
   public addTextInNode(): void {
-    this.activeShapesService.addTextShape();
+    this.shapeActionsService.addTextShape();
   }
 
   public addEdge(): void {

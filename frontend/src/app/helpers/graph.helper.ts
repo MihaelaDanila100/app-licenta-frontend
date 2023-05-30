@@ -5,14 +5,14 @@ import { map } from "rxjs";
 import { ShapeActionsService } from "../shared/services/shape-actions.service";
 import { ShapeActionsHelper } from "./shape-actions.helper";
 import { Edge } from "../entities/edge";
+import { Node } from "../entities/node";
 
 @Injectable({
     providedIn:'root'
 })
 export class GraphHelper {
 
-    constructor(private graphService: GraphService,
-        private colorService: ColorService,
+    constructor(private colorService: ColorService,
         private shapeActionsService: ShapeActionsService,
         private shapeActionsHelper: ShapeActionsHelper) {
         
@@ -83,6 +83,20 @@ export class GraphHelper {
             }
           })
         )
+  }
+
+  public activateTextRequest = (node: Node) => {
+    return this.shapeActionsService.textShapeObs.pipe(
+      map((isTextMode: boolean) => {
+        if(isTextMode) {
+          let nodeText: any = node.getNodeDrawing()._objects[1];
+          nodeText.set('fill ', 'red')
+          nodeText.enterEditing();
+          nodeText.hiddenTextarea?.focus();
+          this.shapeActionsService.triggerActionOnCanvas();
+        }
+      })
+    )
   }
 
 }

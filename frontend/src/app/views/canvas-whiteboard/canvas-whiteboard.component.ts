@@ -145,7 +145,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         node.getNodeDrawing().on("mousedown", () => {
           this.kill$.next(node.getNodeDrawing())
         });
-        return merge(this.graphHelper.colorFillRequest(node), this.graphHelper.colorTextRequest(node));
+        return merge(this.graphHelper.colorFillRequest(node), this.graphHelper.colorTextRequest(node), this.graphHelper.activateTextRequest(node));
       })
     ).subscribe(() => { });
     this.graphService.newEdgeObs.pipe(

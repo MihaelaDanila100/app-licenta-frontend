@@ -14,6 +14,7 @@ export class ShapeActionsService {
   private blockedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private toggleColorsSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private toggleDrawingSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public textShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   private actionTriggeredSbj: Subject<any> = new Subject<any>();
   public actionTriggeredObs = this.actionTriggeredSbj.asObservable();
@@ -26,6 +27,7 @@ export class ShapeActionsService {
   blockedShape = this.blockedShapeSbj.asObservable();
   toggleColorsObs = this.toggleColorsSbj.asObservable();
   toggleDrawingObs = this.toggleDrawingSbj.asObservable();
+  textShapeObs = this.textShapeSbj.asObservable();
 
   constructor() { }
 
@@ -66,6 +68,10 @@ export class ShapeActionsService {
   public updateDrawingMode(mode?: boolean): void {
     if(mode) this.toggleDrawingSbj.next(mode);
     else this.toggleDrawingSbj.next(!this.toggleDrawingSbj.value);
+  }
+
+  public addTextShape(): void {
+    this.textShapeSbj.next(!this.textShapeSbj.value);
   }
 
   public triggerActionOnCanvas(): void {
