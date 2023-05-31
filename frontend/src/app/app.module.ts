@@ -20,6 +20,7 @@ import { CanvasWhiteboardComponent } from './views/canvas-whiteboard/canvas-whit
     HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CanvasWhiteboardComponent]
 })
 export class AppModule { }
