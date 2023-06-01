@@ -13,6 +13,7 @@ export class NavbarComponent {
   constructor(private dialog: MatDialog, private fileService: FileService) { }
 
   @Output() toggledMenu: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openedNewWhiteboard: EventEmitter<any> = new EventEmitter<any>();
 
   public toggleSideNav(): void {
     this.toggledMenu.emit();
@@ -30,6 +31,10 @@ export class NavbarComponent {
 
   public handleChosenFile(event: any): void {
     this.fileService.updateImportedFile(event.target.files[0]);
+  }
+
+  public openNewWhiteboard(): void {
+    this.openedNewWhiteboard.emit();
   }
 
 }

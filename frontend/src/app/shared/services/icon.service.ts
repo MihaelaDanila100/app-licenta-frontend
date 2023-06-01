@@ -113,6 +113,10 @@ export class IconService {
       'import_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/import_icon.svg')
     );
+    this.matIcons.addSvgIcon(
+      'add_whiteboard_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_whiteboard_icon.svg')
+    );
   }
 
 }

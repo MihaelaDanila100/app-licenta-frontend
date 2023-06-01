@@ -50,7 +50,8 @@ export class AppComponent implements AfterViewInit {
   }
 
   public generateWhiteboard() {
-    if(this.whiteboardcontainer) this.whiteboardcontainer.clear();
+    this.graphService.saveWhiteboard();
+    // if(this.whiteboardcontainer) this.whiteboardcontainer.clear();
     const factory = this.resolver.resolveComponentFactory(CanvasWhiteboardComponent);
     let whiteboardRef = this.whiteboardcontainer.createComponent(factory);
     whiteboardRef.changeDetectorRef.detectChanges();
