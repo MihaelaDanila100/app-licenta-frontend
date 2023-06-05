@@ -117,6 +117,10 @@ export class IconService {
       'add_whiteboard_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_whiteboard_icon.svg')
     );
+    this.matIcons.addSvgIcon(
+      'login', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/login.svg')
+    );
   }
 
 }

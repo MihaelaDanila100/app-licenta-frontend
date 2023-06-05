@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { DashedLine, Line } from "../interfaces/line";
+import { DashedLine, Line } from "../views/interfaces/line";
 import { ShapesService } from "../shared/services/shapes.service";
-import { Text } from "../interfaces/text";
+import { Text } from "../views/interfaces/text";
 import { Subject, Subscription } from "rxjs";
 import { ShapeActionsService } from "../shared/services/shape-actions.service";
 import { ColorService } from "../shared/services/color.service";

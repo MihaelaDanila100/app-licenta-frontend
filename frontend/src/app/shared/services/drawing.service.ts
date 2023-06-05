@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
-import { Text } from 'src/app/interfaces/text';
+import { Text } from 'src/app/views/interfaces/text';
 
 @Injectable({
   providedIn: 'root'

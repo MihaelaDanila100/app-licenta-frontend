@@ -1,0 +1,56 @@
+.login_popup {
+    background-image: url("../../../../assets/images/wave.png");
+    background-size: 100% 40%;
+    background-position: 0vh 45vh;
+    background-repeat: no-repeat;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding-top: 3vh;
+}
+
+.avatar_image {
+    width: 18%;
+    height: auto;
+}
+
+.mat-dialog-container {
+    padding: 0px !important;
+}
+
+.form_field {
+    width: 80%;
+    margin: auto;
+}
+
+.link {
+    color: rgb(6, 93, 140);
+    font-size: 12px;
+    cursor: pointer;
+    text-align: left;
+    margin-left: 10%;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.mat-form-field-wrapper {
+    padding-bottom: 0px !important;
+}
+
+.google_auth {
+    // border: solid rgb(202, 202, 202) 1px;
+    background-color: white;
+    padding: 10px;
+    width: 80%;
+    margin: auto;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.google_icon {
+    width: 20px;
+    height: 20px;
+}
