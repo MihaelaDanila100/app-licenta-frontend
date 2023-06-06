@@ -119,6 +119,10 @@ export class IconService {
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_whiteboard_icon.svg')
     );
     this.matIcons.addSvgIcon(
+      'save_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/save_icon.svg')
+    );
+    this.matIcons.addSvgIcon(
       'login', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/login.svg')
     );

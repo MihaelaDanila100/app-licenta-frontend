@@ -5,6 +5,7 @@ import { FileService } from '../../services/file.service';
 import { LoginComponent } from 'src/app/auth/components/login/login.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { TokenService } from 'src/app/auth/services/token.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +17,8 @@ export class NavbarComponent implements OnInit{
   constructor(private dialog: MatDialog, 
     private fileService: FileService,
     private tokenService: TokenService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private router: Router) { }
 
   @Output() toggledMenu: EventEmitter<any> = new EventEmitter<any>();
   @Output() openedNewWhiteboard: EventEmitter<any> = new EventEmitter<any>();
@@ -59,6 +61,7 @@ export class NavbarComponent implements OnInit{
 
   public logout(): void {
     this.tokenService.removeToken();
+    this.router.navigateByUrl('');
   }
 
 }

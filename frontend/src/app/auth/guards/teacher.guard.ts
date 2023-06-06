@@ -14,6 +14,7 @@ export class TeacherGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      console.log("roleee ", this.authService.getUserRole())
     if(this.authService.getUserRole() === Roles.TEACHER) return true;
     this.router.navigateByUrl('/auth/not-authorized');
     return false;

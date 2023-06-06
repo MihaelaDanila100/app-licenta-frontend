@@ -4,6 +4,7 @@ import { GraphService } from './shared/services/graph.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ExportOptionsDialogComponent } from './shared/components/export-options-dialog/export-options-dialog.component';
 import { CanvasWhiteboardComponent } from './views/components/canvas-whiteboard/canvas-whiteboard.component';
+import { ShapeActionsService } from './shared/services/shape-actions.service';
 
 @Component({
   selector: 'app-root',
@@ -12,17 +13,15 @@ import { CanvasWhiteboardComponent } from './views/components/canvas-whiteboard/
 })
 export class AppComponent implements AfterViewInit {
 
-  @ViewChild('whiteboardcontainer', { read: ViewContainerRef }) whiteboardcontainer!: ViewContainerRef;
   public blockedShape: boolean = true;
   public opened: boolean = false;
   public closed: boolean = true;
 
   constructor(private graphService: GraphService, 
     private iconService: IconService,
-    private resolver: ComponentFactoryResolver) {}
+    private actionsService: ShapeActionsService) {}
 
   ngAfterViewInit(): void {
-    this.generateWhiteboard();
   }
 
   toggleMenu(): void {
@@ -34,10 +33,8 @@ export class AppComponent implements AfterViewInit {
 
   }
 
-  public generateWhiteboard() {
-    this.graphService.saveWhiteboard();
-    const factory = this.resolver.resolveComponentFactory(CanvasWhiteboardComponent);
-    let whiteboardRef = this.whiteboardcontainer.createComponent(factory);
-    whiteboardRef.changeDetectorRef.detectChanges();
+  generateWhiteboard() {
+    this.actionsService.createWhiteboard();
   }
+
 }

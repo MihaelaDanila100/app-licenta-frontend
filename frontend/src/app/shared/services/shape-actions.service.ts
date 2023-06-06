@@ -14,7 +14,8 @@ export class ShapeActionsService {
   private blockedShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private toggleColorsSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private toggleDrawingSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public textShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private textShapeSbj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private newWhiteBoardSbj: BehaviorSubject<any> = new BehaviorSubject<any>(true);
 
   private actionTriggeredSbj: Subject<any> = new Subject<any>();
   public actionTriggeredObs = this.actionTriggeredSbj.asObservable();
@@ -28,6 +29,7 @@ export class ShapeActionsService {
   toggleColorsObs = this.toggleColorsSbj.asObservable();
   toggleDrawingObs = this.toggleDrawingSbj.asObservable();
   textShapeObs = this.textShapeSbj.asObservable();
+  newWhiteBoardObs = this.newWhiteBoardSbj.asObservable();
 
   constructor() { }
 
@@ -76,5 +78,9 @@ export class ShapeActionsService {
 
   public triggerActionOnCanvas(): void {
     this.actionTriggeredSbj.next(true);
+  }
+
+  public createWhiteboard(): void {
+    this.newWhiteBoardSbj.next(true);
   }
 }

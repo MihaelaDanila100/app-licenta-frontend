@@ -5,6 +5,7 @@
         <input type = "file" hidden #file (change) = "handleChosenFile($event)">
         <mat-icon class="icon" svgIcon = "import_icon" (click) = "file.click()"></mat-icon>
         <mat-icon class="icon" svgIcon = "add_whiteboard_icon" (click) = "openNewWhiteboard()"></mat-icon>
+        <mat-icon class="icon" svgIcon = "save_icon" *ngIf = "isLoggedIn"></mat-icon>
     </div>
     <div class="data">
         <div class="username">Username</div>

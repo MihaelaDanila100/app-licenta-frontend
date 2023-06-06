@@ -1,20 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 import { GraphService } from 'src/app/shared/services/graph.service';
+import { CanvasWhiteboardComponent } from '../canvas-whiteboard/canvas-whiteboard.component';
+import { ShapeActionsService } from 'src/app/shared/services/shape-actions.service';
 
 @Component({
   selector: 'app-whiteboard-view',
   templateUrl: './whiteboard-view.component.html',
   styleUrls: ['./whiteboard-view.component.scss']
 })
-export class WhiteboardViewComponent implements OnInit {
+export class WhiteboardViewComponent implements AfterViewInit {
 
+  @ViewChild('whiteboardcontainer', { read: ViewContainerRef }) whiteboardcontainer!: ViewContainerRef;
   public opened: boolean = false;
   public closed: boolean = true;
   public selectedNavbarIndex: any;
 
-  constructor(private graphService: GraphService) { }
+  constructor(private graphService: GraphService,
+    private resolver: ComponentFactoryResolver,
+    private shapeActionsService: ShapeActionsService) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.shapeActionsService.newWhiteBoardObs.subscribe(() => {
+      this.generateWhiteboard();
+    });
   }
 
   openMenu(event: any): void {
@@ -30,4 +38,11 @@ export class WhiteboardViewComponent implements OnInit {
     }
   }
 
+  public generateWhiteboard() {
+    this.graphService.saveWhiteboard();
+    const factory = this.resolver.resolveComponentFactory(CanvasWhiteboardComponent);
+    let whiteboardRef = this.whiteboardcontainer.createComponent(factory);
+    whiteboardRef.changeDetectorRef.detectChanges();
+  }
 }
+

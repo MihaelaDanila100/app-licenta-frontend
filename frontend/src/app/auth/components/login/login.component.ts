@@ -35,8 +35,9 @@ export class LoginComponent implements OnInit {
       this.authService.getToken(this.loginForm.value).subscribe((res) => {
         this.tokenService.saveToken(res);
         const decoded: any = jwt_decode(res);
+        console.log("ahaaa ", decoded)
         this.authService.setUserRole(decoded[KeyConstants.TOKEN_ROLE_KEY]);
-        this.route.navigateByUrl('teacher-pannel');
+        this.route.navigateByUrl('teacher');
         this.dialogRef.close();
       });
     } 

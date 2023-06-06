@@ -24,5 +24,6 @@ export class TokenService {
   public removeToken() {
     this.tokenSbj.next(false);
     localStorage.removeItem(KeyConstants.ACCES_TOKEN);
+    localStorage.removeItem(KeyConstants.ROLE_KEY);
   }
 }
