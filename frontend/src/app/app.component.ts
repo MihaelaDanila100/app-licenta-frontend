@@ -13,11 +13,9 @@ import { CanvasWhiteboardComponent } from './views/canvas-whiteboard/canvas-whit
 export class AppComponent implements AfterViewInit {
 
   @ViewChild('whiteboardcontainer', { read: ViewContainerRef }) whiteboardcontainer!: ViewContainerRef;
-  title = 'frontend';
   public blockedShape: boolean = true;
   public opened: boolean = false;
   public closed: boolean = true;
-  public selectedNavbarIndex: any;
 
   constructor(private graphService: GraphService, 
     private iconService: IconService,
@@ -32,26 +30,12 @@ export class AppComponent implements AfterViewInit {
     this.closed = !this.closed;
   }
 
-  openMenu(event: any): void {
-    if(event) {
-      this.opened = true;
-      this.selectedNavbarIndex = 2;
-      this.closed = false;
-    } else {
-      this.opened = false;
-      this.closed = true;
-      this.selectedNavbarIndex = null;
-      this.graphService.toggleEdges();
-    }
-  }
-
   uploadFile(event: any): any {
 
   }
 
   public generateWhiteboard() {
     this.graphService.saveWhiteboard();
-    // if(this.whiteboardcontainer) this.whiteboardcontainer.clear();
     const factory = this.resolver.resolveComponentFactory(CanvasWhiteboardComponent);
     let whiteboardRef = this.whiteboardcontainer.createComponent(factory);
     whiteboardRef.changeDetectorRef.detectChanges();

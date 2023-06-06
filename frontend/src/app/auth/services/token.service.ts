@@ -15,4 +15,8 @@ export class TokenService {
   public getToken() {
     return localStorage.getItem(KeyConstants.ACCES_TOKEN);
   }
+
+  public removeToken() {
+    localStorage.removeItem(KeyConstants.ACCES_TOKEN);
+  }
 }

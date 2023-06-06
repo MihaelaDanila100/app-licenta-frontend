@@ -9,12 +9,14 @@ import { CanvasWhiteboardComponent } from './views/canvas-whiteboard/canvas-whit
 import { MaterialModule } from './shared/material/material.module';
 import { LoginComponent } from './auth/components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthModule } from './auth/auth.module';
+import { WhiteboardViewComponent } from './views/whiteboard-view/whiteboard-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CanvasWhiteboardComponent,
-    LoginComponent
+    WhiteboardViewComponent
   ],
   imports: [
     BrowserModule,
@@ -23,8 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,
-    FormsModule,
-    ReactiveFormsModule
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent],

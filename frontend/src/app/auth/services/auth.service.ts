@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private url = `${environment.API_BASE}/Auth`
+  private url = `${environment.API_BASE}/Auth`;
 
   constructor(private http: HttpClient) { }
 

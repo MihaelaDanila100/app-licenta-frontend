@@ -1,0 +1,17 @@
+<div class="flex_row">
+    <app-secondary-navbar (changedEdgeMode) = "openMenu($event)"></app-secondary-navbar>
+
+    <mat-sidenav-container [autosize] = "true">
+        <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="sidenavbar">
+            <app-sidenav [defaultSelectedIndex] = "selectedNavbarIndex"></app-sidenav>
+        </mat-sidenav>
+
+        <mat-sidenav-content class="flex_row no_scroll">
+            <template #whiteboardcontainer></template>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+
+    <mat-sidenav #drawer mode="side" position = "end" [(opened)]="closed" class="optionsnavbar">
+        <app-options-navbar></app-options-navbar>
+    </mat-sidenav>
+</div>
