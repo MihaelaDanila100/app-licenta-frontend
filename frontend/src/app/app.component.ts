@@ -3,7 +3,7 @@ import { IconService } from './shared/services/icon.service';
 import { GraphService } from './shared/services/graph.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ExportOptionsDialogComponent } from './shared/components/export-options-dialog/export-options-dialog.component';
-import { CanvasWhiteboardComponent } from './views/canvas-whiteboard/canvas-whiteboard.component';
+import { CanvasWhiteboardComponent } from './views/components/canvas-whiteboard/canvas-whiteboard.component';
 
 @Component({
   selector: 'app-root',
