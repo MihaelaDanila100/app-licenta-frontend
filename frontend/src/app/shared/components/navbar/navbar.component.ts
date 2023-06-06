@@ -1,20 +1,32 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ExportOptionsDialogComponent } from '../export-options-dialog/export-options-dialog.component';
 import { FileService } from '../../services/file.service';
 import { LoginComponent } from 'src/app/auth/components/login/login.component';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { TokenService } from 'src/app/auth/services/token.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit{
 
-  constructor(private dialog: MatDialog, private fileService: FileService) { }
+  constructor(private dialog: MatDialog, 
+    private fileService: FileService,
+    private tokenService: TokenService,
+    private authService: AuthService) { }
 
   @Output() toggledMenu: EventEmitter<any> = new EventEmitter<any>();
   @Output() openedNewWhiteboard: EventEmitter<any> = new EventEmitter<any>();
+  public isLoggedIn: boolean = false;
+
+  ngOnInit() {
+    this.tokenService.tokenChangesObs.subscribe((res: boolean) => {
+      this.isLoggedIn = res;
+    });
+  }
 
   public toggleSideNav(): void {
     this.toggledMenu.emit();
@@ -43,6 +55,10 @@ export class NavbarComponent {
     dialogConfig.width = '30vw';
     dialogConfig.height = '85vh';
     let dialogRef = this.dialog.open(LoginComponent, dialogConfig);
+  }
+
+  public logout(): void {
+    this.tokenService.removeToken();
   }
 
 }
