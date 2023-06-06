@@ -5,25 +5,25 @@
     </div>
 
     <div class="google_auth">
-        <img src="../../../../assets/images/google_icon.png" class="google_icon"> Connect with google account
+        <img src="../../../../assets/images/google_icon.png" class="google_icon">Connect with google account
     </div>
 
     Or
 
-    <form class="login_form">
+    <form class="login_form" [formGroup] = "loginForm">
         <mat-form-field appearance = "outline" class="form_field">
             <mat-label>Email: </mat-label>
-            <input matInput type="text">
+            <input matInput type="text" formControlName = "email">
         </mat-form-field>
 
         <mat-form-field appearance = "outline" class="form_field">
             <mat-label>Password: </mat-label>
-            <input matInput type="password">
+            <input matInput type="password" formControlName = "password">
         </mat-form-field>
         <div class="link">Forgot your password?</div>
 
         <div>
-            <button mat-raised-button color = "accent">Login</button>
+            <button mat-raised-button color = "accent" (click) = "login()">Login</button>
         </div>
     </form>
 </div>

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ExportOptionsDialogComponent } from '../export-options-dialog/export-options-dialog.component';
 import { FileService } from '../../services/file.service';
-import { LoginPopupComponent } from 'src/app/views/components/login-popup/login-popup.component';
+import { LoginComponent } from 'src/app/auth/components/login/login.component';
 
 @Component({
   selector: 'app-navbar',
@@ -41,8 +41,8 @@ export class NavbarComponent {
   public openLoginForm(): void {
     let dialogConfig = new MatDialogConfig();
     dialogConfig.width = '30vw';
-    dialogConfig.height = '70vh';
-    let dialogRef = this.dialog.open(LoginPopupComponent, dialogConfig);
+    dialogConfig.height = '85vh';
+    let dialogRef = this.dialog.open(LoginComponent, dialogConfig);
   }
 
 }

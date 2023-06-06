@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { fabric } from 'fabric';
-import { ICircleOptions } from 'fabric/fabric-impl';
-import { Circle, DashedCircle } from 'src/app/views/interfaces/circle';
-import { DashedEllipse, Ellipse } from 'src/app/views/interfaces/ellipse';
-import { DashedLine, Line } from 'src/app/views/interfaces/line';
-import { DashesRectangle, Rectangle } from 'src/app/views/interfaces/rectangle';
-import { Text } from 'src/app/views/interfaces/text';
+import { Circle, DashedCircle } from 'src/app/views/interfaces/ui-interfaces/circle';
+import { DashedEllipse, Ellipse } from 'src/app/views/interfaces/ui-interfaces/ellipse';
+import { DashedLine, Line } from 'src/app/views/interfaces/ui-interfaces/line';
+import { DashesRectangle, Rectangle } from 'src/app/views/interfaces/ui-interfaces/rectangle';
+import { Text } from 'src/app/views/interfaces/ui-interfaces/text';
 
 
 @Injectable({
