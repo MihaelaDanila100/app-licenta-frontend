@@ -11,16 +11,15 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './auth/auth.module';
 import { WhiteboardViewComponent } from './views/components/whiteboard-view/whiteboard-view.component';
-import { TeacherPannelComponent } from './views/components/teacher-pannel/teacher-pannel.component';
-import { AccountSettingsComponent } from './views/components/teacher-pannel/account-settings/account-settings.component';
+import { TeacherPannelComponent } from './views/components/teacher/teacher-pannel/teacher-pannel.component';
+import { AccountSettingsComponent } from './views/components/teacher/account-settings/account-settings.component';
+import { TeacherModule } from './views/components/teacher/teacher.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     CanvasWhiteboardComponent,
-    WhiteboardViewComponent,
-    TeacherPannelComponent,
-    AccountSettingsComponent
+    WhiteboardViewComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +28,8 @@ import { AccountSettingsComponent } from './views/components/teacher-pannel/acco
     BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,
-    AuthModule
+    AuthModule,
+    TeacherModule
   ],
   providers: [],
   bootstrap: [AppComponent],
