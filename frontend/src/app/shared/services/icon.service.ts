@@ -15,6 +15,7 @@ export class IconService {
     this.useActionsIcons();
     this.useIconsService();
     this.useMainActions();
+    this.teacherActions();
   }
 
   public useLockIcon(): void {
@@ -120,6 +121,13 @@ export class IconService {
     this.matIcons.addSvgIcon(
       'login', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/login.svg')
+    );
+  }
+
+  public teacherActions(): void {
+    this.matIcons.addSvgIcon(
+      'whiteboard', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/whiteboard_icon.svg')
     );
   }
 

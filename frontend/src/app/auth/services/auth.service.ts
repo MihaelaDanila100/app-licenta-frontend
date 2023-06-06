@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { LoginUser } from '../interfaces/login-user';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { KeyConstants } from 'src/app/shared/data/constants/key-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,15 @@ export class AuthService {
       email: loginUser.email,
       password: loginUser.password
     };
-    console.log("hellooo ", body)
-    return this.http.post(`${this.url}/Login`, body);
+    // return this.http.post(`${this.url}/Login`, body);
+    return of("eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZWFjaGVyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidGVhY2hlciIsImV4cCI6MTY4NjA0NzQ1MCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzIzNiIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcyMzYifQ.1zVHL4H80gITzEJqBXWtdAvcgDr_QkTmOqvfwxSWNwdzDI0a-W7gkz72sLsaSGlr1maDVPUZW2CF4KsUCjz5Ag")
+  }
+
+  public setUserRole(role: string){
+    localStorage.setItem(KeyConstants.ROLE_KEY, role);
+  }
+
+  public getUserRole() {
+    return localStorage.getItem(KeyConstants.ROLE_KEY);
   }
 }

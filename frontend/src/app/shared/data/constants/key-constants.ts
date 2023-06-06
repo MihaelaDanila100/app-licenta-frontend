@@ -1,5 +1,5 @@
 export const KeyConstants = {
     ACCES_TOKEN: "accestoken",
-    OAUTH_CLIENT: "express-client",
-    OAUTH_SECRET: "express-secret"
+    ROLE_KEY: "role",
+    TOKEN_ROLE_KEY: "rhttp://schemas.microsoft.com/ws/2008/06/identity/claims/role"
 }

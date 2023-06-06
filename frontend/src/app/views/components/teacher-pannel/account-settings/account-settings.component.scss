@@ -1,0 +1,33 @@
+.teacher_actions {
+    background-color: rgb(33, 33, 33);
+    color: white;
+    padding: 1em 0em;
+}
+
+.teacher_view_container {
+    display: grid;
+    grid-template-columns: 17% 95%;
+    height: 91vh;
+}
+
+.teacher_options {
+    margin-top: 2em;
+}
+
+.teacher_option {
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    padding: 0.5em 0.3em;
+    cursor: pointer;
+}
+
+.teacher_option:hover {
+    background-color: rgb(28, 28, 28);
+}
+
+.graphix {
+    margin-left: 5px;
+}
