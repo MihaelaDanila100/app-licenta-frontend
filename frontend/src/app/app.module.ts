@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
@@ -14,6 +14,7 @@ import { WhiteboardViewComponent } from './views/components/whiteboard-view/whit
 import { TeacherPannelComponent } from './views/teacher/teacher-pannel/teacher-pannel.component';
 import { AccountSettingsComponent } from './views/teacher/account-settings/account-settings.component';
 import { TeacherModule } from './views/teacher/teacher.module';
+import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,11 @@ import { TeacherModule } from './views/teacher/teacher.module';
     AuthModule,
     TeacherModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent],
   entryComponents: [CanvasWhiteboardComponent]
 })

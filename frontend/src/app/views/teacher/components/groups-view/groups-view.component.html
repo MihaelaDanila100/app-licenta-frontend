@@ -1,16 +1,19 @@
 <div>
     <h1>My groups</h1>
     <div class="groups_container">
-        <mat-card *ngFor = "let group of teacherGroups" class="group_card">
+        <mat-card *ngFor = "let group of teacherGroups; let i =index" class="group_card">
             <img src="../../../../../assets/images/class_symbol.png" class="group_icon">
 
             <mat-card-content>
-                <h3 class="card_title">{{ group.name }}</h3>
+                <h3 class="card_title" *ngIf = !editable[i]>{{ group.name }}</h3>
+                <mat-form-field *ngIf = "editable[i]" class="card_title">
+                    <input matInput [(ngModel)] = "group.name">
+                </mat-form-field>
             </mat-card-content>
 
             <mat-card-actions align = "end">
                 <button mat-mini-fab class="icon_btn add_student"><mat-icon svgIcon = "add_students"></mat-icon></button>
-                <button mat-mini-fab class="icon_btn" color = "primary"><mat-icon>edit</mat-icon></button>
+                <button mat-mini-fab class="icon_btn" color = "primary" (click) = "editGroup(i)"><mat-icon>{{ editable[i] ? 'save' : 'edit' }}</mat-icon></button>
                 <button mat-mini-fab class="icon_btn delete_group"><mat-icon>delete_forever</mat-icon></button>
             </mat-card-actions>
         </mat-card>

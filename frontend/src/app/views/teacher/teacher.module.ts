@@ -6,6 +6,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { SaveWhiteboardComponent } from './save-whiteboard/save-whiteboard.component';
 import { GroupsViewComponent } from './components/groups-view/groups-view.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { GroupsViewComponent } from './components/groups-view/groups-view.compon
   imports: [
     CommonModule,
     TeacherRoutingModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ]
 })
 export class TeacherModule { }

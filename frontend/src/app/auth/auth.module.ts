@@ -4,7 +4,6 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { MaterialModule } from '../shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
 import { NotAuthenticateedComponent } from './components/not-authenticateed/not-authenticateed.component';
 import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -22,8 +21,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     AuthRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule
+    ReactiveFormsModule
   ],
   exports: [
     LoginComponent

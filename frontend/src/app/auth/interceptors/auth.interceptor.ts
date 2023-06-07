@@ -18,9 +18,11 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private tokenService: TokenService, private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    console.log("e bine intru")
     if(!this.tokenService.getToken()) {
       return next.handle(request);  
     }
+    console.log("e bine avem token")
     const headers = new HttpHeaders({
       Authorization: "Bearer " + this.tokenService.getToken()
     });
