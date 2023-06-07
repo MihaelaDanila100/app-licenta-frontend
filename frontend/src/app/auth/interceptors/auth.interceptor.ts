@@ -33,6 +33,9 @@ export class AuthInterceptor implements HttpInterceptor {
           if(err.status === 401) {
             return this.handleUnauthorized(request, next);
           }
+          if(err.status === 200) {
+            return next.handle(request);
+          }
           return this.handleError(err);
         } else {
           throw new Observable<HttpErrorResponse>(err);

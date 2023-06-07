@@ -17,6 +17,7 @@ export class AuthService {
   public getToken(loginUser: LoginUser): Observable<any> {
     let body = {
       email: loginUser.email,
+      username: "test",
       password: loginUser.password
     };
     // return this.http.post(`${this.url}/Login`, body);

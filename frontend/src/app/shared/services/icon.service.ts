@@ -133,6 +133,14 @@ export class IconService {
       'whiteboard', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/whiteboard_icon.svg')
     );
+    this.matIcons.addSvgIcon(
+      'check_success', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/check_success.svg')
+    );
+    this.matIcons.addSvgIcon(
+      'add_students', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_students.svg')
+    );
   }
 
 }

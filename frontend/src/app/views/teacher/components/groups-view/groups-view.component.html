@@ -1,0 +1,18 @@
+<div>
+    <h1>My groups</h1>
+    <div class="groups_container">
+        <mat-card *ngFor = "let group of teacherGroups" class="group_card">
+            <img src="../../../../../assets/images/class_symbol.png" class="group_icon">
+
+            <mat-card-content>
+                <h3 class="card_title">{{ group.name }}</h3>
+            </mat-card-content>
+
+            <mat-card-actions align = "end">
+                <button mat-mini-fab class="icon_btn add_student"><mat-icon svgIcon = "add_students"></mat-icon></button>
+                <button mat-mini-fab class="icon_btn"><mat-icon>edit</mat-icon></button>
+                <button mat-mini-fab class="icon_btn delete_group"><mat-icon>delete_forever</mat-icon></button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
         this.authService.setUserRole(decoded[KeyConstants.TOKEN_ROLE_KEY]);
         this.route.navigateByUrl('teacher');
         this.dialogRef.close();
+      }, (err) => {
       });
     } 
   }

@@ -1,0 +1,14 @@
+<div *ngIf = "!loading" class="container">
+    <div class="center_items icon_item">
+        <mat-icon svgIcon = "check_success"></mat-icon>
+    </div>
+    <div class="center_items">
+        <h1>The whiteboard was succesfully saved!</h1>
+        <div class="canvas_preview">
+            <canvas id="graph_canvas"></canvas>
+        </div>
+    </div>
+    <div class="center_items">
+        <button mat-raised-button color = "accent">Back to drawing</button>
+    </div>
+</div>

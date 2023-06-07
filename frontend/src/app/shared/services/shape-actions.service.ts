@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { GraphService } from './graph.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class ShapeActionsService {
   textShapeObs = this.textShapeSbj.asObservable();
   newWhiteBoardObs = this.newWhiteBoardSbj.asObservable();
 
-  constructor() { }
+  constructor(private graphService: GraphService) { }
 
   public updateScaleShape(value: number): void {
     this.scaleShapeSbj.next(value);
@@ -78,6 +79,11 @@ export class ShapeActionsService {
 
   public triggerActionOnCanvas(): void {
     this.actionTriggeredSbj.next(true);
+  }
+
+  public saveCurrentState(graphSvg: string): void {
+    this.graphService.addNewGraph(graphSvg);
+    //JSON.stringify(`${this.whiteBoardCanvas.toSVG().replace('<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n',"")}`)
   }
 
   public createWhiteboard(): void {

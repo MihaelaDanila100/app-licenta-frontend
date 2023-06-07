@@ -6,6 +6,7 @@ import { LoginComponent } from 'src/app/auth/components/login/login.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { TokenService } from 'src/app/auth/services/token.service';
 import { Router } from '@angular/router';
+import { SaveWhiteboardComponent } from 'src/app/views/teacher/save-whiteboard/save-whiteboard.component';
 
 @Component({
   selector: 'app-navbar',
@@ -22,6 +23,7 @@ export class NavbarComponent implements OnInit{
 
   @Output() toggledMenu: EventEmitter<any> = new EventEmitter<any>();
   @Output() openedNewWhiteboard: EventEmitter<any> = new EventEmitter<any>();
+  @Output() savedWhiteboard: EventEmitter<any> = new EventEmitter<any>();
   public isLoggedIn: boolean = false;
 
   ngOnInit() {
@@ -62,6 +64,13 @@ export class NavbarComponent implements OnInit{
   public logout(): void {
     this.tokenService.removeToken();
     this.router.navigateByUrl('');
+  }
+
+  public saveWhiteboard(): void {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig.width = "30vw";
+    dialogConfig.height = "40vh";
+    this.dialog.open(SaveWhiteboardComponent, dialogConfig);
   }
 
 }
