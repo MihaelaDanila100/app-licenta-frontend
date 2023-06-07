@@ -141,6 +141,10 @@ export class IconService {
       'add_students', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_students.svg')
     );
+    this.matIcons.addSvgIcon(
+      'add_group', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_group.svg')
+    );
   }
 
 }
