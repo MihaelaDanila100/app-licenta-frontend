@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { LoginUser } from '../interfaces/login-user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { KeyConstants } from 'src/app/shared/data/constants/key-constants';
 
@@ -30,5 +30,10 @@ export class AuthService {
 
   public getUserRole() {
     return localStorage.getItem(KeyConstants.ROLE_KEY);
+  }
+
+  public loginInWithGoogle(credentials: string): Observable<any> {
+    const header = new HttpHeaders().set('content-type', 'application/json');
+    return this.http.post(`${this.url}/LoginWithGoogle`, JSON.stringify(credentials), {headers: header});
   }
 }

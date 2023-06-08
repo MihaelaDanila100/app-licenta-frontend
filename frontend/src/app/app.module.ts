@@ -15,6 +15,8 @@ import { TeacherPannelComponent } from './views/teacher/teacher-pannel/teacher-p
 import { AccountSettingsComponent } from './views/teacher/account-settings/account-settings.component';
 import { TeacherModule } from './views/teacher/teacher.module';
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
+import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -30,12 +32,27 @@ import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
     HttpClientModule,
     MaterialModule,
     AuthModule,
-    TeacherModule
+    TeacherModule,
+    SocialLoginModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
+  }, {
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: false,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider('661260123774-gbdiekkqt81lvbt2cr8eqdbu287qahc8.apps.googleusercontent.com')
+        }
+      ],
+      onError: (err: any) => {
+        console.log(err)
+      }
+    } as SocialAuthServiceConfig
   }],
   bootstrap: [AppComponent],
   entryComponents: [CanvasWhiteboardComponent]
