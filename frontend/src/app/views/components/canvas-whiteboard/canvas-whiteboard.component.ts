@@ -19,6 +19,7 @@ import { SaveJpgPopupComponent } from 'src/app/shared/components/save-jpg-popup/
 import { SavePdfPopupComponent } from 'src/app/shared/components/save-pdf-popup/save-pdf-popup.component';
 import { ColorsHelper } from 'src/app/helpers/colors.helper';
 import { GraphHelper } from 'src/app/helpers/graph.helper';
+import { FileHelper } from 'src/app/helpers/file-helper';
 
 @Component({
   selector: 'app-canvas-whiteboard',
@@ -51,12 +52,18 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     private edgesHelper: EdgesHelper,
     private fileService: FileService,
     private colorsHelper: ColorsHelper,
-    private graphHelper: GraphHelper) { }
+    private graphHelper: GraphHelper,
+    private fileHelper: FileHelper) { }
   
 
   ngOnInit(): void {
     this.shapeActionsService.actionTriggeredObs.subscribe(() => {
       this.whiteBoardCanvas.renderAll();
+    });
+    this.shapeActionsService.triggerDestroyObs.subscribe((object) => {
+      console.log("hai ca scot ")
+      this.whiteBoardCanvas.remove(object);
+      console.log("am obtinut ", this.whiteBoardCanvas)
     });
     this.shapeActionsService.toggleColorsObs.subscribe((res) => {
       this.isColorMode = res;
@@ -121,7 +128,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
             takeWhile(() => this.kill$.value == newSelectedShape),
             map((isDuplicated: boolean) => { if(isDuplicated) this.activeShapesService.addShapeToWhiteboard(newSelectedShape, true) })
           );
-          return merge(unblockRequest, deletedRequest, scaleRequest, rotationRequest, opacityRequest, duplicateRequest);
+          return merge(unblockRequest, deletedRequest, scaleRequest, rotationRequest, opacityRequest, duplicateRequest, this.colorsHelper.colorFillRequest(newSelectedShape), this.colorsHelper.colorStrokeRequest(newSelectedShape));
         }
         return of(newSelectedShape)
       })
@@ -145,7 +152,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         node.getNodeDrawing().on("mousedown", () => {
           this.kill$.next(node.getNodeDrawing())
         });
-        return merge(this.graphHelper.colorFillRequest(node), this.graphHelper.colorTextRequest(node), this.graphHelper.activateTextRequest(node));
+        return merge(this.graphHelper.colorFillRequest(node), this.graphHelper.colorTextRequest(node), this.graphHelper.activateTextRequest(node), this.fileHelper.killGraphObjReq(node.getNodeDrawing()));
       })
     ).subscribe(() => { });
     this.graphService.newEdgeObs.pipe(
@@ -248,16 +255,22 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     this.fileService.exportFileObs.subscribe((res) => {
       switch (res) {
         case 'svg':
+          this.fileService.killNonGraphObjects();
           let myLink = document.createElement("a");
-          console.log("graph ", this.currentGraph)  
-          let myCopy =  this.graphService.copyGraphJSON(this.currentGraph)  
-          console.log("copy ", myCopy)
-          let file = new Blob([myCopy], {type:"text/json"});
+          // console.log("graph ", this.currentGraph)  
+          // let myCopy =  this.graphService.copyGraphJSON(this.currentGraph)  
+          // console.log("copy ", myCopy)
+          let resultObject = {
+            fullCanvas: `${this.whiteBoardCanvas.toSVG().replace('<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n',"")}`
+          }
+          let resultJSON = JSON.stringify(resultObject);
+          let file = new Blob([resultJSON], {type:"text/json"});
           myLink.href = URL.createObjectURL(file);
           myLink.download = "myCanvas.txt";
           document.body.appendChild(myLink);
           myLink.click();
           document.body.removeChild(myLink);
+          console.log("my JSON ", resultJSON)
           break;
         
         case 'png':
@@ -284,8 +297,22 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       let fileReader = new FileReader()
       fileReader.onload = (event) => {
         let fileString: any = fileReader.result;
-        this.currentGraph = this.fileService.uploadGraphFromJSON(fileString);
-        this.renderGraph();
+        // this.currentGraph = this.fileService.uploadGraphFromJSON(fileString);
+        // this.renderGraph();
+        let fileContent = JSON.parse(fileString);
+        
+        fabric.loadSVGFromString(fileContent.fullCanvas, (results) => {
+
+          results.forEach((canvasObject) => {
+            // this.activeShapesService.addShapeToWhiteboard(canvasObject);
+            this.whiteBoardCanvas.add(canvasObject);
+            this.whiteBoardCanvas.renderAll();
+            console.log("please ", results);
+            canvasObject.on("mousedown", () => this.kill$.next(canvasObject))
+          })
+        });
+        // this.fileService.uploadFileFromSVG(fileContent.fullCanvas);
+        // this.whiteBoardCanvas = 
       }
       fileReader.readAsText(svgFile);
     })

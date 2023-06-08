@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { fabric } from 'fabric';
 import { Node } from 'src/app/entities/node';
 import { Graph } from 'src/app/entities/graph';
+import { ActiveShapesService } from './active-shapes.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,9 @@ export class FileService {
   public exportFileObs = this.exportFileSbj.asObservable();
   private filesSbj: Subject<any> = new Subject<any>();
   public filesObs = this.filesSbj.asObservable();
+  public destoryGraphRelatedObjects$: Subject<void> = new Subject<void>();
 
-  constructor() { }
+  constructor(private activeShapesService: ActiveShapesService) { }
 
   public updateExportFile(fileMode: string) {
     this.exportFileSbj.next(fileMode);
@@ -54,5 +56,18 @@ export class FileService {
     let constructedGraph = new Graph(nodesList, isOriented)
     constructedGraph.updateAdjacencyList(adjacencyList)
     return constructedGraph;
+  }
+
+  public uploadFileFromSVG(canvasSVG: string): void {
+    fabric.loadSVGFromString(canvasSVG, (results) => {
+      console.log("please ", results)
+      results.forEach((canvasObject) => {
+        this.activeShapesService.addShapeToWhiteboard(canvasObject);
+      })
+    });
+  }
+
+  public killNonGraphObjects(): void {
+    this.destoryGraphRelatedObjects$.next();
   }
 }

@@ -19,7 +19,9 @@ export class ShapeActionsService {
   private newWhiteBoardSbj: BehaviorSubject<any> = new BehaviorSubject<any>(true);
 
   private actionTriggeredSbj: Subject<any> = new Subject<any>();
+  private triggerDestroyObjectSbj: Subject<any> = new Subject<any>();
   public actionTriggeredObs = this.actionTriggeredSbj.asObservable();
+  public triggerDestroyObs = this.triggerDestroyObjectSbj.asObservable();
 
   scaleShape = this.scaleShapeSbj.asObservable();
   rotationShape = this.rotationShapeSbj.asObservable();
@@ -88,5 +90,9 @@ export class ShapeActionsService {
 
   public createWhiteboard(): void {
     this.newWhiteBoardSbj.next(true);
+  }
+
+  public destroyObject(obj: any): void {
+    this.triggerDestroyObjectSbj.next(obj);
   }
 }
