@@ -7,6 +7,7 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
 import { SaveWhiteboardComponent } from './save-whiteboard/save-whiteboard.component';
 import { GroupsViewComponent } from './components/groups-view/groups-view.component';
 import { FormsModule } from '@angular/forms';
+import { ManageStudentsComponent } from './components/manage-students/manage-students.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { FormsModule } from '@angular/forms';
     TeacherPannelComponent,
     AccountSettingsComponent,
     SaveWhiteboardComponent,
-    GroupsViewComponent
+    GroupsViewComponent,
+    ManageStudentsComponent
   ],
   imports: [
     CommonModule,

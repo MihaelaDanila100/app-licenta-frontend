@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GroupsService } from '../../services/groups.service';
 import { Group } from '../../interfaces/group';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ManageStudentsComponent } from '../manage-students/manage-students.component';
 
 @Component({
   selector: 'app-groups-view',
@@ -48,6 +49,16 @@ export class GroupsViewComponent implements OnInit {
       this.newTeacherGroup.splice(index, 1);
       this.teacherGroups.unshift(group);
     });
+  }
+
+  public editStudents(group: Group): void {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '65vw';
+    dialogConfig.height = '60vh';
+    dialogConfig.data = {
+      groupId: group.id
+    };
+    let dialogRef = this.dialog.open(ManageStudentsComponent, dialogConfig);
   }
 
 }
