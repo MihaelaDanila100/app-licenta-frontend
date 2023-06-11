@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WhiteboardViewComponent } from './views/components/whiteboard-view/whiteboard-view.component';
-import { TeacherPannelComponent } from './views/teacher/teacher-pannel/teacher-pannel.component';
+import { TeacherPannelComponent } from './views/teacher/components/teacher-pannel/teacher-pannel.component';
 import { TeacherGuard } from './auth/guards/teacher.guard';
 
 const routes: Routes = [

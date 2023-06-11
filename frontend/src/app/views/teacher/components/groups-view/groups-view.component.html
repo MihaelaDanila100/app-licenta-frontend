@@ -1,8 +1,12 @@
 <div>
-    <h1>My groups</h1>
+    <h1 class="title">My groups</h1>
     <div class="groups_container">
         <mat-card *ngFor = "let group of teacherGroups; let i =index" class="group_card">
-            <img src="../../../../../assets/images/class_symbol.png" class="group_icon">
+            <div>
+                <a href="https://www.flaticon.com/free-icons/student"  title="student icons">
+                    <img class="card_image" src = "../../../../../assets/images/book.png" alt = "Student icons created by Smashicons - Flaticon">
+                </a>
+            </div>
 
             <mat-card-content>
                 <h3 class="card_title" *ngIf = !editable[i]>{{ group.name }}</h3>
@@ -18,6 +22,7 @@
             </mat-card-actions>
         </mat-card>
     </div>
+    <button mat-fab color = "accent" class="add_btn">
+        <mat-icon class="add_icon" svgIcon = "add_group"></mat-icon>
+    </button>
 </div>
-
-<button mat-fab color = "accent" class="add_btn"><mat-icon class="add_icon" svgIcon = "add_group"></mat-icon></button>

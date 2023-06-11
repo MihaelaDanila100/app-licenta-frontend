@@ -1,17 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TeacherPannelComponent } from './teacher-pannel/teacher-pannel.component';
+import { TeacherPannelComponent } from './components/teacher-pannel/teacher-pannel.component';
 import { GroupsViewComponent } from './components/groups-view/groups-view.component';
 
-const routes: Routes = [
-  {
+const routes: Routes = [{
     path: '',
-    component: TeacherPannelComponent,
+    redirectTo: 'pannel',
     pathMatch: 'full'
-  }, {
-    path: 'groups',
-    component: GroupsViewComponent
-  }
+  },
+  {
+    path: 'pannel',
+    component: TeacherPannelComponent,
+    children: [
+      {
+        path: 'groups',
+        component: GroupsViewComponent
+      }
+    ]
+  }, 
 ];
 
 @NgModule({

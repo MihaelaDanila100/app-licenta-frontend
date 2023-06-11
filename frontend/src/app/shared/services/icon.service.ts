@@ -131,6 +131,10 @@ export class IconService {
   public teacherActions(): void {
     this.matIcons.addSvgIcon(
       'whiteboard', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/whiteboard_new_icon.svg')
+    );
+    this.matIcons.addSvgIcon(
+      'old_pictures', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/whiteboard_icon.svg')
     );
     this.matIcons.addSvgIcon(
@@ -144,6 +148,10 @@ export class IconService {
     this.matIcons.addSvgIcon(
       'add_group', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_group.svg')
+    );
+    this.matIcons.addSvgIcon(
+      'classrooms', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/classrooms.svg')
     );
     this.matIcons.addSvgIcon(
       'dashboard_icon', 

@@ -2,12 +2,7 @@
     background-color: rgb(33, 33, 33);
     color: white;
     padding: 1em 0em;
-}
-
-.teacher_view_container {
-    display: grid;
-    grid-template-columns: 17% 95%;
-    height: 91vh;
+    height: 92vh;
 }
 
 .teacher_options {
@@ -30,8 +25,4 @@
 
 .graphix {
     margin-left: 5px;
-}
-
-.teacher_view {
-    padding: 1em;
 }

@@ -6,8 +6,12 @@
     gap: 5vw;
 }
 
+.title {
+    font-weight: 600;
+}
+
 .group_card {
-    width: 20vw;
+    width: 15vw;
 }
 
 .icon_btn {
@@ -45,5 +49,12 @@
 .add_btn {
     position: absolute;
     right: 3vw;
-    bottom: -15vh;
+    bottom: 3vh;
+}
+
+.card_image {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
+    margin-left: 15%;
 }

@@ -1,0 +1,14 @@
+<div class="teacher_actions">
+    <h2 class="graphix">Graphix</h2>
+    <div class="teacher_options">
+        <div class="teacher_option" [routerLink] = "'/whiteboard'">
+            <mat-icon svgIcon = "whiteboard"></mat-icon> Start a new whiteboard
+        </div>
+        <div class="teacher_option">
+            <mat-icon svgIcon = "old_pictures"></mat-icon> My whiteboards
+        </div>
+        <div class="teacher_option" (click) = "goToGroups()">
+            <mat-icon svgIcon = "classrooms"></mat-icon> Manage groups
+        </div>
+    </div>
+</div>

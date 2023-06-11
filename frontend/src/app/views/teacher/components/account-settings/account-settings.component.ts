@@ -14,7 +14,7 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   goToGroups(): void {
-    this.router.navigateByUrl('teacher/groups')
+    this.router.navigateByUrl('teacher/pannel/groups')
   }
 
 }
