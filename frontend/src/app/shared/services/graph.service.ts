@@ -18,6 +18,10 @@ export class GraphService {
   newEdgeObs = this.newEdgeSbj.asObservable();
   private currentGraphDrawingSbj: BehaviorSubject<any> = new BehaviorSubject<any>(false);
   currentGraphDrawingObs = this.currentGraphDrawingSbj.asObservable();
+  private askForGraphSbj: Subject<void> = new Subject<void>();
+  askForGraphObs = this.askForGraphSbj.asObservable();
+  private currentGraphObjSbj: Subject<Graph> = new Subject<Graph>();
+  currentGraphObj = this.currentGraphObjSbj.asObservable();
   private oldWhiteboards: any[] = [];
 
   constructor() { }
@@ -74,5 +78,13 @@ export class GraphService {
     this.oldWhiteboards.push({
       canvas: this.currentGraphDrawingSbj.value
     })
+  }
+
+  public updateCurrentGraphObj(graph: Graph): void {
+    this.currentGraphObjSbj.next(graph);
+  }
+
+  public askForGraph(): void {
+    this.askForGraphSbj.next();
   }
 }

@@ -1,0 +1,21 @@
+<div>
+    <div *ngFor = "let line of currentAdjacencyList">
+        <span *ngFor = "let item of line">
+            <span *ngIf = "item == false">
+                <!-- <button mat-raised-button color = "accent">Add</button> -->0
+            </span>
+            <!-- <span *ngIf = "!item != false">*</span> -->1
+        </span>
+    </div>
+</div>
+<form [formGroup] = "edgeForm">
+    <mat-form-field formControlName = "leftNode" class="node_input">
+        <mat-label>Add left node label:</mat-label>
+        <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field formControlName = "rightNode" class="node_input">
+        <mat-label>Add right node label:</mat-label>
+        <input matInput type="number">
+    </mat-form-field>
+    <button mat-raised-button color = "accent">Add</button>
+</form>

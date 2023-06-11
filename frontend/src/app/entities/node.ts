@@ -10,8 +10,9 @@ export class Node {
     private shapesService: ShapesService = ShapesService.instance;
     private indexInGraph: number = 0;
     static nodeIndex: number = 0;
+    private representationSVG: string = '';
 
-    constructor(label?: string, value?: any, representation?: fabric.Group | fabric.Object[], indexInGraph?: number) {
+    constructor(label?: string, value?: any, representation?: any, indexInGraph?: number) {
         let objects: fabric.Object[];
         this.value = value;
         
@@ -26,7 +27,10 @@ export class Node {
 
         if(representation instanceof Array) objects = [...representation]
         else {
-            if(representation) objects = [...representation._objects];
+            if(representation){
+                if(representation._objects) objects = [...representation._objects];
+                else objects = [...representation.objects]
+            } 
             else {
                 let circle = this.shapesService.createCircle(Shapes.circle);
                 let text = Shapes.text;
@@ -55,5 +59,10 @@ export class Node {
     public decreaseNodeIndex(): void {
         this.indexInGraph--;
     }
+
+    public setDrawingSVG(svgResult: string) {
+        this.representationSVG = svgResult;
+    }
+    
 
 }

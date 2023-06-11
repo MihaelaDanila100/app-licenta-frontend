@@ -166,20 +166,45 @@ export class EdgesHelper {
         let width = Math.abs(x2 - x1);
         let tanAngle = height / width;
         let angle = Math.atan(tanAngle)*180/Math.PI;
-        symbol.set('left', pointer.x + 15)
-        symbol.set('top', pointer.y - 20)
         if(x2 > x1) {
             if(y2 < y1){
                 symbol.set('angle', -angle);
-                symbol.set('left', pointer.x + 37)
-                symbol.set('top', pointer.y + 20)
-            }
-            else if(y2 === y1) symbol.set('angle', 0);
-            else if(y2 > y1) symbol.set('angle', angle);
+                console.log("heighht ", height)
+                symbol.set('top', pointer.y - (symbol.height / 3))
+                symbol.set('left', pointer.x - (symbol.width / 3))
+            }else{
+                if(y2 === y1) {
+                    symbol.set('angle', 0);
+                    symbol.set('top', pointer.y)
+                    symbol.set('left', pointer.x)
+                }else if(y2 > y1) { 
+                    symbol.set('angle', angle);
+                    symbol.set('top', pointer.y - (symbol.height / 4))
+                    if(angle < 21) symbol.set('left', pointer.x - (symbol.width / 55))
+                    else if(angle < 55) symbol.set('left', pointer.x + (symbol.width / 2))
+                    else if(angle < 62) symbol.set('left', pointer.x + (symbol.width / 1.5))
+                    else {
+                        symbol.set('left', pointer.x + (symbol.width + (symbol.width / 120)))
+                        console.log("aici e problema ")
+                    }
+                }
+            } 
         } else if(x2 < x1) {
-            if(y2 > y1) symbol.set('angle', 180 - angle);
-            else if(y2 === y1) symbol.set('angle', 0);
-            else if(y2 < y1) symbol.set('angle', 180 + angle);
+            if(y2 > y1){ 
+                symbol.set('angle', 180 - angle);
+                symbol.set('top', pointer.y + (symbol.height / 3))
+                symbol.set('left', pointer.x + (symbol.width / 3))
+                console.log("hehe ", angle)
+            }
+            else if(y2 === y1) {
+                symbol.set('angle', 0);
+                symbol.set('top', pointer.y);
+                symbol.set('left', pointer.x);
+            } else if(y2 < y1) {
+                symbol.set('angle', 180 + angle);
+                symbol.set('top', pointer.y - (symbol.height / 3))
+                symbol.set('left', pointer.x - (symbol.width / 3))
+            }
         }
         symbol.setCoords();
         return symbol;

@@ -145,6 +145,10 @@ export class IconService {
       'add_group', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_group.svg')
     );
+    this.matIcons.addSvgIcon(
+      'dashboard_icon', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/dashboard_icon.svg')
+    );
   }
 
 }

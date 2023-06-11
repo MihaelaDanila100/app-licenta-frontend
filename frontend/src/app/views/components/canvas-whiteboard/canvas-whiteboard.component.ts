@@ -61,10 +61,11 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       this.whiteBoardCanvas.renderAll();
     });
     this.shapeActionsService.triggerDestroyObs.subscribe((object) => {
-      console.log("hai ca scot ")
       this.whiteBoardCanvas.remove(object);
-      console.log("am obtinut ", this.whiteBoardCanvas)
     });
+    this.graphService.askForGraphObs.subscribe((res) => {
+      this.graphService.updateCurrentGraphObj(this.currentGraph)
+    })
     this.shapeActionsService.toggleColorsObs.subscribe((res) => {
       this.isColorMode = res;
     });
@@ -171,7 +172,7 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         newEdge.getRightNode().getNodeDrawing().on("moving", (event) => {
           newEdge.setLineCoords(event.pointer, false);
         });
-        return merge(this.graphHelper.colorEdgeRequest(newEdge));
+        return merge(this.graphHelper.colorEdgeRequest(newEdge), this.fileHelper.killGraphObjReq(newEdge.getLine()), this.fileHelper.killGraphObjReq(newEdge.getAdditionalSymbols()));
       })
     ).subscribe(() => { })
     let newEdge!: any;
@@ -208,14 +209,12 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
     };
     let mouseMoveHandler = (event: any) => {
       if(newEdge != null){
-        // if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_NO_COST){
-          newEdge = this.edgesHelper.connectEdge(event, newEdge, this.whiteBoardCanvas.getPointer(event.e));
-          if(adjacentSymbols) {
-            if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_COST) adjacentSymbols = this.edgesHelper.updateLabelOfCost(adjacentSymbols, newEdge);
-            if(this.currentSelectedEdgeType === EdgeTypes.ORIENTED_WITH_NO_COST) adjacentSymbols = this.edgesHelper.updateArrowHead(adjacentSymbols, newEdge, this.whiteBoardCanvas.getPointer(event.e));
-          }
-          this.whiteBoardCanvas.renderAll();
-        // } 
+        newEdge = this.edgesHelper.connectEdge(event, newEdge, this.whiteBoardCanvas.getPointer(event.e));
+        if(adjacentSymbols) {
+          if(this.currentSelectedEdgeType === EdgeTypes.UNORIENTED_WITH_COST) adjacentSymbols = this.edgesHelper.updateLabelOfCost(adjacentSymbols, newEdge);
+          if(this.currentSelectedEdgeType === EdgeTypes.ORIENTED_WITH_NO_COST) adjacentSymbols = this.edgesHelper.updateArrowHead(adjacentSymbols, newEdge, this.whiteBoardCanvas.getPointer(event.e));
+        }
+        this.whiteBoardCanvas.renderAll();
       } 
     };
     let mouseDownHandler = (event: any) => {
@@ -257,20 +256,22 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
         case 'svg':
           this.fileService.killNonGraphObjects();
           let myLink = document.createElement("a");
-          // console.log("graph ", this.currentGraph)  
-          // let myCopy =  this.graphService.copyGraphJSON(this.currentGraph)  
-          // console.log("copy ", myCopy)
           let resultObject = {
-            fullCanvas: `${this.whiteBoardCanvas.toSVG().replace('<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n',"")}`
+            fullCanvas: `${this.whiteBoardCanvas.toSVG().replace('<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n',"")}`,
+            nodes: this.currentGraph.nodesList.map((node) => {
+              node.setDrawingSVG(node.getNodeDrawing().toSVG().replace('<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n',""))
+              return node
+            }),
+            adjacencyList: this.currentGraph.adjacency_list
           }
           let resultJSON = JSON.stringify(resultObject);
+          console.log("there it is ", resultJSON)
           let file = new Blob([resultJSON], {type:"text/json"});
           myLink.href = URL.createObjectURL(file);
           myLink.download = "myCanvas.txt";
           document.body.appendChild(myLink);
           myLink.click();
           document.body.removeChild(myLink);
-          console.log("my JSON ", resultJSON)
           break;
         
         case 'png':
@@ -297,37 +298,56 @@ export class CanvasWhiteboardComponent implements OnInit, OnDestroy {
       let fileReader = new FileReader()
       fileReader.onload = (event) => {
         let fileString: any = fileReader.result;
-        // this.currentGraph = this.fileService.uploadGraphFromJSON(fileString);
-        // this.renderGraph();
         let fileContent = JSON.parse(fileString);
-        
+        console.log("yep ", fileContent)
         fabric.loadSVGFromString(fileContent.fullCanvas, (results) => {
 
           results.forEach((canvasObject) => {
-            // this.activeShapesService.addShapeToWhiteboard(canvasObject);
             this.whiteBoardCanvas.add(canvasObject);
             this.whiteBoardCanvas.renderAll();
-            console.log("please ", results);
             canvasObject.on("mousedown", () => this.kill$.next(canvasObject))
           })
         });
-        // this.fileService.uploadFileFromSVG(fileContent.fullCanvas);
-        // this.whiteBoardCanvas = 
+        let newGraphNodes: Node[] = [];
+        fileContent.nodes.forEach((node: any) => {
+          let svgRepr: string = node.representationSVG
+          console.log(`<svg>${svgRepr}</svg>`);
+          fabric.loadSVGFromString(`<svg>${svgRepr}</svg>`, (result) => {
+            newGraphNodes.push(new Node(node.label, 0, result, node.indexInGraph));
+          });
+        });
+        this.currentGraph = new Graph(newGraphNodes, false);
+        this.currentGraph.updateAdjacencyList(fileContent.adjacencyList);
+        this.addGraphToCanvas();
       }
       fileReader.readAsText(svgFile);
     })
   }
 
-  private renderGraph(): void {
-    this.whiteBoardCanvas.clear();
+  private addGraphToCanvas(): void {
     this.currentGraph.nodesList.forEach((node) => {
       this.whiteBoardCanvas.add(node.getNodeDrawing());
-    });
-    this.currentGraph.adjacency_list.forEach((edgesList) => {
-      edgesList.forEach((edge) => {
-        if(edge != false) this.whiteBoardCanvas.add(edge);
+      node.getNodeDrawing().on("mousedown", () => {
+        this.kill$.next(node.getNodeDrawing());
       });
+      this.graphHelper.colorFillRequest(node).subscribe(() => {});
+      this.graphHelper.colorTextRequest(node).subscribe(() => {});
+      this.graphHelper.activateTextRequest(node).subscribe(() => {});
     });
+    console.log("ssss ", this.currentGraph.adjacency_list)
+    this.currentGraph.adjacency_list.forEach((edgeList: any, index: number) => {
+      edgeList.forEach((edge: any, j: number) => {
+        if(edge != false) {
+          let fabricEdge = this.shapesService.createLine(edge);
+          let newEdge = new Edge(fabricEdge, this.currentGraph.getNodeRefAt(index), this.currentGraph.getNodeRefAt(j));
+          this.whiteBoardCanvas.add(fabricEdge);
+          fabricEdge.setCoords();
+          fabricEdge.set('lockMovementX', true);
+          fabricEdge.set('lockMovementY', true);
+          this.graphService.addEdge(newEdge);
+        }
+      })
+    })
     this.whiteBoardCanvas.renderAll();
   }
 

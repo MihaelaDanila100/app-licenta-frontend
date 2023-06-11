@@ -1,4 +1,4 @@
-<mat-tab-group [disableRipple]="true">
+<mat-tab-group [disableRipple]="true" class="menu">
     <mat-tab label="Colors">
         <ng-template matTabContent>
             <app-color-chooser></app-color-chooser>
@@ -9,8 +9,10 @@
             <app-shape-options></app-shape-options>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Text"> 
-        Content 3 
+    <mat-tab label="Edges"> 
+        <ng-template matTabContent>
+            <app-add-edge></app-add-edge>
+        </ng-template>
     </mat-tab>
     <mat-tab label="Symbols"> 
         Content 3 

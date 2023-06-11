@@ -5,7 +5,8 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpHeaders,
-  HttpErrorResponse
+  HttpErrorResponse,
+  HttpResponse
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { TokenService } from '../services/token.service';
@@ -20,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     console.log("e bine intru")
     if(!this.tokenService.getToken()) {
-      return next.handle(request);  
+      return next.handle(request); 
     }
     console.log("e bine avem token")
     const headers = new HttpHeaders({

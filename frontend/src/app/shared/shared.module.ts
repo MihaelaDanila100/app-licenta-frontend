@@ -17,6 +17,9 @@ import { EdgesTypesComponent } from './components/edges-types/edges-types.compon
 import { ExportOptionsDialogComponent } from './components/export-options-dialog/export-options-dialog.component';
 import { SaveJpgPopupComponent } from './components/save-jpg-popup/save-jpg-popup.component';
 import { SavePdfPopupComponent } from './components/save-pdf-popup/save-pdf-popup.component';
+import { AddEdgeComponent } from './components/add-edge/add-edge.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -35,13 +38,16 @@ import { SavePdfPopupComponent } from './components/save-pdf-popup/save-pdf-popu
     EdgesTypesComponent,
     ExportOptionsDialogComponent,
     SaveJpgPopupComponent,
-    SavePdfPopupComponent
+    SavePdfPopupComponent,
+    AddEdgeComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     PrimengComponentsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     NavbarComponent,
