@@ -6,6 +6,11 @@
     gap: 5vw;
 }
 
+.groups_view_container {
+    max-height: 92vh;
+    overflow-y: auto;
+}
+
 .title {
     font-weight: 600;
 }

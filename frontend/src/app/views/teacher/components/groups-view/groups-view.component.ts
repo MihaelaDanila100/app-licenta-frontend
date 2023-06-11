@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupsService } from '../../services/groups.service';
 import { Group } from '../../interfaces/group';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-groups-view',
@@ -9,9 +10,11 @@ import { Group } from '../../interfaces/group';
 })
 export class GroupsViewComponent implements OnInit {
 
-  constructor(private groupsService: GroupsService) { }
+  constructor(private groupsService: GroupsService,
+    private dialog: MatDialog) { }
 
   public teacherGroups: Group[] = [];
+  public newTeacherGroup: Group[] = [];
   public editable: boolean[] = [];
 
   ngOnInit(): void {
@@ -31,6 +34,20 @@ export class GroupsViewComponent implements OnInit {
     } else {
       this.editable[index] = true;
     }
+  }
+
+  public openGroupForm(): void {
+    this.newTeacherGroup.unshift({
+      name: '',
+      teacherId: ''
+    });
+  }
+
+  public saveGroup(group: Group, index: number): void {
+    this.groupsService.addGroup(group).subscribe((res) => {
+      this.newTeacherGroup.splice(index, 1);
+      this.teacherGroups.unshift(group);
+    });
   }
 
 }

@@ -1,6 +1,24 @@
-<div>
+<div class="groups_view_container">
     <h1 class="title">My groups</h1>
     <div class="groups_container">
+        <mat-card *ngFor = "let group of newTeacherGroup; let i = index" class="group_card">
+            <div>
+                <a href="https://www.flaticon.com/free-icons/student"  title="student icons">
+                    <img class="card_image" src = "../../../../../assets/images/book.png" alt = "Student icons created by Smashicons - Flaticon">
+                </a>
+            </div>
+
+            <mat-card-content>
+                <mat-form-field class="card_title">
+                    <input matInput [(ngModel)] = "group.name" placeholder="Group name">
+                </mat-form-field>
+            </mat-card-content>
+
+            <mat-card-actions align = "end">
+                <button mat-mini-fab class="icon_btn" color = "primary" (click) = "saveGroup(group, i)"><mat-icon>save</mat-icon></button>
+            </mat-card-actions>
+        </mat-card>
+
         <mat-card *ngFor = "let group of teacherGroups; let i =index" class="group_card">
             <div>
                 <a href="https://www.flaticon.com/free-icons/student"  title="student icons">
@@ -22,7 +40,7 @@
             </mat-card-actions>
         </mat-card>
     </div>
-    <button mat-fab color = "accent" class="add_btn">
+    <button mat-fab color = "accent" class="add_btn" (click) = "openGroupForm()">
         <mat-icon class="add_icon" svgIcon = "add_group"></mat-icon>
     </button>
 </div>

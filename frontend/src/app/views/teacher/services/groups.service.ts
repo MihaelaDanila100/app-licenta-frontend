@@ -23,4 +23,11 @@ export class GroupsService {
     };
     return this.http.put(`${this.url}/${group.id}`, body);
   }
+
+  public addGroup(group: Group): Observable<any> {
+    let body = {
+      name: group.name
+    };
+    return this.http.post(`${this.url}`, body);
+  }
 }
