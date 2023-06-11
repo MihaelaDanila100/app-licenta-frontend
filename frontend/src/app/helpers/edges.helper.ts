@@ -183,9 +183,10 @@ export class EdgesHelper {
                     if(angle < 21) symbol.set('left', pointer.x - (symbol.width / 55))
                     else if(angle < 55) symbol.set('left', pointer.x + (symbol.width / 2))
                     else if(angle < 62) symbol.set('left', pointer.x + (symbol.width / 1.5))
+                    else if(angle < 72) symbol.set('left', pointer.x + (symbol.width - (symbol.width / 5)))
                     else {
-                        symbol.set('left', pointer.x + (symbol.width + (symbol.width / 120)))
-                        console.log("aici e problema ")
+                        symbol.set('left', pointer.x + (symbol.width - (symbol.width / 40)))
+                        console.log("aici e problema ", angle)
                     }
                 }
             } 
