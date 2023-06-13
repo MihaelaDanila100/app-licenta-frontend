@@ -15,4 +15,8 @@ export class StudentsService {
   public getAllStudents(): Observable<any> {
     return this.http.get(`${this.url}`);
   }
+
+  public getStudentsForGroup(groupId: string): Observable<any> {
+    return this.http.get(`${this.url}/for-group?groupId=${groupId}`);
+  }
 }

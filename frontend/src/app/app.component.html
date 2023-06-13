@@ -1,6 +1,6 @@
 <div class="view">
     <input type="file" hidden #file (change) = "uploadFile($event)">
-    <app-navbar (toggledMenu) = "toggleMenu()" (openedNewWhiteboard) = "generateWhiteboard()"></app-navbar>
+    <app-navbar (openedNewWhiteboard) = "generateWhiteboard()"></app-navbar>
     
     <div class="routes_container">
         <router-outlet></router-outlet>

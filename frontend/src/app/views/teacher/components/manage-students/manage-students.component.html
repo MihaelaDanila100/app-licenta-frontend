@@ -1,1 +1,39 @@
-<p>manage-students works!</p>
+<div>
+    <h1>Manage students</h1>
+
+    <div class="grid_row">
+        <div>
+            <div>
+                <mat-form-field appearance = "outline">
+                    <mat-label>Search student email</mat-label>
+                    <input matInput type="text" (input) = "filternewStudents($event)">
+                </mat-form-field>
+            </div>
+            <div>
+                <div *ngFor = "let newStudent of displayNewStudents; let i = index">
+                    <mat-checkbox (change) = "chooseStudent($event, newStudent)"></mat-checkbox>
+                    <span>{{ newStudent.email }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <mat-icon class="add_icon" svgIcon = "add_student"></mat-icon>
+        </div>
+
+        
+        <div>
+            <mat-form-field appearance = "outline">
+                <mat-label>Search student email</mat-label>
+                <input matInput type="text" (input) = "filterExistingStudents($event)">
+            </mat-form-field>
+            <div>
+                <div *ngFor = "let existingStudent of displayExistingGroupStudents">
+                    {{ existingStudent.email }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button mat-raised-button color = "accent" (click) = "addStudents()">Add</button>
+</div>

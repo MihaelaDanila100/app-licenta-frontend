@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ComponentFactoryResolver, ViewChild, ViewCont
 import { GraphService } from 'src/app/shared/services/graph.service';
 import { CanvasWhiteboardComponent } from '../canvas-whiteboard/canvas-whiteboard.component';
 import { ShapeActionsService } from 'src/app/shared/services/shape-actions.service';
+import { PopupService } from 'src/app/shared/services/popup.service';
 
 @Component({
   selector: 'app-whiteboard-view',
@@ -17,11 +18,15 @@ export class WhiteboardViewComponent implements AfterViewInit {
 
   constructor(private graphService: GraphService,
     private resolver: ComponentFactoryResolver,
-    private shapeActionsService: ShapeActionsService) { }
+    private shapeActionsService: ShapeActionsService,
+    private popUpService: PopupService) { }
 
   ngAfterViewInit(): void {
     this.shapeActionsService.newWhiteBoardObs.subscribe(() => {
       this.generateWhiteboard();
+    });
+    this.popUpService.inlineModals.subscribe((res) => {
+      this.opened = res;
     });
   }
 

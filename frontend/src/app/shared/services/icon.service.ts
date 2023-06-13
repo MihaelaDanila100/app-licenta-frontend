@@ -157,6 +157,10 @@ export class IconService {
       'dashboard_icon', 
       this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/dashboard_icon.svg')
     );
+    this.matIcons.addSvgIcon(
+      'add_student', 
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons/add_student.svg')
+    );
   }
 
 }

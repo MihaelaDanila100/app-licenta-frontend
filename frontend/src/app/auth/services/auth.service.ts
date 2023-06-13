@@ -17,7 +17,6 @@ export class AuthService {
   public getToken(loginUser: LoginUser) {
     let body = {
       email: loginUser.email,
-      username: "test",
       password: loginUser.password
     };
     const options = {

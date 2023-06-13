@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { TokenService } from 'src/app/auth/services/token.service';
 import { Router } from '@angular/router';
 import { SaveWhiteboardComponent } from 'src/app/views/teacher/save-whiteboard/save-whiteboard.component';
+import { PopupService } from '../../services/popup.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,13 +19,13 @@ export class NavbarComponent implements OnInit{
   constructor(private dialog: MatDialog, 
     private fileService: FileService,
     private tokenService: TokenService,
-    private authService: AuthService,
+    private popUpService: PopupService,
     private router: Router) { }
 
-  @Output() toggledMenu: EventEmitter<any> = new EventEmitter<any>();
   @Output() openedNewWhiteboard: EventEmitter<any> = new EventEmitter<any>();
   @Output() savedWhiteboard: EventEmitter<any> = new EventEmitter<any>();
   public isLoggedIn: boolean = false;
+  private openedNavbar: boolean = false;
 
   ngOnInit() {
     this.tokenService.tokenChangesObs.subscribe((res: boolean) => {
@@ -33,7 +34,9 @@ export class NavbarComponent implements OnInit{
   }
 
   public toggleSideNav(): void {
-    this.toggledMenu.emit();
+    this.openedNavbar = !this.openedNavbar;
+    if(this.openedNavbar) this.popUpService.addPopUp();
+    else this.popUpService.removePopUp();
   }
 
   public openExportDialog(): void {

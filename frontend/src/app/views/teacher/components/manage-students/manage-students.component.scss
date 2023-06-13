@@ -1,0 +1,16 @@
+// .flex_row {
+//     display: flex;
+//     flex-direction: column;
+// }
+
+.grid_row {
+    display: grid;
+    grid-template-columns: 40% 10% 40%;
+}
+
+.add_icon {
+    width: 40%;
+    height: auto;
+    cursor: pointer;
+    color: rgb(17, 84, 160);
+}

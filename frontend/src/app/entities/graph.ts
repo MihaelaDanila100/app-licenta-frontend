@@ -19,13 +19,11 @@ export class Graph {
     }    
     
     public addNewNode(node: Node): void {
-        console.log("nodeeee ", node)
         this.numberOfNodes++;
         this.nodesList.push(node);
         if(this.numberOfNodes > 1) this.adjacency_list.forEach((list) => list.push(false));
         if(this.numberOfNodes > 1) this.adjacency_list.push(Array<any>(this.numberOfNodes).fill(false));
         else this.adjacency_list = [Array<any>(this.numberOfNodes).fill(false)];
-        console.log("The new graph is ", this.numberOfNodes, this.isOriented, this.adjacency_list, this.nodesList)
     }
 
     public addNewEdge(edge: Edge): void {

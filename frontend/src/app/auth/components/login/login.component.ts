@@ -51,19 +51,20 @@ export class LoginComponent implements OnInit {
 
   public login(): void {
     if(this.loginForm.valid) {
-      this.authService.getToken(this.loginForm.value).subscribe({
-        next: this.handleToken.bind(this)
+      this.authService.getToken(this.loginForm.value).subscribe((res: any) => {
+        console.log("shit")
+        let token = res.token;
+        this.tokenService.saveToken(token);
+        const decoded: any = jwt_decode(token);
+        this.authService.setUserRole(decoded[KeyConstants.TOKEN_ROLE_KEY]);
+        debugger;
+        this.route.navigate(['teacher/pannel']);
+        this.dialogRef.close();
       });
     } 
   }
 
   private handleToken = (res: any) => {
-    let token = res.token;
-    this.tokenService.saveToken(token);
-    const decoded: any = jwt_decode(token);
-    this.authService.setUserRole(decoded[KeyConstants.TOKEN_ROLE_KEY]);
-    this.route.navigateByUrl('teacher');
-    this.dialogRef.close();
   }
 
   public loginWithGoogle(): void {

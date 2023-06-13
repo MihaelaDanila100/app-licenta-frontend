@@ -31,7 +31,7 @@ export class SidenavShapesComponent implements OnInit {
     });
     this.shapesCanvas.on("mouse:down", (event: any) => {
       if(event.target) this.activeShapesService.addShapeToWhiteboard(event.target);
-    })
+    });
   }
 
   private initShapes() {
